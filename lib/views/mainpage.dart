@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import '../entities/meter_registration.dart';
 import 'package:flutter/services.dart';
 
 // Statefulwidget is mutable. It can be drawn multiple times within its lifetime.
@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
+  Future<MeterInfo> _futureMeterInfo;
 }
 
 Text textWidget(String someText, textColor) {
@@ -32,6 +33,9 @@ Container headerWidget(String someText) {
 }
 
 class _MainPageState extends State<MainPage> {
+  final TextEditingController _serialNumber = TextEditingController();
+  Future<MeterInfo> _futureMeterInfo;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +52,7 @@ class _MainPageState extends State<MainPage> {
                     Center(child: headerWidget("Register meters")),
                     Center(
                         child: TextField(
+                      controller: _serialNumber,
                       // inputFormatters: [
                       //   FilteringTextInputFormatter.deny(RegExp(r'[0-9]')),
                       // ],
@@ -69,7 +74,15 @@ class _MainPageState extends State<MainPage> {
                                     fontSize: 15,
                                     color: Colors.white)),
                             onPressed: () {
-                              print("Press");
+                              // setState(() {
+                              //   _futureMeterInfo =
+                              //       registerMeter(_serialNumber.text,
+                              //       _serialNumber.text,
+                              //       _serialNumber.text,
+                              //       _serialNumber.text ,
+                              //       _serialNumber.text,
+                              //       _serialNumber.text);
+                              // });
                             },
                           ),
                         ),
