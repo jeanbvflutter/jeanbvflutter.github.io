@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import '../entities/meter_registration.dart';
+import '../entities/ui/textfield_ui.dart';
 import 'package:flutter/services.dart';
 
 // Statefulwidget is mutable. It can be drawn multiple times within its lifetime.
@@ -34,6 +35,10 @@ Container headerWidget(String someText) {
 
 class _MainPageState extends State<MainPage> {
   final TextEditingController _serialNumber = TextEditingController();
+  final TextEditingController _zipcode = TextEditingController();
+  final TextEditingController _zipcode_ext = TextEditingController();
+  final TextEditingController _housenumber = TextEditingController();
+  final TextEditingController _street = TextEditingController();
   Future<MeterInfo> _futureMeterInfo;
 
   @override
@@ -43,53 +48,63 @@ class _MainPageState extends State<MainPage> {
       body: Container(
         margin: EdgeInsets.all(5),
         child: Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Expanded(
-              child: Container(
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Center(child: headerWidget("Register meters")),
-                    Center(
-                        child: TextField(
-                      controller: _serialNumber,
-                      // inputFormatters: [
-                      //   FilteringTextInputFormatter.deny(RegExp(r'[0-9]')),
-                      // ],
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Enter meter serial number'),
-                    )),
-                    Container(
-                      margin: EdgeInsets.only(top: 5),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: ButtonTheme(
-                          minWidth: 150.0,
-                          height: 50.0,
-                          child: RaisedButton(
-                            child: Text('Investigate meter',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 15,
-                                    color: Colors.white)),
-                            onPressed: () {
-                              // setState(() {
-                              //   _futureMeterInfo =
-                              //       registerMeter(_serialNumber.text,
-                              //       _serialNumber.text,
-                              //       _serialNumber.text,
-                              //       _serialNumber.text ,
-                              //       _serialNumber.text,
-                              //       _serialNumber.text);
-                              // });
-                            },
-                          ),
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Center(child: headerWidget("Register meters")),
+                  Center(child: textFieldWidget(_serialNumber, "Serienummer")),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          // SizedBox(height: 80),
+                          Expanded(
+                              child: textFieldWidget(_zipcode, "Postcode")),
+                          Expanded(
+                              child: textFieldWidget(_zipcode_ext, "Extentie")),
+                          Expanded(
+                              child:
+                                  textFieldWidget(_housenumber, "Huisnummer")),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Center(child: textFieldWidget(_street, "Straat")),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: ButtonTheme(
+                        minWidth: 150.0,
+                        height: 50.0,
+                        child: RaisedButton(
+                          child: Text('Investigate meter',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15,
+                                  color: Colors.white)),
+                          onPressed: () {
+                            // setState(() {
+                            //   _futureMeterInfo =
+                            //       registerMeter(_serialNumber.text,
+                            //       _serialNumber.text,
+                            //       _serialNumber.text,
+                            //       _serialNumber.text ,
+                            //       _serialNumber.text,
+                            //       _serialNumber.text);
+                            // });
+                          },
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             )
           ],
