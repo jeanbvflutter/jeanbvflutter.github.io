@@ -5,20 +5,22 @@ import 'package:http/http.dart' as http;
 Future<MeterInfo> registerMeter(String serialNumber, int clientId, int zipCode,
     String zipCodeExt, int houseNumber, String streetName) async {
   final response = await http.post(
-    Uri.https('jsonplaceholder.typicode.com', 'registerMeter'),
+    Uri.https('energize.eleena.eu', '/home/register_meter'),
     headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
+      // 'Content-Type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/form-data; charset=UTF-8',
     },
     body: jsonEncode(<String, dynamic>{
-      'serial_number': serialNumber,
-      'client_id': clientId,
-      'zip_code': zipCode,
-      'zip_code_ext': zipCodeExt,
-      'house_number': houseNumber,
-      'street_name': streetName,
+      'serial_number': "E0018003191683116",
+      'client_id': null,
+      'zip_code': 1852,
+      'zip_code_ext': "GM",
+      'house_number': 43,
+      'street_name': "Ewislaan",
     }),
   );
-  if (response.statusCode == 201) {
+  if (response.statusCode == 200) {
+    print(response.body);
     return MeterInfo.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to create album.');

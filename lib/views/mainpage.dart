@@ -84,21 +84,21 @@ class _MainPageState extends State<MainPage> {
                         minWidth: 150.0,
                         height: 50.0,
                         child: RaisedButton(
-                          child: Text('Investigate meter',
+                          child: Text('Register meter',
                               style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 15,
                                   color: Colors.white)),
                           onPressed: () {
-                            // setState(() {
-                            //   _futureMeterInfo =
-                            //       registerMeter(_serialNumber.text,
-                            //       _serialNumber.text,
-                            //       _serialNumber.text,
-                            //       _serialNumber.text ,
-                            //       _serialNumber.text,
-                            //       _serialNumber.text);
-                            // });
+                            setState(() {
+                              _futureMeterInfo = registerMeter(
+                                  _serialNumber.text,
+                                  null,
+                                  int.parse(_zipcode.text),
+                                  _zipcode_ext.text,
+                                  int.parse(_housenumber.text),
+                                  _street.text);
+                            });
                           },
                         ),
                       ),
