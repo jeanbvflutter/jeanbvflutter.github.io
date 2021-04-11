@@ -32,9 +32,16 @@ class InstallationInfo {
   final String email;
   final String clientSource;
 
+  // address details
+  final int zipCode;
+  final int zipCodeExt;
+  final int houseNumber;
+  final int street;
+  final String city;
 
-
-  InstallationInfo({this.status, this.breakerStatus, this.meterId, this.cumulativeProduction, this.clientId, this.loginName, this.lastName, this.firstName, this.email, this.clientSource});
+  InstallationInfo({this.status, this.breakerStatus, this.meterId, this.cumulativeProduction, this.clientId, 
+  this.loginName, this.lastName, this.firstName, this.email, this.clientSource,
+  this.zipCode, this. zipCodeExt, this.houseNumber, this.street, this.city});
 
   factory InstallationInfo.fromJson(Map<String, dynamic> json) {
     return InstallationInfo(

@@ -2,40 +2,35 @@ import 'package:flutter/material.dart';
 import '../../entities/installation_info.dart';
 
 
+  // final int status;
+  // final int breakerStatus;
+  // final int meterId;
+  // final int cumulativeProduction;
 
-FutureBuilder clientInfornation(
-  String data, Future futureClientInformation){
+
+FutureBuilder meterInformation(
+  String data, Future futureMeterInformation){
     String showClientInfo;
     return FutureBuilder<InstallationInfo>(
-      future: futureClientInformation,
+      future: futureMeterInformation,
       builder: (context, snapshot) {
         switch(data){
-          case 'clientId':
+          case 'status':
           {
             showClientInfo = snapshot.data.clientId.toString();
           }
           break;
-          case 'loginName':
+          case 'breakerStatus':
           {
             showClientInfo = snapshot.data.clientId.toString();
           }
           break;
-          case 'lastName':
+          case 'meterId':
           {
             showClientInfo = snapshot.data.clientId.toString();
           }
           break;
-          case 'firstName':
-          {
-            showClientInfo = snapshot.data.clientId.toString();
-          }
-          break;
-          case 'email':
-          {
-            showClientInfo = snapshot.data.clientId.toString();
-          }
-          break;
-          case 'clientSource':
+          case 'scumulativeProductiontreet':
           {
             showClientInfo = snapshot.data.clientId.toString();
           }
