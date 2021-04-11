@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import '../entities/meter_registration.dart';
-import '../entities/ui/textfield_ui.dart';
+import '../entities/register_meter.dart';
+import '../components/textfield_ui.dart';
 import 'package:flutter/services.dart';
 
 // Statefulwidget is mutable. It can be drawn multiple times within its lifetime.

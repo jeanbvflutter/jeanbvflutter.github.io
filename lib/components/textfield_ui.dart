@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 TextField textFieldWidget(_controller, String _hintText) {
   String regex;
-
   switch (_hintText.toLowerCase()) {
     case "serienummer":
       {
