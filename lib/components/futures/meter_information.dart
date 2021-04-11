@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../entities/installation_info.dart';
 
-
-  // final int status;
-  // final int breakerStatus;
-  // final int meterId;
-  // final int cumulativeProduction;
-
-
 FutureBuilder meterInformation(
   String data, Future futureMeterInformation){
     String showClientInfo;
