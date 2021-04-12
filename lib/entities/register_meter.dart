@@ -23,7 +23,7 @@ Future<MeterInfo> registerMeter(String serialNumber, int clientId, int zipCode,
     print(response.body);
     return MeterInfo.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to create album.');
+    throw Exception('Failed');
   }
 }
 

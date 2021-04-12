@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
+import 'package:meter_activation/components/ui/register_meter_button.dart';
 import 'dart:async';
 import '../entities/register_meter.dart';
 import '../components/ui/textfield_ui.dart';
@@ -17,15 +18,6 @@ class MainPage extends StatefulWidget {
   Future<MeterInfo> _futureMeterInfo;
 }
 
-Text textWidget(String someText, textColor) {
-  return Text(
-    someText,
-    style: TextStyle(color: textColor),
-    textAlign: TextAlign.center,
-  );
-}
-
-
 class _MainPageState extends State<MainPage> {
   final TextEditingController _serialNumber = TextEditingController();
   final TextEditingController _zipcode = TextEditingController();
@@ -33,6 +25,18 @@ class _MainPageState extends State<MainPage> {
   final TextEditingController _housenumber = TextEditingController();
   final TextEditingController _street = TextEditingController();
   Future<MeterInfo> _futureMeterInfo;
+
+  registerMeterCallback() {
+    setState(() {
+      _futureMeterInfo = registerMeter(
+          _serialNumber.text,
+          null,
+          int.parse(_zipcode.text),
+          _zipcode_ext.text,
+          int.parse(_housenumber.text),
+          _street.text);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,37 +52,29 @@ class _MainPageState extends State<MainPage> {
                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Center(child: headerWidget("Investigate installation")),
-                  Center(child: textFieldWidget(_serialNumber, "Serialnumber")),
+                  Center(child: textFieldWidget(_serialNumber, "Serienummer")),
                   SizedBox(height: 10),
                   Center(child: textFieldWidget(_street, "Straat")),
                   Container(
                     margin: EdgeInsets.only(top: 10),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: ButtonTheme(
-                        minWidth: 150.0,
-                        height: 50.0,
-                        child: ElevatedButton(
-                          child: Text('Investigate installation',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 15,
-                                  color: Colors.white)),
-                          onPressed: () {
-                            setState(() {
-                              _futureMeterInfo = registerMeter(
-                                  _serialNumber.text,
-                                  null,
-                                  int.parse(_zipcode.text),
-                                  _zipcode_ext.text,
-                                  int.parse(_housenumber.text),
-                                  _street.text);
-                            });
-                          },
-                        ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          // SizedBox(height: 80),
+                          Expanded(
+                              flex: 2,
+                              child: textFieldWidget(_zipcode, "Postcode")),
+                          Expanded(
+                              child: textFieldWidget(_zipcode_ext, "Extentie")),
+                          Expanded(
+                              child:
+                                  textFieldWidget(_housenumber, "Huisnummer")),
+                        ],
                       ),
                     ),
-                  )
+                  ),
+                  new RegisterMeterButton(registerMeter: registerMeterCallback),
                 ],
               ),
             )
