@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:meter_activation/components/ui/header_widget.dart';
 import 'dart:async';
 import '../entities/register_meter.dart';
-import '../components/textfield_ui.dart';
+import '../components/ui/textfield_ui.dart';
 import 'package:flutter/services.dart';
 
 // Statefulwidget is mutable. It can be drawn multiple times within its lifetime.
@@ -24,14 +25,6 @@ Text textWidget(String someText, textColor) {
   );
 }
 
-Container headerWidget(String someText) {
-  return Container(
-    height: 50,
-    margin: EdgeInsets.only(bottom: 15),
-    child: Center(child: textWidget(someText, Colors.white)),
-    decoration: BoxDecoration(color: Colors.blueGrey),
-  );
-}
 
 class _MainPageState extends State<MainPage> {
   final TextEditingController _serialNumber = TextEditingController();
@@ -54,26 +47,8 @@ class _MainPageState extends State<MainPage> {
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Center(child: headerWidget("Register meters")),
-                  Center(child: textFieldWidget(_serialNumber, "Serienummer")),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // SizedBox(height: 80),
-                          Expanded(
-                              child: textFieldWidget(_zipcode, "Postcode")),
-                          Expanded(
-                              child: textFieldWidget(_zipcode_ext, "Extentie")),
-                          Expanded(
-                              child:
-                                  textFieldWidget(_housenumber, "Huisnummer")),
-                        ],
-                      ),
-                    ),
-                  ),
+                  Center(child: headerWidget("Investigate installation")),
+                  Center(child: textFieldWidget(_serialNumber, "Serialnumber")),
                   SizedBox(height: 10),
                   Center(child: textFieldWidget(_street, "Straat")),
                   Container(
@@ -83,8 +58,8 @@ class _MainPageState extends State<MainPage> {
                       child: ButtonTheme(
                         minWidth: 150.0,
                         height: 50.0,
-                        child: RaisedButton(
-                          child: Text('Register meter',
+                        child: ElevatedButton(
+                          child: Text('Investigate installation',
                               style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 15,
