@@ -10,22 +10,22 @@ FutureBuilder meterInformation(
         switch(data){
           case 'status':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.status.toString();
           }
           break;
           case 'breakerStatus':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.breakerStatus.toString();
           }
           break;
           case 'meterId':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.meterId.toString();
           }
           break;
-          case 'scumulativeProductiontreet':
+          case 'cumulativeProduction':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.cumulativeProduction.toString();
           }
           break;
         }

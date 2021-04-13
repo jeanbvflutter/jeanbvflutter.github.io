@@ -10,7 +10,7 @@ Future<InstallationInfo> fetchInstallationInfo(String serialNumber) async {
    "serial_number": serialNumber,
 };
   final response = await http.get(
-    Uri.http('0.0.0.0:8001', '/rest/get-client-info-by-serial-number/', queryParameters),
+    Uri.https('energize.eleena.eu', '/rest/get-client-info-by-serial-number/', queryParameters),
   );
 
   if (response.statusCode == 200) {

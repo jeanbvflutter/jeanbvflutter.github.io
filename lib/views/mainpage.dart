@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meter_activation/components/futures/address_information.dart';
+import 'package:meter_activation/components/futures/meter_information.dart';
 import 'package:meter_activation/components/ui/fetch_installation_info_button.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
 import 'package:meter_activation/components/ui/register_meter_button.dart';
@@ -61,6 +62,35 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  FutureBuilder meterInformation(Future futureMeterInformation) {
+    String status;
+
+    return FutureBuilder<InstallationInfo>(
+      future: futureMeterInformation,
+      builder: (context, snapshot) {
+        try {
+          print("in here");
+          status = snapshot.data.status.toString();
+        } on Exception catch (_) {} catch (error) {
+          return Text("");
+        }
+        if (status == 'Registered') {
+          return Column(
+            children: [
+              registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber),
+              new RegisterMeterButton(registerMeter: registerMeterCallback),
+            ],
+          );
+        } else {
+          return Text("TEST");
+        }
+      },
+    );
+  }
+
+  // Widget _buildChild(){
+  //   if(_futureInstallationInfo.)
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +106,14 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   Center(child: headerWidget("Investigate installation")),
                   Center(child: textFieldWidget(_serialNumber, "Serienummer")),
-                  SizedBox(height: 10),
-                  registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber),
-                  new FetchInstallationInfoButton(fetchInstallationInfo: fetchInstallationInfoCallBack),
+                  // SizedBox(height: 10),
+                  // registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber),
+                  new FetchInstallationInfoButton(
+                      fetchInstallationInfo: fetchInstallationInfoCallBack),
+
+                  SizedBox(height: 20),
+                  meterInformation(_futureInstallationInfo),
+                  // Center(child: meterInformation("status", _futureInstallationInfo)),
                 ],
               ),
             ),
