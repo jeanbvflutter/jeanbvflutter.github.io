@@ -7,7 +7,6 @@ Future<MeterInfo> registerMeter(String serialNumber, int clientId, int zipCode,
   final response = await http.post(
     Uri.https('energize.eleena.eu', '/home/register_meter_flutter'),
     headers: <String, String>{
-      // 'Content-Type': 'application/json; charset=UTF-8',
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
     body: jsonEncode(<String, dynamic>{

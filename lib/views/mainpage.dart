@@ -32,18 +32,6 @@ class _MainPageState extends State<MainPage> {
   final TextEditingController _street = TextEditingController();
   Future<MeterInfo> _futureMeterInfo;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _futureInstallationInfo = fetchInstallationInfo();
-  // }
-
-  // void futureInstallationInfoSetState() {
-  //   setState(() {
-  //     this._futureInstallationInfo = fetchInstallationInfo();
-  //   });
-  // }
-
   fetchInstallationInfoCallBack() {
     setState(() {
       _futureInstallationInfo = fetchInstallationInfo(_serialNumber.text);
@@ -88,9 +76,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  // Widget _buildChild(){
-  //   if(_futureInstallationInfo.)
-  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,22 +84,16 @@ class _MainPageState extends State<MainPage> {
       body: Container(
         margin: EdgeInsets.all(5),
         child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Expanded(
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Center(child: headerWidget("Investigate installation")),
                   Center(child: textFieldWidget(_serialNumber, "Serienummer")),
-                  // SizedBox(height: 10),
-                  // registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber),
                   new FetchInstallationInfoButton(
                       fetchInstallationInfo: fetchInstallationInfoCallBack),
-
                   SizedBox(height: 20),
                   meterInformation(_futureInstallationInfo),
-                  // Center(child: meterInformation("status", _futureInstallationInfo)),
                 ],
               ),
             ),
