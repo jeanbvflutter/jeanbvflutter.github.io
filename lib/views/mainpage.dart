@@ -63,13 +63,14 @@ class _MainPageState extends State<MainPage> {
                         children: [
                           // SizedBox(height: 80),
                           Expanded(
-                              flex: 2,
-                              child: textFieldWidget(_zipcode, "Postcode")),
+                            child: textFieldWidget(_zipcode, "Postcode"),
+                          ),
                           Expanded(
-                              child: textFieldWidget(_zipcode_ext, "Extentie")),
+                            child: textFieldWidget(_zipcode_ext, "Extentie"),
+                          ),
                           Expanded(
-                              child:
-                                  textFieldWidget(_housenumber, "Huisnummer")),
+                            child: textFieldWidget(_housenumber, "Huisnummer"),
+                          ),
                         ],
                       ),
                     ),
@@ -77,7 +78,7 @@ class _MainPageState extends State<MainPage> {
                   new RegisterMeterButton(registerMeter: registerMeterCallback),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
