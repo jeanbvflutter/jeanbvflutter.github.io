@@ -4,23 +4,27 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+Future<InstallationInfo> fetchInstallationInfo(String serialNumber) async {
+  // var http;
+  final queryParameters = {
+   "serial_number": serialNumber,
+};
+  final response = await http.get(
+    Uri.http('0.0.0.0:8001', '/rest/get-client-info-by-serial-number/', queryParameters),
+  );
 
-Future<InstallationInfo> fetchInstallationInfo() async {
-    var http;
-    final response =
-      await http.get(Uri.https('energize.eleena.eu', '/external/get-client-info-by-serial-number'));
-
-    if(response.statusCode == 200){
-      return InstallationInfo.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed');
-    }
+  if (response.statusCode == 200) {
+    print("RESPONSE" + response.body);
+    return InstallationInfo.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed');
+  }
 }
 
 class InstallationInfo {
   // Meter details
-  final int status;
-  final int breakerStatus;
+  final String status;
+  final String breakerStatus;
   final int meterId;
   final int cumulativeProduction;
 
@@ -33,28 +37,42 @@ class InstallationInfo {
   final String clientSource;
 
   // address details
-  final int zipCode;
-  final int zipCodeExt;
-  final int houseNumber;
-  final int street;
-  final String city;
+  // final String zipCode;
+  // final String zipCodeExt;
+  // final String houseNumber;
+  // final String street;
+  // final String city;
 
-  InstallationInfo({this.status, this.breakerStatus, this.meterId, this.cumulativeProduction, this.clientId, 
-  this.loginName, this.lastName, this.firstName, this.email, this.clientSource,
-  this.zipCode, this. zipCodeExt, this.houseNumber, this.street, this.city});
+  InstallationInfo(
+      {this.status,
+      this.breakerStatus,
+      this.meterId,
+      this.cumulativeProduction,
+      this.clientId,
+      this.loginName,
+      this.lastName,
+      this.firstName,
+      this.email,
+      this.clientSource,
+      // this.zipCode,
+      // this.zipCodeExt,
+      // this.houseNumber,
+      // this.street,
+      // this.city
+      });
 
   factory InstallationInfo.fromJson(Map<String, dynamic> json) {
     return InstallationInfo(
-      status: json['meter_information']['status'],
-      breakerStatus: json['meter_information']['breaker_status'],
-      meterId: json['meter_information']['id'],
+      status: json['meter_information'][0]['status'],
+      breakerStatus: json['meter_information'][0]['breaker_status'],
+      meterId: json['meter_information'][0]['id'],
       cumulativeProduction: 100,
-      clientId: json['cliennt_information']['id'],
-      loginName: json['client_information']['login_name'],
-      lastName: json['client_information']['last_name'],
-      firstName: json['client_information']['first_name'],
-      email: json['client_information']['email'],
-      clientSource: json['client_information']['client_source'],
+      clientId: json['client_information'][0]['id'],
+      loginName: json['client_information'][0]['login_name'],
+      lastName: json['client_information'][0]['last_name'],
+      firstName: json['client_information'][0]['first_name'],
+      email: json['client_information'][0]['email'],
+      clientSource: json['client_information'][0]['client_source'],
     );
   }
 }

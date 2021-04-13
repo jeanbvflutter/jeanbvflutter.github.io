@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meter_activation/components/futures/address_information.dart';
+import 'package:meter_activation/components/ui/fetch_installation_info_button.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
 import 'package:meter_activation/components/ui/register_meter_button.dart';
 import 'package:meter_activation/components/ui/registration_info.dart';
+import 'package:meter_activation/entities/installation_info.dart';
 import 'dart:async';
 import '../entities/register_meter.dart';
 import '../components/ui/textfield_ui.dart';
@@ -20,12 +23,31 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  Future<InstallationInfo> _futureInstallationInfo;
   final TextEditingController _serialNumber = TextEditingController();
   final TextEditingController _zipcode = TextEditingController();
   final TextEditingController _zipcode_ext = TextEditingController();
   final TextEditingController _housenumber = TextEditingController();
   final TextEditingController _street = TextEditingController();
   Future<MeterInfo> _futureMeterInfo;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _futureInstallationInfo = fetchInstallationInfo();
+  // }
+
+  // void futureInstallationInfoSetState() {
+  //   setState(() {
+  //     this._futureInstallationInfo = fetchInstallationInfo();
+  //   });
+  // }
+
+  fetchInstallationInfoCallBack() {
+    setState(() {
+      _futureInstallationInfo = fetchInstallationInfo(_serialNumber.text);
+    });
+  }
 
   registerMeterCallback() {
     setState(() {
@@ -56,7 +78,7 @@ class _MainPageState extends State<MainPage> {
                   Center(child: textFieldWidget(_serialNumber, "Serienummer")),
                   SizedBox(height: 10),
                   registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber),
-                  new RegisterMeterButton(registerMeter: registerMeterCallback),
+                  new FetchInstallationInfoButton(fetchInstallationInfo: fetchInstallationInfoCallBack),
                 ],
               ),
             ),
