@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
 import 'package:meter_activation/components/ui/register_meter_button.dart';
+import 'package:meter_activation/components/ui/registration_info.dart';
 import 'dart:async';
 import '../entities/register_meter.dart';
 import '../components/ui/textfield_ui.dart';
@@ -54,27 +55,7 @@ class _MainPageState extends State<MainPage> {
                   Center(child: headerWidget("Investigate installation")),
                   Center(child: textFieldWidget(_serialNumber, "Serienummer")),
                   SizedBox(height: 10),
-                  Center(child: textFieldWidget(_street, "Straat")),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // SizedBox(height: 80),
-                          Expanded(
-                            child: textFieldWidget(_zipcode, "Postcode"),
-                          ),
-                          Expanded(
-                            child: textFieldWidget(_zipcode_ext, "Extentie"),
-                          ),
-                          Expanded(
-                            child: textFieldWidget(_housenumber, "Huisnummer"),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber),
                   new RegisterMeterButton(registerMeter: registerMeterCallback),
                 ],
               ),
