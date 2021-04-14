@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'textfield_ui.dart';
 
-Container registrationInfo(_street, _zipcode, _zipcodeExt, _housenumber) {
+Container registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber) {
   return Container(
     child: Column(
       children: [
@@ -17,7 +17,7 @@ Container registrationInfo(_street, _zipcode, _zipcodeExt, _housenumber) {
                   child: textFieldWidget(_zipcode, "Postcode"),
                 ),
                 Expanded(
-                  child: textFieldWidget(_zipcodeExt, "Extentie"),
+                  child: textFieldWidget(_zipcode_ext, "Extentie"),
                 ),
                 Expanded(
                   child: textFieldWidget(_housenumber, "Huisnummer"),

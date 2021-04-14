@@ -84,7 +84,15 @@ class _InstallationInformationState extends State<InstallationInformation> {
         } else {
           return Column(
             children: [
-              installationInformationCard(widget.futureInstallationInformation),
+              installationInformationCard(
+                widget.futureInstallationInformation,
+              ),
+              CustomButton(
+                onPressed: widget.productionTestCallback,
+                text: 'Production Test',
+                minWidth: 150,
+                height: 50,
+              ),
             ],
           );
         }

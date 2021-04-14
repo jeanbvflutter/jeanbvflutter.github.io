@@ -4,6 +4,7 @@ import 'package:meter_activation/components/futures/client_information.dart';
 import 'package:meter_activation/components/futures/meter_information.dart';
 import 'package:meter_activation/components/ui/header_info.dart';
 
+
 Card installationInformationCard(Future futureInstallationInformation) {
   return Card(
     elevation: 3,
