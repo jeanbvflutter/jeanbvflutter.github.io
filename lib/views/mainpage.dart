@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:meter_activation/components/futures/installation_information.dart';
 import 'package:meter_activation/components/ui/custom_button.dart';
+import 'package:meter_activation/components/ui/header_info.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
+import 'package:meter_activation/components/ui/installation_information_card.dart';
 import 'package:meter_activation/components/ui/registration_info.dart';
+import 'package:meter_activation/components/ui/text_widget.dart';
 import 'package:meter_activation/entities/installation_info.dart';
 import 'dart:async';
 import '../entities/register_meter.dart';
@@ -29,9 +33,9 @@ class _MainPageState extends State<MainPage> {
   bool isVisible = true;
   Future<InstallationInfo> _futureInstallationInfo;
   final TextEditingController _serialNumber = TextEditingController();
-  final TextEditingController _zipcode = TextEditingController();
-  final TextEditingController _zipcode_ext = TextEditingController();
-  final TextEditingController _housenumber = TextEditingController();
+  final TextEditingController _zipCode = TextEditingController();
+  final TextEditingController _zipcodeExt = TextEditingController();
+  final TextEditingController _houseNumber = TextEditingController();
   final TextEditingController _street = TextEditingController();
   Future<MeterInfo> _futureMeterInfo;
 
@@ -46,54 +50,11 @@ class _MainPageState extends State<MainPage> {
       _futureMeterInfo = registerMeter(
           _serialNumber.text,
           null,
-          int.parse(_zipcode.text),
-          _zipcode_ext.text,
-          int.parse(_housenumber.text),
+          int.parse(_zipCode.text),
+          _zipcodeExt.text,
+          int.parse(_houseNumber.text),
           _street.text);
     });
-  }
-
-  FutureBuilder meterInformation(Future futureMeterInformation) {
-    String status;
-
-    return FutureBuilder<InstallationInfo>(
-      future: futureMeterInformation,
-      builder: (context, snapshot) {
-        try {
-          status = snapshot.data.status.toString();          
-        } on Exception catch (_) {} catch (error) {
-          return Text("");    
-        }
-        if (status == 'Not Activated' || status == 'Unregistered')  {
-          return Column(
-            children: [
-              registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber),
-              Row(
-                children: [
-                  CustomButton(
-                    onPressed: registerMeterCallback,
-                    text: 'Register meter',
-                    textStyle: buttonTextStyle,
-                    minWidth: 150,
-                    height: 50,
-                  ),
-                  SizedBox(width: 5,),
-                  CustomButton(
-                    onPressed: getLocation,
-                    text: 'Geolocation',
-                    textStyle: buttonTextStyle,
-                    minWidth: 150,
-                    height: 50,
-                  ),
-                ],
-              ),
-            ],
-          );         
-        } else {
-          return Text("Registered");
-        }
-      },
-    );
   }
 
   @override
@@ -115,7 +76,9 @@ class _MainPageState extends State<MainPage> {
                   minWidth: 150,
                   height: 50,
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 CustomButton(
                   onPressed: fetchInstallationInfoCallBack,
                   text: 'Investigate meter',
@@ -126,7 +89,14 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
             SizedBox(height: 20),
-            meterInformation(_futureInstallationInfo),
+            new InstallationInformation(
+                registerMeterCallback: registerMeterCallback,
+                getLocation: getLocation,
+                futureInstallationInformation: _futureInstallationInfo,
+                street: _street,
+                zipCode: _zipCode,
+                zipCodeExt: _zipcodeExt,
+                houseNumber: _houseNumber),
           ],
         ),
       ),
@@ -161,10 +131,10 @@ class _MainPageState extends State<MainPage> {
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
     setState(() {
-      this._housenumber.text = first.featureName;
+      this._houseNumber.text = first.featureName;
       this._street.text = first.thoroughfare;
-      this._zipcode.text = first.postalCode.split(' ')[0];
-      this._zipcode_ext.text = first.postalCode.split(' ')[1];
+      this._zipCode.text = first.postalCode.split(' ')[0];
+      this._zipcodeExt.text = first.postalCode.split(' ')[1];
     });
   }
 }

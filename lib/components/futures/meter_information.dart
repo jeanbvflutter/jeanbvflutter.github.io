@@ -28,11 +28,16 @@ FutureBuilder meterInformation(
             showClientInfo = snapshot.data.cumulativeProduction.toString();
           }
           break;
+          case 'serialNumber':
+          {
+            showClientInfo = snapshot.data.serialNumber.toString();
+          }
+          break;
         }
         if (snapshot.hasData) {
           return Text(showClientInfo);
         } else if (snapshot.hasError){
-          return Text("${snapshot.error}");
+          return CircularProgressIndicator();
         }
         return CircularProgressIndicator();
       },

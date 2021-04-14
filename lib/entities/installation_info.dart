@@ -30,6 +30,7 @@ class InstallationInfo {
   final String breakerStatus;
   final int meterId;
   final int cumulativeProduction;
+  final String serialNumber;
 
   // Client details
   final int clientId;
@@ -40,28 +41,29 @@ class InstallationInfo {
   final String clientSource;
 
   // address details
-  // final String zipCode;
-  // final String zipCodeExt;
-  // final String houseNumber;
-  // final String street;
-  // final String city;
+  final String zipCode;
+  final String zipCodeExt;
+  final String houseNumber;
+  final String street;
+  final String city;
 
   InstallationInfo(
       {this.status,
       this.breakerStatus,
       this.meterId,
       this.cumulativeProduction,
+      this.serialNumber,
       this.clientId,
       this.loginName,
       this.lastName,
       this.firstName,
       this.email,
       this.clientSource,
-      // this.zipCode,
-      // this.zipCodeExt,
-      // this.houseNumber,
-      // this.street,
-      // this.city
+      this.zipCode,
+      this.zipCodeExt,
+      this.houseNumber,
+      this.street,
+      this.city
       });
 
   factory InstallationInfo.fromJson(Map<String, dynamic> json) {
@@ -73,10 +75,18 @@ class InstallationInfo {
       final email = json['client_information'][0]['email'];
       final clientSource = json['client_information'][0]['client_source'];
 
+
+      final zipCode = json['address_information']['zip_code'];
+      final zipCodeExt = json['address_information']['zip_code_ext'];
+      final street = json['address_information']['street'];
+      final houseNumber = json['address_information']['house_number'];
+      final city = json['address_information']['city'];
+
       return InstallationInfo(
       status: json['meter_information'][0]['status'],
       breakerStatus: json['meter_information'][0]['breaker_status'],
       meterId: json['meter_information'][0]['id'],
+      serialNumber: json['meter_information'][0]['serial_number'],
       cumulativeProduction: 100,
       clientId: clientId,
       loginName: loginName,
@@ -84,6 +94,11 @@ class InstallationInfo {
       firstName: firstName,
       email: email,
       clientSource: clientSource,
+      zipCode: zipCode,
+      zipCodeExt: zipCodeExt,
+      houseNumber: houseNumber,
+      street: street,
+      city: city,
     );
 
     }
@@ -94,11 +109,19 @@ class InstallationInfo {
       final firstName = null;
       final email = null;
       final clientSource = null;
+      final zipCode = null;
+      final zipCodeExt = null;
+      final street = null;
+      final houseNumber = null;
+      final city = null;
+      
+      
       
       return InstallationInfo(
       status: json['meter_information'][0]['status'],
       breakerStatus: json['meter_information'][0]['breaker_status'],
       meterId: json['meter_information'][0]['id'],
+      serialNumber: json['meter_information'][0]['serial_number'],
       cumulativeProduction: 100,
       clientId: clientId,
       loginName: loginName,
@@ -106,6 +129,11 @@ class InstallationInfo {
       firstName: firstName,
       email: email,
       clientSource: clientSource,
+      zipCode: zipCode,
+      zipCodeExt: zipCodeExt,
+      houseNumber: houseNumber,
+      street: street,
+      city: city,
     );
     
       }

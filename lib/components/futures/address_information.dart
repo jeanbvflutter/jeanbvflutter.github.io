@@ -10,34 +10,34 @@ FutureBuilder addressInformation(
         switch(data){
           case 'zipCode':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.zipCode.toString();
           }
           break;
           case 'zipCodeExt':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.zipCodeExt.toString();
           }
           break;
           case 'houseNumber':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.houseNumber.toString();
           }
           break;
           case 'street':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.street.toString();
           }
           break;
           case 'city':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.city.toString();
           }
           break;
         }
         if (snapshot.hasData) {
           return Text(showClientInfo);
         } else if (snapshot.hasError){
-          return Text("${snapshot.error}");
+          return CircularProgressIndicator();
         }
         return CircularProgressIndicator();
       },

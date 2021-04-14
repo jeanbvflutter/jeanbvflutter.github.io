@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../entities/installation_info.dart';
 
-FutureBuilder clientInfornation(
+FutureBuilder clientInformation(
   String data, Future futureClientInformation){
     String showClientInfo;
     return FutureBuilder<InstallationInfo>(
@@ -15,34 +15,34 @@ FutureBuilder clientInfornation(
           break;
           case 'loginName':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.loginName.toString();
           }
           break;
           case 'lastName':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.lastName.toString();
           }
           break;
           case 'firstName':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.firstName.toString();
           }
           break;
           case 'email':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.email.toString();
           }
           break;
           case 'clientSource':
           {
-            showClientInfo = snapshot.data.clientId.toString();
+            showClientInfo = snapshot.data.clientSource.toString();
           }
           break;
         }
         if (snapshot.hasData) {
           return Text(showClientInfo);
         } else if (snapshot.hasError){
-          return Text("${snapshot.error}");
+          return CircularProgressIndicator();
         }
         return CircularProgressIndicator();
       },
