@@ -11,6 +11,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:meter_activation/enums.dart';
+import 'package:meter_activation/entities/production_check.dart';
 
 // Statefulwidget is mutable. It can be drawn multiple times within its lifetime.
 // They are widget that can change their state multiple times and can be redrawn on the screen any number of times while to app is in action.
@@ -25,8 +26,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  String barcode = 'Unknown';
-  bool isVisible = true;
   Future<InstallationInfo> _futureInstallationInfo;
   final TextEditingController _serialNumber = TextEditingController();
   final TextEditingController _zipcode = TextEditingController();
@@ -34,6 +33,7 @@ class _MainPageState extends State<MainPage> {
   final TextEditingController _housenumber = TextEditingController();
   final TextEditingController _street = TextEditingController();
   Future<MeterInfo> _futureMeterInfo;
+  Future<ProductionInfo> _futureProductionInfo;
 
   fetchInstallationInfoCallBack() {
     setState(() {
@@ -50,6 +50,13 @@ class _MainPageState extends State<MainPage> {
           _zipcode_ext.text,
           int.parse(_housenumber.text),
           _street.text);
+    });
+  }
+
+  productionTestCallback(){
+    setState(() {
+      _futureProductionInfo = productionTest(
+          _serialNumber.text);
     });
   }
 
@@ -82,6 +89,14 @@ class _MainPageState extends State<MainPage> {
                   CustomButton(
                     onPressed: getLocation,
                     text: 'Geolocation',
+                    textStyle: buttonTextStyle,
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                  SizedBox(width: 5,),
+                  CustomButton(
+                    onPressed: productionTestCallback,
+                    text: 'Production Test',
                     textStyle: buttonTextStyle,
                     minWidth: 150,
                     height: 50,
@@ -149,11 +164,11 @@ class _MainPageState extends State<MainPage> {
         this._serialNumber.text = serialnumber;
       });
     } on PlatformException {
-      barcode = 'Failed to get platform version.';
+      print('Failed to get platform version.');
     }
   }
 
-  getLocation() async {
+  Future<void> getLocation() async {
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     debugPrint('location: ${position.latitude}');
