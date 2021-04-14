@@ -60,12 +60,11 @@ class _MainPageState extends State<MainPage> {
       future: futureMeterInformation,
       builder: (context, snapshot) {
         try {
-          print("in here");
-          status = snapshot.data.status.toString();
+          status = snapshot.data.status.toString();          
         } on Exception catch (_) {} catch (error) {
-          return Text("");
+          return Text("");    
         }
-        if (status == 'Registered') {
+        if (status == 'Not Activated' || status == 'Unregistered')  {
           return Column(
             children: [
               registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber),
@@ -89,9 +88,9 @@ class _MainPageState extends State<MainPage> {
                 ],
               ),
             ],
-          );
+          );         
         } else {
-          return Text("TEST");
+          return Text("Registered");
         }
       },
     );

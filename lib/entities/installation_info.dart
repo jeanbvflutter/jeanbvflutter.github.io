@@ -16,6 +16,9 @@ Future<InstallationInfo> fetchInstallationInfo(String serialNumber) async {
   if (response.statusCode == 200) {
     print("RESPONSE" + response.body);
     return InstallationInfo.fromJson(jsonDecode(response.body));
+  }else if (response.statusCode == 404) {
+    print("RESPONSE" + response.body);
+    return InstallationInfo.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed');
   }
@@ -62,17 +65,50 @@ class InstallationInfo {
       });
 
   factory InstallationInfo.fromJson(Map<String, dynamic> json) {
-    return InstallationInfo(
+    try {
+      final clientId = json['client_information'][0]['id'];
+      final loginName = json['client_information'][0]['login_name'];
+      final lastName = json['client_information'][0]['last_name'];
+      final firstName = json['client_information'][0]['first_name'];
+      final email = json['client_information'][0]['email'];
+      final clientSource = json['client_information'][0]['client_source'];
+
+      return InstallationInfo(
       status: json['meter_information'][0]['status'],
       breakerStatus: json['meter_information'][0]['breaker_status'],
       meterId: json['meter_information'][0]['id'],
       cumulativeProduction: 100,
-      clientId: json['client_information'][0]['id'],
-      loginName: json['client_information'][0]['login_name'],
-      lastName: json['client_information'][0]['last_name'],
-      firstName: json['client_information'][0]['first_name'],
-      email: json['client_information'][0]['email'],
-      clientSource: json['client_information'][0]['client_source'],
+      clientId: clientId,
+      loginName: loginName,
+      lastName: lastName,
+      firstName: firstName,
+      email: email,
+      clientSource: clientSource,
     );
+
+    }
+     on Exception catch (_) {} catch (error){
+      final clientId = null;
+      final loginName = null;
+      final lastName = null;
+      final firstName = null;
+      final email = null;
+      final clientSource = null;
+      
+      return InstallationInfo(
+      status: json['meter_information'][0]['status'],
+      breakerStatus: json['meter_information'][0]['breaker_status'],
+      meterId: json['meter_information'][0]['id'],
+      cumulativeProduction: 100,
+      clientId: clientId,
+      loginName: loginName,
+      lastName: lastName,
+      firstName: firstName,
+      email: email,
+      clientSource: clientSource,
+    );
+    
+      }
+
   }
 }
