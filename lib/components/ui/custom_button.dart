@@ -3,8 +3,8 @@ import 'package:meter_activation/entities/register_meter.dart';
 
 class CustomButton extends StatefulWidget {
   final Function() onPressed;
-  double minWidth;
-  double height;
+  final double minWidth;
+  final double height;
   final text;
   final textStyle;
 

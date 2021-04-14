@@ -9,17 +9,19 @@ import 'package:meter_activation/enums.dart';
 class InstallationInformation extends StatefulWidget {
   Future futureInstallationInformation;
   final Function() registerMeterCallback;
-
   final Function() getLocation;
+  final Function() productionTestCallback;
 
   TextEditingController street;
   TextEditingController zipCode;
   TextEditingController zipCodeExt;
   TextEditingController houseNumber;
   String status;
+
   InstallationInformation(
       {this.registerMeterCallback,
       this.getLocation,
+      this.productionTestCallback,
       this.futureInstallationInformation,
       this.street,
       this.zipCode,
@@ -64,6 +66,13 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   CustomButton(
                     onPressed: widget.getLocation,
                     text: 'Geolocation',
+                    textStyle: buttonTextStyle,
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                  CustomButton(
+                    onPressed: widget.productionTestCallback,
+                    text: 'Production Test',
                     textStyle: buttonTextStyle,
                     minWidth: 150,
                     height: 50,

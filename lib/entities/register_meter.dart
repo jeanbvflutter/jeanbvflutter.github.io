@@ -36,11 +36,11 @@ class MeterInfo {
 
   MeterInfo(
       {this.serialNumber,
-      this.clientId,
-      this.streetName,
-      this.zipCode,
-      this.zipCodeExt,
-      this.houseNumber});
+        this.clientId,
+        this.streetName,
+        this.zipCode,
+        this.zipCodeExt,
+        this.houseNumber});
 
   factory MeterInfo.fromJson(Map<String, dynamic> json) {
     return MeterInfo(
