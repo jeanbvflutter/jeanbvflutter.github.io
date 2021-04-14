@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meter_activation/components/ui/button_widget.dart';
-import 'package:meter_activation/components/ui/fetch_installation_info_button.dart';
+import 'package:meter_activation/components/ui/custom_button.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
-import 'package:meter_activation/components/ui/register_meter_button.dart';
 import 'package:meter_activation/components/ui/registration_info.dart';
 import 'package:meter_activation/entities/installation_info.dart';
 import 'dart:async';
@@ -12,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:meter_activation/enums.dart';
 
 // Statefulwidget is mutable. It can be drawn multiple times within its lifetime.
 // They are widget that can change their state multiple times and can be redrawn on the screen any number of times while to app is in action.
@@ -70,7 +69,25 @@ class _MainPageState extends State<MainPage> {
           return Column(
             children: [
               registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber),
-              new RegisterMeterButton(registerMeter: registerMeterCallback),
+              Row(
+                children: [
+                  CustomButton(
+                    onPressed: registerMeterCallback,
+                    text: 'Register meter',
+                    textStyle: buttonTextStyle,
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                  SizedBox(width: 5,),
+                  CustomButton(
+                    onPressed: getLocation,
+                    text: 'Geolocation',
+                    textStyle: buttonTextStyle,
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                ],
+              ),
             ],
           );
         } else {
@@ -80,42 +97,37 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: Text("Eleena Meter Activation")),
       body: Container(
         margin: EdgeInsets.all(5),
-        child: Row(
+        child: Column(
           children: [
-            Expanded(
-              child: Column(
-                children: [
-                  Center(child: headerWidget("Investigate installation")),
-                  Center(child: textFieldWidget(_serialNumber, "Serienummer")),
-                  new FetchInstallationInfoButton(
-                      fetchInstallationInfo: fetchInstallationInfoCallBack),
-                  SizedBox(height: 20),
-                  meterInformation(_futureInstallationInfo),
-                  Row(
-                    children: [
-                      FetchInstallationInfoButton(
-                          fetchInstallationInfo: fetchInstallationInfoCallBack),
-                      SizedBox(width: 3),
-                      ButtonWidget(
-                        text: 'Scan Barcode',
-                        onClicked: scanBarcode,
-                      ),
-                      ButtonWidget(
-                        text: 'Geolocation',
-                        onClicked: getLocation,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            Center(child: headerWidget("Investigate installation")),
+            Center(child: textFieldWidget(_serialNumber, "Serienummer")),
+            Row(
+              children: [
+                CustomButton(
+                  onPressed: scanBarcode,
+                  text: 'Scan Barcode',
+                  textStyle: buttonTextStyle,
+                  minWidth: 150,
+                  height: 50,
+                ),
+                SizedBox(width: 10,),
+                CustomButton(
+                  onPressed: fetchInstallationInfoCallBack,
+                  text: 'Investigate meter',
+                  textStyle: buttonTextStyle,
+                  minWidth: 150,
+                  height: 50,
+                ),
+              ],
             ),
+            SizedBox(height: 20),
+            meterInformation(_futureInstallationInfo),
           ],
         ),
       ),
@@ -141,13 +153,13 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-
-  getLocation() async
-  {
-    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  getLocation() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     debugPrint('location: ${position.latitude}');
     final coordinates = new Coordinates(position.latitude, position.longitude);
-    var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
     setState(() {
       this._housenumber.text = first.featureName;
