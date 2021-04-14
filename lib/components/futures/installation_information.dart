@@ -70,13 +70,6 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     minWidth: 150,
                     height: 50,
                   ),
-                  CustomButton(
-                    onPressed: widget.productionTestCallback,
-                    text: 'Production Test',
-                    textStyle: buttonTextStyle,
-                    minWidth: 150,
-                    height: 50,
-                  ),
                 ],
               ),
             ],
