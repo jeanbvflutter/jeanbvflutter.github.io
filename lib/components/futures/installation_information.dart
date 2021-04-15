@@ -11,12 +11,14 @@ class InstallationInformation extends StatefulWidget {
   final Function() registerMeterCallback;
   final Function() getLocation;
   final Function() productionTestCallback;
+  final Function() changeAddress;
 
   TextEditingController street;
   TextEditingController zipCode;
   TextEditingController zipCodeExt;
   TextEditingController houseNumber;
   String status;
+  bool changeAddressBool;
 
   InstallationInformation(
       {this.registerMeterCallback,
@@ -27,7 +29,9 @@ class InstallationInformation extends StatefulWidget {
       this.zipCode,
       this.zipCodeExt,
       this.houseNumber,
-      this.status});
+      this.status,
+      this.changeAddress,
+      this.changeAddressBool});
 
   @override
   _InstallationInformationState createState() =>
@@ -43,10 +47,10 @@ class _InstallationInformationState extends State<InstallationInformation> {
         try {
           widget.status = snapshot.data.status.toString();
         } on Exception catch (_) {} catch (error) {
-          return Text("");
+          return Text("EXCEPTION");
         }
         if (widget.status == 'Not Activated' ||
-            widget.status == 'Unregistered') {
+            widget.status == 'Unregistered' || widget.changeAddressBool == true) {
           return Column(
             children: [
               registrationInfo(widget.street, widget.zipCode, widget.zipCodeExt,
@@ -61,7 +65,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     height: 50,
                   ),
                   SizedBox(
-                    width: 5,
+                    width: 10,
                   ),
                   CustomButton(
                     onPressed: widget.getLocation,
@@ -80,11 +84,24 @@ class _InstallationInformationState extends State<InstallationInformation> {
               installationInformationCard(
                 widget.futureInstallationInformation,
               ),
-              CustomButton(
-                onPressed: widget.productionTestCallback,
-                text: 'Production Test',
-                minWidth: 150,
-                height: 50,
+              Row(
+                children: [
+                  CustomButton(
+                    onPressed: widget.productionTestCallback,
+                    text: 'Production Test',
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CustomButton(
+                    onPressed: widget.changeAddress,
+                    text: 'Change address',
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                ],
               ),
             ],
           );

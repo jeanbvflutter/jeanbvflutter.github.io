@@ -36,12 +36,21 @@ class _MainPageState extends State<MainPage> {
   final TextEditingController _zipcodeExt = TextEditingController();
   final TextEditingController _houseNumber = TextEditingController();
   final TextEditingController _street = TextEditingController();
+  bool _changeAddress = false;
+
   Future<MeterInfo> _futureMeterInfo;
   Future<ProductionInfo> _futureProductionInfo;
 
   fetchInstallationInfoCallback() {
     setState(() {
       _futureInstallationInfo = fetchInstallationInfo(_serialNumber.text);
+      _changeAddress = false;
+    });
+  }
+
+  changeAddressCallback() {
+    setState(() {
+      _changeAddress = true;
     });
   }
 
@@ -101,10 +110,12 @@ class _MainPageState extends State<MainPage> {
                 getLocation: getLocation,
                 productionTestCallback: productionTestCallback,
                 futureInstallationInformation: _futureInstallationInfo,
+                changeAddress: changeAddressCallback,
                 street: _street,
                 zipCode: _zipCode,
                 zipCodeExt: _zipcodeExt,
-                houseNumber: _houseNumber),
+                houseNumber: _houseNumber,
+                changeAddressBool: _changeAddress,),
           ],
         ),
       ),
