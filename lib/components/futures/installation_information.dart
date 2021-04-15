@@ -12,6 +12,7 @@ class InstallationInformation extends StatefulWidget {
   final Function() getLocation;
   final Function() productionTestCallback;
   final Function() changeAddress;
+  final Function() unregisterMeter;
 
   TextEditingController street;
   TextEditingController zipCode;
@@ -31,7 +32,8 @@ class InstallationInformation extends StatefulWidget {
       this.houseNumber,
       this.status,
       this.changeAddress,
-      this.changeAddressBool});
+      this.changeAddressBool,
+      this.unregisterMeter});
 
   @override
   _InstallationInformationState createState() =>
@@ -98,6 +100,15 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   CustomButton(
                     onPressed: widget.changeAddress,
                     text: 'Change address',
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CustomButton(
+                    onPressed: widget.unregisterMeter,
+                    text: 'Unregister meter',
                     minWidth: 150,
                     height: 50,
                   ),

@@ -7,6 +7,7 @@ import 'package:meter_activation/components/ui/installation_information_card.dar
 import 'package:meter_activation/components/ui/registration_info.dart';
 import 'package:meter_activation/components/ui/text_widget.dart';
 import 'package:meter_activation/entities/installation_info.dart';
+import 'package:meter_activation/entities/unregister_meter.dart';
 import 'dart:async';
 import '../entities/register_meter.dart';
 import '../components/ui/textfield_ui.dart';
@@ -40,11 +41,18 @@ class _MainPageState extends State<MainPage> {
 
   Future<MeterInfo> _futureMeterInfo;
   Future<ProductionInfo> _futureProductionInfo;
+  Future<UnRegisterMeterInfo> _futureUnregisterMeter;
 
   fetchInstallationInfoCallback() {
     setState(() {
       _futureInstallationInfo = fetchInstallationInfo(_serialNumber.text);
       _changeAddress = false;
+    });
+  }
+
+  unregisterMeterCallback() {
+    setState(() {
+      _futureUnregisterMeter = unregisterMeter(_serialNumber.text);
     });
   }
 
@@ -115,7 +123,8 @@ class _MainPageState extends State<MainPage> {
                 zipCode: _zipCode,
                 zipCodeExt: _zipcodeExt,
                 houseNumber: _houseNumber,
-                changeAddressBool: _changeAddress,),
+                changeAddressBool: _changeAddress,
+                unregisterMeter: unregisterMeterCallback,),
           ],
         ),
       ),
