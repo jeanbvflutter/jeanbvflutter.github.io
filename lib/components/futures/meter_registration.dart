@@ -30,7 +30,7 @@ FutureBuilder meterRegistration(
         print("ERROR");
         return Text("No data");
       }
-      return Text("No data");
+      return Text(showMeterRegistrationInfo);
     },
   );
 }
