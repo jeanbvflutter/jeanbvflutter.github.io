@@ -4,7 +4,6 @@ import 'package:meter_activation/components/futures/client_information.dart';
 import 'package:meter_activation/components/futures/meter_information.dart';
 import 'package:meter_activation/components/ui/header_info.dart';
 
-
 Card installationInformationCard(Future futureInstallationInformation) {
   return Card(
     elevation: 3,
@@ -117,8 +116,8 @@ Card installationInformationCard(Future futureInstallationInformation) {
                               Row(
                                 children: [
                                   Text("Postcode: "),
-                                  addressInformation("zipCode",
-                                      futureInstallationInformation)
+                                  addressInformation(
+                                      "zipCode", futureInstallationInformation)
                                 ],
                               ),
                             ],
@@ -190,7 +189,7 @@ Card installationInformationCard(Future futureInstallationInformation) {
               children: [
                 headerInfoWidget("Meter Information"),
                 Container(
-                    margin: EdgeInsets.all(26.0),
+                    margin: EdgeInsets.all(29.0),
                     child: Column(
                       children: [
                         Align(
@@ -214,8 +213,8 @@ Card installationInformationCard(Future futureInstallationInformation) {
                               Row(
                                 children: [
                                   Text("Status: "),
-                                  meterInformation("status",
-                                      futureInstallationInformation)
+                                  meterInformation(
+                                      "status", futureInstallationInformation)
                                 ],
                               ),
                             ],
@@ -235,7 +234,6 @@ Card installationInformationCard(Future futureInstallationInformation) {
                             ],
                           ),
                         ),
-                      
                       ],
                     ))
               ],

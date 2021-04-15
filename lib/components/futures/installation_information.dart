@@ -89,45 +89,29 @@ class _InstallationInformationState extends State<InstallationInformation> {
                         height: 50,
                       ),
                       // E0039004361627619
-                      SizedBox(
-                          width: 200,
-                          height: 45,
-                          child: Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: Card(
-                              elevation: 1,
-                              shape: RoundedRectangleBorder(
-                                  side: BorderSide(color: Colors.black26),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Container(
-                                  constraints: BoxConstraints(
-                                    maxHeight: 30,
-                                  ),
-                                  child: Center(
-                                      child: meterRegistration("status",
-                                          widget.meterRegistrationInfo))),
-                            ),
-                          )),
+                      // SizedBox(
+                      //     width: 200,
+                      //     height: 45,
+                      //     child: Container(
+                      //       margin: EdgeInsets.only(top: 10),
+                      //       child: Card(
+                      //         elevation: 1,
+                      //         shape: RoundedRectangleBorder(
+                      //             side: BorderSide(color: Colors.black26),
+                      //             borderRadius: BorderRadius.circular(5)),
+                      //         child: Container(
+                      //             constraints: BoxConstraints(
+                      //               maxHeight: 30,
+                      //             ),
+                      //             child: Center(
+                      //                 child: meterRegistration("status",
+                      //                     widget.meterRegistrationInfo))),
+                      //       ),
+                      //     )),
                     ],
                   )),
                 ],
               ),
-              // Align()
-              // Align(
-              //     alignment: Alignment.centerLeft,
-              //     child: Card(
-              //         elevation: 3,
-              //         shape: RoundedRectangleBorder(
-              //             side: BorderSide(color: Colors.black26),
-              //             borderRadius: BorderRadius.circular(5)),
-              //         child: Container(
-              //             constraints: BoxConstraints(
-              //               maxHeight: 50,
-              //               minWidth: 80,
-              //             ),
-              //             margin: EdgeInsets.all(10.0),
-              //             child: meterRegistration(
-              //                 "status", widget.meterRegistrationInfo))))
             ],
           );
         } else {
