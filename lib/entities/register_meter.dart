@@ -27,29 +27,13 @@ Future<MeterInfo> registerMeter(String serialNumber, int clientId, int zipCode,
 }
 
 class MeterInfo {
-  String serialNumber;
-  int clientId;
-  int zipCode;
-  String zipCodeExt;
-  int houseNumber;
-  String streetName;
+  String status;
 
-  MeterInfo(
-      {this.serialNumber,
-        this.clientId,
-        this.streetName,
-        this.zipCode,
-        this.zipCodeExt,
-        this.houseNumber});
+  MeterInfo({this.status});
 
   factory MeterInfo.fromJson(Map<String, dynamic> json) {
     return MeterInfo(
-      serialNumber: json['serial_number'],
-      clientId: json['client_id'],
-      streetName: json['street_name'],
-      zipCode: json['zip_code'],
-      zipCodeExt: json['zip_code_ext'],
-      houseNumber: json['house_number'],
+      status: json['status'],
     );
   }
 }

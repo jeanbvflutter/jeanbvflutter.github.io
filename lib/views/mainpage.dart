@@ -27,7 +27,7 @@ import 'package:meter_activation/entities/production_check.dart';
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
-  Future<MeterInfo> _futureMeterInfo;
+  // Future<MeterInfo> _futureMeterInfo;
 }
 
 class _MainPageState extends State<MainPage> {
@@ -37,9 +37,10 @@ class _MainPageState extends State<MainPage> {
   final TextEditingController _zipcodeExt = TextEditingController();
   final TextEditingController _houseNumber = TextEditingController();
   final TextEditingController _street = TextEditingController();
+  
   bool _changeAddress = false;
 
-  Future<MeterInfo> _futureMeterInfo;
+  Future<MeterInfo> _futureMeterRegistrationInfo;
   Future<ProductionInfo> _futureProductionInfo;
   Future<UnRegisterMeterInfo> _futureUnregisterMeter;
 
@@ -64,20 +65,14 @@ class _MainPageState extends State<MainPage> {
 
   registerMeterCallback() {
     setState(() {
-      _futureMeterInfo = registerMeter(
-          _serialNumber.text,
-          null,
-          int.parse(_zipCode.text),
-          _zipcodeExt.text,
-          int.parse(_houseNumber.text),
-          _street.text);
+      _futureMeterRegistrationInfo = registerMeter(_serialNumber.text, null, int.parse(_zipCode.text),
+          _zipcodeExt.text, int.parse(_houseNumber.text), _street.text);
     });
   }
 
-  productionTestCallback(){
+  productionTestCallback() {
     setState(() {
-      _futureProductionInfo = productionTest(
-          _serialNumber.text);
+      _futureProductionInfo = productionTest(_serialNumber.text);
     });
   }
 
@@ -114,17 +109,18 @@ class _MainPageState extends State<MainPage> {
             ),
             SizedBox(height: 20),
             new InstallationInformation(
-                registerMeterCallback: registerMeterCallback,
-                getLocation: getLocation,
-                productionTestCallback: productionTestCallback,
-                futureInstallationInformation: _futureInstallationInfo,
-                changeAddress: changeAddressCallback,
-                street: _street,
-                zipCode: _zipCode,
-                zipCodeExt: _zipcodeExt,
-                houseNumber: _houseNumber,
-                changeAddressBool: _changeAddress,
-                unregisterMeter: unregisterMeterCallback,),
+              registerMeterCallback: registerMeterCallback,
+              getLocation: getLocation,
+              productionTestCallback: productionTestCallback,
+              futureInstallationInformation: _futureInstallationInfo,
+              changeAddress: changeAddressCallback,
+              street: _street,
+              zipCode: _zipCode,
+              zipCodeExt: _zipcodeExt,
+              houseNumber: _houseNumber,
+              changeAddressBool: _changeAddress,
+              unregisterMeter: unregisterMeterCallback,
+            ),
           ],
         ),
       ),

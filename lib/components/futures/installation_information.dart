@@ -6,8 +6,11 @@ import 'package:meter_activation/components/ui/registration_info.dart';
 import 'package:meter_activation/entities/installation_info.dart';
 import 'package:meter_activation/enums.dart';
 
+import 'meter_registration.dart';
+
 class InstallationInformation extends StatefulWidget {
   Future futureInstallationInformation;
+  Future meterRegistrationInfo;
   final Function() registerMeterCallback;
   final Function() getLocation;
   final Function() productionTestCallback;
@@ -33,7 +36,8 @@ class InstallationInformation extends StatefulWidget {
       this.status,
       this.changeAddress,
       this.changeAddressBool,
-      this.unregisterMeter});
+      this.unregisterMeter,
+      this.meterRegistrationInfo});
 
   @override
   _InstallationInformationState createState() =>
@@ -52,9 +56,23 @@ class _InstallationInformationState extends State<InstallationInformation> {
           return Text("EXCEPTION");
         }
         if (widget.status == 'Not Activated' ||
-            widget.status == 'Unregistered' || widget.changeAddressBool == true) {
+            widget.status == 'Unregistered' ||
+            widget.changeAddressBool == true) {
           return Column(
             children: [
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                      "Vul het adres in waarop je de meter wil registereren, of klik op 'Detecteer locatie'")),
+              SizedBox(height: 5),
+              CustomButton(
+                onPressed: widget.getLocation,
+                text: 'Detecteer locatie',
+                textStyle: buttonTextStyle,
+                minWidth: 150,
+                height: 50,
+              ),
+              SizedBox(height: 10),
               registrationInfo(widget.street, widget.zipCode, widget.zipCodeExt,
                   widget.houseNumber),
               Row(
@@ -66,18 +84,36 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     minWidth: 150,
                     height: 50,
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  CustomButton(
-                    onPressed: widget.getLocation,
-                    text: 'Geolocation',
-                    textStyle: buttonTextStyle,
-                    minWidth: 150,
-                    height: 50,
-                  ),
+                  Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.black26),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Container(
+                          // padding: EdgeInsets.all(10),
+                          constraints: BoxConstraints(
+                            maxHeight: 30,
+                          ),
+                          child: meterRegistration(
+                              "status", widget.meterRegistrationInfo))),
                 ],
               ),
+              // Align()
+              // Align(
+              //     alignment: Alignment.centerLeft,
+              //     child: Card(
+              //         elevation: 3,
+              //         shape: RoundedRectangleBorder(
+              //             side: BorderSide(color: Colors.black26),
+              //             borderRadius: BorderRadius.circular(5)),
+              //         child: Container(
+              //             constraints: BoxConstraints(
+              //               maxHeight: 50,
+              //               minWidth: 80,
+              //             ),
+              //             margin: EdgeInsets.all(10.0),
+              //             child: meterRegistration(
+              //                 "status", widget.meterRegistrationInfo))))
             ],
           );
         } else {
