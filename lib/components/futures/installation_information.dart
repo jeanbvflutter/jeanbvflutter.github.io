@@ -77,25 +77,39 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   widget.houseNumber),
               Row(
                 children: [
-                  CustomButton(
-                    onPressed: widget.registerMeterCallback,
-                    text: 'Register meter',
-                    textStyle: buttonTextStyle,
-                    minWidth: 150,
-                    height: 50,
-                  ),
-                  Card(
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black26),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Container(
-                          // padding: EdgeInsets.all(10),
-                          constraints: BoxConstraints(
-                            maxHeight: 30,
-                          ),
-                          child: meterRegistration(
-                              "status", widget.meterRegistrationInfo))),
+                  Container(
+                      // margin: EdgeInsets.all(5),
+                      child: Row(
+                    children: [
+                      CustomButton(
+                        onPressed: widget.registerMeterCallback,
+                        text: 'Register meter',
+                        textStyle: buttonTextStyle,
+                        minWidth: 150,
+                        height: 50,
+                      ),
+                      // E0039004361627619
+                      SizedBox(
+                          width: 200,
+                          height: 45,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Card(
+                              elevation: 1,
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.black26),
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Container(
+                                  constraints: BoxConstraints(
+                                    maxHeight: 30,
+                                  ),
+                                  child: Center(
+                                      child: meterRegistration("status",
+                                          widget.meterRegistrationInfo))),
+                            ),
+                          )),
+                    ],
+                  )),
                 ],
               ),
               // Align()

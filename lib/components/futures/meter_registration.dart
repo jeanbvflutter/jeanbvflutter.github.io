@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:meter_activation/entities/register_meter.dart';
 import '../../entities/installation_info.dart';
 
 FutureBuilder meterRegistration(
     String data, Future futureMeterRegistrationInfo) {
   String showMeterRegistrationInfo;
-  return FutureBuilder<InstallationInfo>(
+  return FutureBuilder<MeterInfo>(
     future: futureMeterRegistrationInfo,
     builder: (context, snapshot) {
       switch (data) {

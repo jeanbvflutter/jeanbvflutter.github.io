@@ -37,7 +37,7 @@ class _MainPageState extends State<MainPage> {
   final TextEditingController _zipcodeExt = TextEditingController();
   final TextEditingController _houseNumber = TextEditingController();
   final TextEditingController _street = TextEditingController();
-  
+
   bool _changeAddress = false;
 
   Future<MeterInfo> _futureMeterRegistrationInfo;
@@ -65,8 +65,13 @@ class _MainPageState extends State<MainPage> {
 
   registerMeterCallback() {
     setState(() {
-      _futureMeterRegistrationInfo = registerMeter(_serialNumber.text, null, int.parse(_zipCode.text),
-          _zipcodeExt.text, int.parse(_houseNumber.text), _street.text);
+      _futureMeterRegistrationInfo = registerMeter(
+          _serialNumber.text,
+          null,
+          int.parse(_zipCode.text),
+          _zipcodeExt.text,
+          int.parse(_houseNumber.text),
+          _street.text);
     });
   }
 
@@ -109,18 +114,18 @@ class _MainPageState extends State<MainPage> {
             ),
             SizedBox(height: 20),
             new InstallationInformation(
-              registerMeterCallback: registerMeterCallback,
-              getLocation: getLocation,
-              productionTestCallback: productionTestCallback,
-              futureInstallationInformation: _futureInstallationInfo,
-              changeAddress: changeAddressCallback,
-              street: _street,
-              zipCode: _zipCode,
-              zipCodeExt: _zipcodeExt,
-              houseNumber: _houseNumber,
-              changeAddressBool: _changeAddress,
-              unregisterMeter: unregisterMeterCallback,
-            ),
+                registerMeterCallback: registerMeterCallback,
+                getLocation: getLocation,
+                productionTestCallback: productionTestCallback,
+                futureInstallationInformation: _futureInstallationInfo,
+                changeAddress: changeAddressCallback,
+                street: _street,
+                zipCode: _zipCode,
+                zipCodeExt: _zipcodeExt,
+                houseNumber: _houseNumber,
+                changeAddressBool: _changeAddress,
+                unregisterMeter: unregisterMeterCallback,
+                meterRegistrationInfo: _futureMeterRegistrationInfo),
           ],
         ),
       ),
