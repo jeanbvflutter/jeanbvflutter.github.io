@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meter_activation/components/futures/status.dart';
+import 'package:meter_activation/components/ui/category.dart';
 import 'package:meter_activation/components/ui/custom_button.dart';
 import 'package:meter_activation/components/ui/header_info.dart';
 import 'package:meter_activation/components/ui/installation_information_card.dart';
@@ -77,41 +79,98 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   widget.houseNumber),
               Row(
                 children: [
-                  Container(
-                      // margin: EdgeInsets.all(5),
-                      child: Row(
-                    children: [
-                      CustomButton(
-                        onPressed: widget.registerMeterCallback,
-                        text: 'Register meter',
-                        textStyle: buttonTextStyle,
-                        minWidth: 150,
-                        height: 50,
-                      ),
-                      // E0039004361627619
-                      SizedBox(
-                          width: 200,
-                          height: 45,
-                          child: Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: Card(
-                              elevation: 1,
-                              shape: RoundedRectangleBorder(
-                                  side: BorderSide(color: Colors.black26),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Container(
-                                  constraints: BoxConstraints(
-                                    maxHeight: 30,
-                                  ),
-                                  child: Center(
-                                      child: meterRegistration("status",
-                                          widget.meterRegistrationInfo))),
-                            ),
-                          )),
-                    ],
-                  )),
+                  CustomButton(
+                    onPressed: widget.registerMeterCallback,
+                    text: 'Register meter',
+                    textStyle: buttonTextStyle,
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                  // E0018003191683116
+                  // SizedBox(
+                  //   width: 200,
+                  //   height: 45,
+                  //   child: Container(
+                  //     margin: EdgeInsets.only(top: 10),
+                  //     child: Card(
+                  //       elevation: 1,
+                  //       shape: RoundedRectangleBorder(
+                  //           side: BorderSide(color: Colors.black26),
+                  //           borderRadius: BorderRadius.circular(5)),
+                  //       child: Container(
+                  //           // margin: EdgeInsets.all(5),
+                  //           constraints: BoxConstraints(
+                  //             maxHeight: 30,
+                  //           ),
+                  //           child: Center(
+                  //               child: meterRegistration(
+                  //                   "status", widget.meterRegistrationInfo))),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
+              SizedBox(height: 10),
+              Column(
+                children: [
+                  Row(children: [
+                    // setStatus(widget.meterRegistrationInfo),
+                    Container(
+                        child: Row(
+                      children: [
+                        Card(
+                          child: category(
+                              "Registration Status",
+                              widget.meterRegistrationInfo,
+                              Colors.grey[200],
+                              Colors.black),
+                        )
+                        // setStatus(widget.meterRegistrationInfo),
+                        // Text("Meter Registration Status"),
+                      ],
+                    )),
+                    Container(
+                        child: Row(
+                      children: [
+                        Card(
+                          child: category(
+                              "Meter Connection",
+                              widget.meterRegistrationInfo,
+                              Colors.grey[200],
+                              Colors.black),
+                        )
+                      ],
+                    )),
+                  ]),
+                  Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Card(
+                          child: category(
+                              "RSSI Check",
+                              widget.meterRegistrationInfo,
+                              Colors.grey[200],
+                              Colors.black),
+                        ),
+                        Card(
+                          child: category(
+                              "Meter Disconnection",
+                              widget.meterRegistrationInfo,
+                              Colors.grey[200],
+                              Colors.black),
+                        )
+                      ]),
+                ],
+              ),
+              // child: Container(
+              //   // margin: EdgeInsets.all(5),
+              //   constraints: BoxConstraints(
+              //     maxHeight: 30,
+              //   ),
+              // child: Center(
+              //     child: meterRegistration(
+              //         "status", widget.meterRegistrationInfo)
+              // ),
             ],
           );
         } else {

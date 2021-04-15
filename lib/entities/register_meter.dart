@@ -19,7 +19,7 @@ Future<MeterInfo> registerMeter(String serialNumber, int clientId, int zipCode,
     }),
   );
   if (response.statusCode == 200) {
-    print(response.body);
+    print("RESPONSE" + response.body);
     return MeterInfo.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed');
@@ -28,12 +28,18 @@ Future<MeterInfo> registerMeter(String serialNumber, int clientId, int zipCode,
 
 class MeterInfo {
   String status;
+  String message;
 
-  MeterInfo({this.status});
+  MeterInfo({this.status, this.message});
 
   factory MeterInfo.fromJson(Map<String, dynamic> json) {
-    return MeterInfo(
-      status: json['status'],
-    );
+    try {
+      return MeterInfo(
+        status: json['status'],
+        message: json['message'],
+      );
+    } on Exception catch (_) {} catch (error) {
+      return MeterInfo(status: null, message: null);
+    }
   }
 }
