@@ -55,7 +55,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
         try {
           widget.status = snapshot.data.status.toString();
         } on Exception catch (_) {} catch (error) {
-          return Text("EXCEPTION");
+          return Text("");
         }
         if (widget.status == 'Not Activated' ||
             widget.status == 'Unregistered' ||
