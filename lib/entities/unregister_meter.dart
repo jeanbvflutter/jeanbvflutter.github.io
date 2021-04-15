@@ -8,7 +8,7 @@ Future<UnRegisterMeterInfo> unregisterMeter(String serialNumber) async {
   // var http;
   
   final response = await http.post(
-    Uri.https('energize.eleena.eu', '/home/unregister_meter'),
+    Uri.https('energize.eleena.eu', '/home/unregister_meter_flutter'),
 
 
     headers: <String, String>{
