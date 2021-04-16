@@ -4,10 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 Future<MeterConnectionInfo> connectMeter(String serialNumber) async {
-  var urlExt = 'post/connectMeter?serial_number=$serialNumber';
-
+  print("TEST123");
+  var urlExt = 'post/connectMeter';
+  final queryParameters = {
+    "serial_number": serialNumber,
+  };
   final response = await http.get(
-    Uri.https('104.248.82.49:8888', urlExt),
+    Uri.http('104.248.82.49:8888', urlExt, queryParameters),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
@@ -16,6 +19,7 @@ Future<MeterConnectionInfo> connectMeter(String serialNumber) async {
     print(response.body);
     return MeterConnectionInfo.fromJson(jsonDecode(response.body));
   } else {
+    print("RESPONSE" + response.body);
     throw Exception('Failed');
   }
 }
