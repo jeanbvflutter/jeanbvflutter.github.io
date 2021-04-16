@@ -13,11 +13,14 @@ import 'meter_registration.dart';
 class InstallationInformation extends StatefulWidget {
   Future futureInstallationInformation;
   Future meterRegistrationInfo;
+  Future meterConnectionInfo;
+
   final Function() registerMeterCallback;
   final Function() getLocation;
   final Function() productionTestCallback;
   final Function() changeAddress;
   final Function() unregisterMeter;
+  final Function() connectMeter;
 
   TextEditingController street;
   TextEditingController zipCode;
@@ -26,6 +29,7 @@ class InstallationInformation extends StatefulWidget {
   String status;
   bool changeAddressBool;
   bool startRegistration;
+  bool startMeterConnection;
 
   InstallationInformation(
       {this.registerMeterCallback,
@@ -41,7 +45,10 @@ class InstallationInformation extends StatefulWidget {
       this.changeAddressBool,
       this.unregisterMeter,
       this.meterRegistrationInfo,
-      this.startRegistration});
+      this.startRegistration,
+      this.connectMeter,
+      this.meterConnectionInfo,
+      this.startMeterConnection});
 
   @override
   _InstallationInformationState createState() =>
@@ -122,6 +129,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       Card(
                         child: category(
                           "Registration Status",
+                          widget.startRegistration,
                           widget.meterRegistrationInfo,
                           Colors.grey[200],
                           Colors.black,
@@ -137,6 +145,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       Card(
                         child: category(
                             "RSSI Check",
+                            true,
                             widget.meterRegistrationInfo,
                             Colors.grey[200],
                             Colors.black),
@@ -150,13 +159,15 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       Card(
                         child: category(
                             "Meter Connection",
-                            widget.meterRegistrationInfo,
+                            true,
+                            widget.meterConnectionInfo,
                             Colors.grey[200],
                             Colors.black),
                       ),
                       Card(
                         child: category(
                             "Meter Disconnection",
+                            true,
                             widget.meterRegistrationInfo,
                             Colors.grey[200],
                             Colors.black),
@@ -179,11 +190,11 @@ class _InstallationInformationState extends State<InstallationInformation> {
                           maxWidth: 400,
                         ),
                         child: Center(
-                            child: setStatus(
-                                "registration",
-                                widget.startRegistration,
-                                "text",
-                                widget.meterRegistrationInfo)))),
+                            child: SetStatus(
+                                process: "Registration Status",
+                                processStart: widget.startRegistration,
+                                view: "text",
+                                future: widget.meterRegistrationInfo)))),
               ),
             )
             // child: Container(

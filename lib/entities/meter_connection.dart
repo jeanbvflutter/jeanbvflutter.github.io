@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 Future<MeterConnectionInfo> connectMeter(String serialNumber) async {
@@ -21,12 +22,22 @@ Future<MeterConnectionInfo> connectMeter(String serialNumber) async {
 
 class MeterConnectionInfo {
   String status;
-
-  MeterConnectionInfo({this.status});
+  String message;
+  MeterConnectionInfo({this.status, this.message});
 
   factory MeterConnectionInfo.fromJson(Map<String, dynamic> json) {
-    return MeterConnectionInfo(
-      status: json['status'],
-    );
+    bool status;
+    String newStatus;
+    String message;
+
+    status = json['status'];
+    message = json['message'];
+
+    if (status == true) {
+      newStatus = "OK";
+    } else if (status == false) {
+      newStatus = "error";
+    }
+    return MeterConnectionInfo(status: newStatus, message: message);
   }
 }

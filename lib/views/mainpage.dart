@@ -3,6 +3,7 @@ import 'package:meter_activation/components/futures/installation_information.dar
 import 'package:meter_activation/components/ui/custom_button.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
 import 'package:meter_activation/entities/installation_info.dart';
+import 'package:meter_activation/entities/meter_connection.dart';
 import 'package:meter_activation/entities/unregister_meter.dart';
 import 'dart:async';
 import '../entities/register_meter.dart';
@@ -35,10 +36,12 @@ class _MainPageState extends State<MainPage> {
 
   bool _changeAddress = false;
   bool _startRegistration = false;
+  bool _startMeterConnection = false;
 
   Future<MeterInfo> _futureMeterRegistrationInfo;
   Future<ProductionInfo> _futureProductionInfo;
   Future<UnRegisterMeterInfo> _futureUnregisterMeter;
+  Future<MeterConnectionInfo> _futureMeterConnection;
 
   fetchInstallationInfoCallback() {
     setState(() {
@@ -50,6 +53,13 @@ class _MainPageState extends State<MainPage> {
   unregisterMeterCallback() {
     setState(() {
       _futureUnregisterMeter = unregisterMeter(_serialNumber.text);
+    });
+  }
+
+  connectMeterCallback() {
+    setState(() {
+      _futureMeterConnection = connectMeter(_serialNumber.text);
+      _startMeterConnection = true;
     });
   }
 
@@ -123,7 +133,10 @@ class _MainPageState extends State<MainPage> {
                 changeAddressBool: _changeAddress,
                 unregisterMeter: unregisterMeterCallback,
                 meterRegistrationInfo: _futureMeterRegistrationInfo,
-                startRegistration: _startRegistration),
+                startRegistration: _startRegistration,
+                connectMeter: connectMeterCallback,
+                meterConnectionInfo: _futureMeterConnection,
+                startMeterConnection: _startMeterConnection),
           ],
         ),
       ),
