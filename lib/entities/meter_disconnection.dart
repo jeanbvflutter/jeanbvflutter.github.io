@@ -6,14 +6,11 @@ Future<MeterDisconnectionInfo> disconnectMeter(String serialNumber) async {
 
   var urlExt = '/disconnectMeter?serial_number=$serialNumber';
 
-  final response = await http.post(
+  final response = await http.get(
     Uri.https('104.248.82.49:8888', urlExt),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
-
-    body: jsonEncode(<String, dynamic>{
-    }),
   );
   if (response.statusCode == 200) {
     print(response.body);

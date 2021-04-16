@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meter_activation/components/futures/installation_information.dart';
 import 'package:meter_activation/components/ui/custom_button.dart';
-import 'package:meter_activation/components/ui/header_info.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
-import 'package:meter_activation/components/ui/installation_information_card.dart';
-import 'package:meter_activation/components/ui/registration_info.dart';
-import 'package:meter_activation/components/ui/text_widget.dart';
 import 'package:meter_activation/entities/installation_info.dart';
 import 'package:meter_activation/entities/unregister_meter.dart';
 import 'dart:async';
@@ -27,7 +23,6 @@ import 'package:meter_activation/entities/production_check.dart';
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
-  // Future<MeterInfo> _futureMeterInfo;
 }
 
 class _MainPageState extends State<MainPage> {

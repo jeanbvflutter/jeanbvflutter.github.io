@@ -2,34 +2,32 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-// DOES NOT REQUIRE CONNECTION TO METER
-Future<MeterHealthCheckInfo> healthCheckMeter(String serialNumber) async {
-
+Future<ProductionInfo> productionTest(String serialNumber) async {
   var urlExt = '/meterHealthCheck?serial_number=$serialNumber';
 
   final response = await http.get(
-    Uri.https('104.248.82.49:8888', urlExt),
+    Uri.https('104.248.82.49:8888', '/get/productionTestForConnectedMeters'),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
   );
   if (response.statusCode == 200) {
     print(response.body);
-    return MeterHealthCheckInfo.fromJson(jsonDecode(response.body));
+    return ProductionInfo.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed');
   }
 }
 
-class MeterHealthCheckInfo {
+class ProductionInfo {
   String status;
 
-  MeterHealthCheckInfo(
+  ProductionInfo(
       {this.status});
 
-  factory MeterHealthCheckInfo.fromJson(Map<String, dynamic> json) {
-    return MeterHealthCheckInfo(
-      status: json['alive'],
+  factory ProductionInfo.fromJson(Map<String, dynamic> json) {
+    return ProductionInfo(
+      status: json['status'],
     );
   }
 }
