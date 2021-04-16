@@ -60,119 +60,137 @@ class _InstallationInformationState extends State<InstallationInformation> {
         if (widget.status == 'Not Activated' ||
             widget.status == 'Unregistered' ||
             widget.changeAddressBool == true) {
-          return Column(
-            children: [
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                      "Vul het adres in waarop je de meter wil registereren, of klik op 'Detecteer locatie'")),
-              SizedBox(height: 5),
-              CustomButton(
-                onPressed: widget.getLocation,
-                text: 'Detecteer locatie',
-                textStyle: buttonTextStyle,
-                minWidth: 150,
-                height: 50,
-              ),
-              SizedBox(height: 10),
-              registrationInfo(widget.street, widget.zipCode, widget.zipCodeExt,
-                  widget.houseNumber),
-              Row(
-                children: [
-                  CustomButton(
-                    onPressed: widget.registerMeterCallback,
-                    text: 'Register meter',
-                    textStyle: buttonTextStyle,
-                    minWidth: 150,
-                    height: 50,
-                  ),
-                  // E0018003191683116
-                  // SizedBox(
-                  //   width: 200,
-                  //   height: 45,
-                  //   child: Container(
-                  //     margin: EdgeInsets.only(top: 10),
-                  //     child: Card(
-                  //       elevation: 1,
-                  //       shape: RoundedRectangleBorder(
-                  //           side: BorderSide(color: Colors.black26),
-                  //           borderRadius: BorderRadius.circular(5)),
-                  //       child: Container(
-                  //           // margin: EdgeInsets.all(5),
-                  //           constraints: BoxConstraints(
-                  //             maxHeight: 30,
-                  //           ),
-                  //           child: Center(
-                  //               child: meterRegistration(
-                  //                   "status", widget.meterRegistrationInfo))),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Column(
-                children: [
-                  Row(children: [
-                    // setStatus(widget.meterRegistrationInfo),
-                    Container(
-                        child: Row(
-                      children: [
-                        Card(
-                          child: category(
-                              "Registration Status",
-                              widget.meterRegistrationInfo,
-                              Colors.grey[200],
-                              Colors.black),
-                        )
-                        // setStatus(widget.meterRegistrationInfo),
-                        // Text("Meter Registration Status"),
-                      ],
-                    )),
-                    Container(
-                        child: Row(
-                      children: [
-                        Card(
-                          child: category(
-                              "Meter Connection",
-                              widget.meterRegistrationInfo,
-                              Colors.grey[200],
-                              Colors.black),
-                        )
-                      ],
-                    )),
-                  ]),
-                  Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Card(
-                          child: category(
-                              "RSSI Check",
-                              widget.meterRegistrationInfo,
-                              Colors.grey[200],
-                              Colors.black),
+          return Column(children: [
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                    "Vul het adres in waarop je de meter wil registereren, of klik op 'Detecteer locatie'")),
+            SizedBox(height: 5),
+            CustomButton(
+              onPressed: widget.getLocation,
+              text: 'Detecteer locatie',
+              textStyle: buttonTextStyle,
+              minWidth: 150,
+              height: 50,
+            ),
+            SizedBox(height: 10),
+            registrationInfo(widget.street, widget.zipCode, widget.zipCodeExt,
+                widget.houseNumber),
+            Row(
+              children: [
+                CustomButton(
+                  onPressed: widget.registerMeterCallback,
+                  text: 'Register meter',
+                  textStyle: buttonTextStyle,
+                  minWidth: 150,
+                  height: 50,
+                ),
+                // E0018003191683116
+                // SizedBox(
+                //   width: 200,
+                //   height: 45,
+                //   child: Container(
+                //     margin: EdgeInsets.only(top: 10),
+                //     child: Card(
+                //       elevation: 1,
+                //       shape: RoundedRectangleBorder(
+                //           side: BorderSide(color: Colors.black26),
+                //           borderRadius: BorderRadius.circular(5)),
+                //       child: Container(
+                //           // margin: EdgeInsets.all(5),
+                //           constraints: BoxConstraints(
+                //             maxHeight: 30,
+                //           ),
+                //           child: Center(
+                //               child: meterRegistration(
+                //                   "status", widget.meterRegistrationInfo))),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Column(
+              children: [
+                Row(children: [
+                  // setStatus(widget.meterRegistrationInfo),
+                  Container(
+                      child: Row(
+                    children: [
+                      Card(
+                        child: category(
+                          "Registration Status",
+                          widget.meterRegistrationInfo,
+                          Colors.grey[200],
+                          Colors.black,
                         ),
-                        Card(
-                          child: category(
-                              "Meter Disconnection",
-                              widget.meterRegistrationInfo,
-                              Colors.grey[200],
-                              Colors.black),
-                        )
-                      ]),
-                ],
+                      )
+                      // setStatus(widget.meterRegistrationInfo),
+                      // Text("Meter Registration Status"),
+                    ],
+                  )),
+                  Container(
+                      child: Row(
+                    children: [
+                      Card(
+                        child: category(
+                            "RSSI Check",
+                            widget.meterRegistrationInfo,
+                            Colors.grey[200],
+                            Colors.black),
+                      ),
+                    ],
+                  )),
+                ]),
+                Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Card(
+                        child: category(
+                            "Meter Connection",
+                            widget.meterRegistrationInfo,
+                            Colors.grey[200],
+                            Colors.black),
+                      ),
+                      Card(
+                        child: category(
+                            "Meter Disconnection",
+                            widget.meterRegistrationInfo,
+                            Colors.grey[200],
+                            Colors.black),
+                      )
+                    ]),
+              ],
+            ),
+            Container(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Card(
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.black26),
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Container(
+                        // margin: EdgeInsets.all(5),
+                        constraints: BoxConstraints(
+                          maxHeight: 50,
+                          maxWidth: 400,
+                        ),
+                        child: Center(
+                            child: setStatus(
+                                "text", widget.meterRegistrationInfo)))),
               ),
-              // child: Container(
-              //   // margin: EdgeInsets.all(5),
-              //   constraints: BoxConstraints(
-              //     maxHeight: 30,
-              //   ),
-              // child: Center(
-              //     child: meterRegistration(
-              //         "status", widget.meterRegistrationInfo)
-              // ),
-            ],
-          );
+            )
+            // child: Container(
+            //   // margin: EdgeInsets.all(5),
+            //   constraints: BoxConstraints(
+            //     maxHeight: 30,
+            //   ),
+            // child: Center(
+            //     child: meterRegistration(
+            //         "status", widget.meterRegistrationInfo)
+            // ),
+          ]);
         } else {
           return Column(
             children: [
