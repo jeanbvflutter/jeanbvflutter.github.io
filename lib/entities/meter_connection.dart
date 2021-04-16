@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:meter_activation/entities/status_parser.dart';
 
 Future<MeterConnectionInfo> connectMeter(String serialNumber) async {
   print("TEST123");
@@ -24,24 +25,12 @@ Future<MeterConnectionInfo> connectMeter(String serialNumber) async {
   }
 }
 
-class MeterConnectionInfo {
-  String status;
+class MeterConnectionInfo extends StatusParser {
   String message;
-  MeterConnectionInfo({this.status, this.message});
+
+  MeterConnectionInfo(status, {this.message}) : super(status);
 
   factory MeterConnectionInfo.fromJson(Map<String, dynamic> json) {
-    bool status;
-    String newStatus;
-    String message;
-
-    status = json['status'];
-    message = json['message'];
-
-    if (status == true) {
-      newStatus = "OK";
-    } else if (status == false) {
-      newStatus = "error";
-    }
-    return MeterConnectionInfo(status: newStatus, message: message);
+    return MeterConnectionInfo(json['status'], message: json['message']);
   }
 }

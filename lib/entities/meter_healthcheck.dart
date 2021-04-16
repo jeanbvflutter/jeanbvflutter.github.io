@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:meter_activation/entities/status_parser.dart';
 
 // DOES NOT REQUIRE CONNECTION TO METER
 Future<MeterHealthCheckInfo> healthCheckMeter(String serialNumber) async {
@@ -21,15 +22,13 @@ Future<MeterHealthCheckInfo> healthCheckMeter(String serialNumber) async {
   }
 }
 
-class MeterHealthCheckInfo {
-  String status;
+class MeterHealthCheckInfo extends StatusParser{
 
-  MeterHealthCheckInfo(
-      {this.status});
+  MeterHealthCheckInfo(status) : super(status);
 
   factory MeterHealthCheckInfo.fromJson(Map<String, dynamic> json) {
     return MeterHealthCheckInfo(
-      status: json['alive'],
+      json['alive'],
     );
   }
 }
