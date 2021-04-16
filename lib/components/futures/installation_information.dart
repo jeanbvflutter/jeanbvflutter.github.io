@@ -25,6 +25,7 @@ class InstallationInformation extends StatefulWidget {
   TextEditingController houseNumber;
   String status;
   bool changeAddressBool;
+  bool startRegistration;
 
   InstallationInformation(
       {this.registerMeterCallback,
@@ -39,7 +40,8 @@ class InstallationInformation extends StatefulWidget {
       this.changeAddress,
       this.changeAddressBool,
       this.unregisterMeter,
-      this.meterRegistrationInfo});
+      this.meterRegistrationInfo,
+      this.startRegistration});
 
   @override
   _InstallationInformationState createState() =>
@@ -178,7 +180,10 @@ class _InstallationInformationState extends State<InstallationInformation> {
                         ),
                         child: Center(
                             child: setStatus(
-                                "text", widget.meterRegistrationInfo)))),
+                                "registration",
+                                widget.startRegistration,
+                                "text",
+                                widget.meterRegistrationInfo)))),
               ),
             )
             // child: Container(

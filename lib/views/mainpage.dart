@@ -39,6 +39,7 @@ class _MainPageState extends State<MainPage> {
   final TextEditingController _street = TextEditingController();
 
   bool _changeAddress = false;
+  bool _startRegistration = false;
 
   Future<MeterInfo> _futureMeterRegistrationInfo;
   Future<ProductionInfo> _futureProductionInfo;
@@ -72,6 +73,7 @@ class _MainPageState extends State<MainPage> {
           _zipcodeExt.text,
           int.parse(_houseNumber.text),
           _street.text);
+      _startRegistration = true;
     });
   }
 
@@ -125,7 +127,8 @@ class _MainPageState extends State<MainPage> {
                 houseNumber: _houseNumber,
                 changeAddressBool: _changeAddress,
                 unregisterMeter: unregisterMeterCallback,
-                meterRegistrationInfo: _futureMeterRegistrationInfo),
+                meterRegistrationInfo: _futureMeterRegistrationInfo,
+                startRegistration: _startRegistration),
           ],
         ),
       ),

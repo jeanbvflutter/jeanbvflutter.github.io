@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meter_activation/components/ui/status_icon.dart';
 
-FutureBuilder setStatus(String view, Future future) {
+FutureBuilder setStatus(
+    String process, bool processStart, String view, Future future) {
   String status;
   String icon;
   String message;
@@ -10,6 +11,7 @@ FutureBuilder setStatus(String view, Future future) {
     builder: (context, snapshot) {
       print("STATUS TRACK");
       try {
+        print(processStart);
         status = snapshot.data.status.toString();
         message = snapshot.data.message.toString();
       } on Exception catch (_) {} catch (error) {
@@ -19,6 +21,16 @@ FutureBuilder setStatus(String view, Future future) {
             icon,
           );
         } else if (view == "text") {
+          switch (process) {
+            case "registration":
+              {
+                print("REGISTRATION TRACT CHECK2" + processStart.toString());
+                if (processStart == true) {
+                  return Text("Started Registration Process");
+                }
+              }
+              break;
+          }
           return Text("Meter Status Track");
         }
       }
@@ -30,6 +42,17 @@ FutureBuilder setStatus(String view, Future future) {
             icon,
           );
         } else if (view == "text") {
+          print("REGISTRATION TRACK" + processStart.toString());
+          // switch (process) {
+          //   case "registration":
+          //     {
+          //       print("REGISTRATION TRACT CHECK2" + processStart.toString());
+          //       if (processStart == true) {
+          //         return Text("Started Registration Process");
+          //       }
+          //     }
+          //     break;
+          // }
           return Text(message);
         }
       } else if (snapshot.hasError) {

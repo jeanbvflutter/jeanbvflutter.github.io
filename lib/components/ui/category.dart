@@ -9,7 +9,7 @@ Container category(String someText, Future future, bgColor, textColor) {
     padding: EdgeInsets.all(5),
     child: Row(
       children: [
-        setStatus("icon", future),
+        setStatus("general", true, "icon", future),
         Center(child: textWidget(someText, textColor)),
       ],
     ),
