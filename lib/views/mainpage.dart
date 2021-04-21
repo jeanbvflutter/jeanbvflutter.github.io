@@ -7,6 +7,7 @@ import 'package:meter_activation/components/ui/header_widget.dart';
 import 'package:meter_activation/entities/RSSI_check.dart';
 import 'package:meter_activation/entities/installation_info.dart';
 import 'package:meter_activation/entities/meter_connection.dart';
+import 'package:meter_activation/entities/meter_disconnection.dart';
 import 'package:meter_activation/entities/unregister_meter.dart';
 import 'dart:async';
 import '../entities/meter_healthcheck.dart';
@@ -59,39 +60,22 @@ class _MainPageState extends State<MainPage> {
   Future<RSSIInfo> _futureRSSICheckInfo;
   Future<MeterBreakerInfo> _futureMeterBreakerOnInfo;
   Future<MeterBreakerInfo> _futureMeterBreakerOffInfo;
+  Future<MeterConnectionInfo> connectMeterFuture;
 
 
-  /// WRAP THE ACTION IN BETWEEN CONNECTION
   meterConnectionWrapper(Function func){
-    setState(() {
-      Future executeFuture;
-      var connectionCallback = connectMeter(_serialNumber.text);
-
-      connectionCallback.then((value) {
-        if (value.status == 'OK'){
-          print('EEYY!');
-          executeFuture = func(_serialNumber.text);
-        }else {
-          print("Can't connect");
-          return;
-        }
-
-        executeFuture.then((value) {
-          if(value.status == 'OK'){
-            print('EEYY!2');
-            var disconnectionCallback = connectMeter(_serialNumber.text);
-            disconnectionCallback.then((value) {
-              if (value.status == 'OK'){
-                print('Completed!');
-              }else {
-                print("Can't disconnect!");
-              }
-            });
+    connectMeter(_serialNumber.text).then((value) {
+      if (value.status == 'OK') {
+        func(_serialNumber.text).then((value){
+          if (value.status == 'OK') {
+            print("Operation has successful");
           }else{
-            print('FAILED EXECUTION');
+            print("Operation has failed");
           }
+          disconnectMeter(_serialNumber.text);
+          return;
         });
-      });
+      }
     });
   }
 
@@ -103,12 +87,6 @@ class _MainPageState extends State<MainPage> {
       _startMeterConnection = false;
       _futureMeterConnection = null;
       _futureMeterRegistrationInfo = null;
-    });
-  }
-
-  randomFunction() {
-    setState(() {
-      _futureUnregisterMeter = unregisterMeter(_serialNumber.text);
     });
   }
 
@@ -129,13 +107,6 @@ class _MainPageState extends State<MainPage> {
       _startMeterConnection = true;
     });
   }
-  // connectMeterCallback() {
-  //   setState(() {
-  //     _futureMeterConnection = connectMeter(_serialNumber.text);
-  //     _startMeterConnection = true;
-  //   });
-  // }
-
 
   changeAddressCallback() {
     setState(() {
@@ -160,6 +131,7 @@ class _MainPageState extends State<MainPage> {
     });
     _futureMeterRegistrationInfo.then((value) {
       if (value.message == 'Meter registered successfully.') {
+        print('I am here');
         sleep(Duration(seconds: 3));
         setState(() {
           currentProcess = "Meter Connection";
@@ -181,26 +153,7 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  newProductionTestCallback() {
-    print(_serialNumber.text);
-    _futureProductionInfo = meterConnectionWrapper(newProductionTest);
-  }
 
-  healthCheckCallback() {
-    _futureMeterHealthCheckInfo = meterConnectionWrapper(healthCheckMeter);
-  }
-
-  breakerOnCallback() {
-    _futureMeterBreakerOnInfo = meterConnectionWrapper(meterBreakerOn);
-  }
-
-  breakerOffCallback() {
-    _futureMeterBreakerOffInfo = meterConnectionWrapper(meterBreakerOff);
-  }
-
-  RSSICheckCallback() {
-    _futureRSSICheckInfo = meterConnectionWrapper(RSSIcheck);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -253,11 +206,11 @@ class _MainPageState extends State<MainPage> {
                 endpointInfo: _futureEndpointInfo,
                 processStart: _startRegistration,
                 startMeterConnection: _startMeterConnection,
-                newProductionTest: newProductionTestCallback,
-                healthCheck: healthCheckCallback,
-                breakerOn:breakerOnCallback,
-                breakerOff:breakerOffCallback,
-                RSSICheck:RSSICheckCallback,)
+                newProductionTest:() { meterConnectionWrapper(newProductionTest); },
+                healthCheck:() { healthCheckMeter(_serialNumber.text); },
+                breakerOn:() {meterConnectionWrapper(meterBreakerOn); },
+                breakerOff:() { meterConnectionWrapper(meterBreakerOff); },
+                RSSICheck:() { meterConnectionWrapper(RSSIcheck); })
           ],
         ),
       ),
