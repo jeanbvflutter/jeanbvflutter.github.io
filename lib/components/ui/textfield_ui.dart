@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 TextField textFieldWidget(_controller, String _hintText) {
   String regex;
   switch (_hintText.toLowerCase()) {
@@ -25,7 +26,7 @@ TextField textFieldWidget(_controller, String _hintText) {
       break;
     case "straat":
       {
-        regex = r'^[a-zA-Z]{0,30}';
+        regex = r'^[a-zA-Z ]{0,30}';
       }
       break;
     default:

@@ -7,6 +7,7 @@ import 'package:meter_activation/components/ui/header_widget.dart';
 import 'package:meter_activation/entities/RSSI_check.dart';
 import 'package:meter_activation/entities/installation_info.dart';
 import 'package:meter_activation/entities/meter_connection.dart';
+import 'package:meter_activation/entities/meter_disconnection.dart';
 import 'package:meter_activation/entities/unregister_meter.dart';
 import 'dart:async';
 import '../entities/meter_healthcheck.dart';
@@ -46,6 +47,7 @@ class _MainPageState extends State<MainPage> {
   bool _startRegistration = false;
   bool _startMeterConnection = false;
   bool _registrationSuccesful = false;
+  bool _startMeterDisonnection = false;
 
   String currentProcess;
 
@@ -59,35 +61,35 @@ class _MainPageState extends State<MainPage> {
   Future<RSSIInfo> _futureRSSICheckInfo;
   Future<MeterBreakerInfo> _futureMeterBreakerOnInfo;
   Future<MeterBreakerInfo> _futureMeterBreakerOffInfo;
-
+  Future<MeterDisconnectionInfo> _futureMeterDisconnection;
 
   /// WRAP THE ACTION IN BETWEEN CONNECTION
-  meterConnectionWrapper(Function func){
+  meterConnectionWrapper(Function func) {
     setState(() {
       Future executeFuture;
       var connectionCallback = connectMeter(_serialNumber.text);
 
       connectionCallback.then((value) {
-        if (value.status == 'OK'){
+        if (value.status == 'OK') {
           print('EEYY!');
           executeFuture = func(_serialNumber.text);
-        }else {
+        } else {
           print("Can't connect");
           return;
         }
 
         executeFuture.then((value) {
-          if(value.status == 'OK'){
+          if (value.status == 'OK') {
             print('EEYY!2');
             var disconnectionCallback = connectMeter(_serialNumber.text);
             disconnectionCallback.then((value) {
-              if (value.status == 'OK'){
+              if (value.status == 'OK') {
                 print('Completed!');
-              }else {
+              } else {
                 print("Can't disconnect!");
               }
             });
-          }else{
+          } else {
             print('FAILED EXECUTION');
           }
         });
@@ -136,7 +138,6 @@ class _MainPageState extends State<MainPage> {
   //   });
   // }
 
-
   changeAddressCallback() {
     setState(() {
       _changeAddress = true;
@@ -163,14 +164,44 @@ class _MainPageState extends State<MainPage> {
         sleep(Duration(seconds: 3));
         setState(() {
           currentProcess = "Meter Connection";
+
           _futureMeterConnection = connectMeter(_serialNumber.text);
           _startMeterConnection = true;
 
           _futureEndpointInfo = _futureMeterConnection;
         });
+        _futureMeterConnection.then((value) {
+          if (value.message == 'Meter connected successfully') {
+            setState(() {
+              // _futureMeterConnection = connectMeter(_serialNumber.text);
+
+              _futureMeterDisconnection = disconnectMeter(_serialNumber.text);
+              _startMeterDisonnection = true;
+            });
+          } else {
+            print("HMMM");
+          }
+        });
       } else {
         print("Can't connect");
         return;
+      }
+    }).catchError((e) {
+      print("ERRORRRR");
+    }).whenComplete(() => print("Done!"));
+    _futureMeterConnection.then((value) {
+      if (value.message == 'Meter connected successfully') {
+        // sleep(Duration(seconds: 4));
+        print("SUCCESSFULL YES567890");
+
+        setState(() {
+          _futureMeterConnection = connectMeter(_serialNumber.text);
+
+          // _futureMeterDisconnection = disconnectMeter(_serialNumber.text);
+          _startMeterDisonnection = true;
+        });
+      } else {
+        print("HMMM");
       }
     });
   }
@@ -235,29 +266,30 @@ class _MainPageState extends State<MainPage> {
             ),
             SizedBox(height: 20),
             new InstallationInformation(
-                registerMeterCallback: registerMeterCallback,
-                getLocation: getLocation,
-                productionTestCallback: productionTestCallback,
-                futureInstallationInformation: _futureInstallationInfo,
-                changeAddress: changeAddressCallback,
-                street: _street,
-                zipCode: _zipCode,
-                zipCodeExt: _zipcodeExt,
-                houseNumber: _houseNumber,
-                changeAddressBool: _changeAddress,
-                unregisterMeter: unregisterMeterCallback,
-                meterRegistrationInfo: _futureMeterRegistrationInfo,
-                connectMeterCallback: connectMeterCallback,
-                meterConnectionInfo: _futureMeterConnection,
-                currentProcess: currentProcess,
-                endpointInfo: _futureEndpointInfo,
-                processStart: _startRegistration,
-                startMeterConnection: _startMeterConnection,
-                newProductionTest: newProductionTestCallback,
-                healthCheck: healthCheckCallback,
-                breakerOn:breakerOnCallback,
-                breakerOff:breakerOffCallback,
-                RSSICheck:RSSICheckCallback,)
+              registerMeterCallback: registerMeterCallback,
+              getLocation: getLocation,
+              productionTestCallback: productionTestCallback,
+              futureInstallationInformation: _futureInstallationInfo,
+              changeAddress: changeAddressCallback,
+              street: _street,
+              zipCode: _zipCode,
+              zipCodeExt: _zipcodeExt,
+              houseNumber: _houseNumber,
+              changeAddressBool: _changeAddress,
+              unregisterMeter: unregisterMeterCallback,
+              meterRegistrationInfo: _futureMeterRegistrationInfo,
+              connectMeterCallback: connectMeterCallback,
+              meterConnectionInfo: _futureMeterConnection,
+              currentProcess: currentProcess,
+              endpointInfo: _futureEndpointInfo,
+              processStart: _startRegistration,
+              startMeterConnection: _startMeterConnection,
+              newProductionTest: newProductionTestCallback,
+              healthCheck: healthCheckCallback,
+              breakerOn: breakerOnCallback,
+              breakerOff: breakerOffCallback,
+              RSSICheck: RSSICheckCallback,
+            )
           ],
         ),
       ),
