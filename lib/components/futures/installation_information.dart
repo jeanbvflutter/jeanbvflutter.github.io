@@ -38,32 +38,32 @@ class InstallationInformation extends StatefulWidget {
   String currentProcess;
   Future endpointInfo;
 
-  InstallationInformation(
-      {this.registerMeterCallback,
-      this.getLocation,
-      this.productionTestCallback,
-      this.futureInstallationInformation,
-      this.street,
-      this.zipCode,
-      this.zipCodeExt,
-      this.houseNumber,
-      this.status,
-      this.changeAddress,
-      this.changeAddressBool,
-      this.unregisterMeter,
-      this.meterRegistrationInfo,
-      this.connectMeterCallback,
-      this.meterConnectionInfo,
-      this.currentProcess,
-      this.endpointInfo,
-      this.processStart,
-      this.startMeterConnection,
-      this.newProductionTest,
-      this.healthCheck,
-      this.breakerOn,
-      this.breakerOff,
-      this.RSSICheck,
-      });
+  InstallationInformation({
+    this.registerMeterCallback,
+    this.getLocation,
+    this.productionTestCallback,
+    this.futureInstallationInformation,
+    this.street,
+    this.zipCode,
+    this.zipCodeExt,
+    this.houseNumber,
+    this.status,
+    this.changeAddress,
+    this.changeAddressBool,
+    this.unregisterMeter,
+    this.meterRegistrationInfo,
+    this.connectMeterCallback,
+    this.meterConnectionInfo,
+    this.currentProcess,
+    this.endpointInfo,
+    this.processStart,
+    this.startMeterConnection,
+    this.newProductionTest,
+    this.healthCheck,
+    this.breakerOn,
+    this.breakerOff,
+    this.RSSICheck,
+  });
 
   @override
   _InstallationInformationState createState() =>
@@ -111,28 +111,6 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   minWidth: 150,
                   height: 50,
                 ),
-                // E0018003191683116
-                // SizedBox(
-                //   width: 200,
-                //   height: 45,
-                //   child: Container(
-                //     margin: EdgeInsets.only(top: 10),
-                //     child: Card(
-                //       elevation: 1,
-                //       shape: RoundedRectangleBorder(
-                //           side: BorderSide(color: Colors.black26),
-                //           borderRadius: BorderRadius.circular(5)),
-                //       child: Container(
-                //           // margin: EdgeInsets.all(5),
-                //           constraints: BoxConstraints(
-                //             maxHeight: 30,
-                //           ),
-                //           child: Center(
-                //               child: meterRegistration(
-                //                   "status", widget.meterRegistrationInfo))),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
             SizedBox(height: 10),
@@ -170,39 +148,9 @@ class _InstallationInformationState extends State<InstallationInformation> {
                           widget.registrationSuccesful,
                         ),
                       ),
-                      // Card(
-                      //   child: category(
-                      //       "RSSI Check",
-                      //       true,
-                      //       widget.meterRegistrationInfo,
-                      //       Colors.grey[200],
-                      //       Colors.black),
-                      // ),
                     ],
                   )),
                 ]),
-                Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // Card(
-                      //   child: category(
-                      //     "Meter Connection",
-                      //     widget.processStart,
-                      //     widget.meterConnectionInfo,
-                      //     Colors.grey[200],
-                      //     Colors.black,
-                      //     widget.registrationSuccesful,
-                      //   ),
-                      // ),
-                      // Card(
-                      //   child: category(
-                      //       "Meter Disconnection",
-                      //       true,
-                      //       widget.meterRegistrationInfo,
-                      //       Colors.grey[200],
-                      //       Colors.black),
-                      // )
-                    ]),
               ],
             ),
             Container(
@@ -214,7 +162,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                         side: BorderSide(color: Colors.black26),
                         borderRadius: BorderRadius.circular(5)),
                     child: Container(
-                      // margin: EdgeInsets.all(5),
+                        // margin: EdgeInsets.all(5),
                         constraints: BoxConstraints(
                           maxHeight: 50,
                           maxWidth: 400,
@@ -226,16 +174,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                                 "text",
                                 widget.endpointInfo)))),
               ),
-            )
-            // child: Container(
-            //   // margin: EdgeInsets.all(5),
-            //   constraints: BoxConstraints(
-            //     maxHeight: 30,
-            //   ),
-            // child: Center(
-            //     child: meterRegistration(
-            //         "status", widget.meterRegistrationInfo)
-            // ),
+            ),
           ]);
         } else {
           return Column(
@@ -269,51 +208,51 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     minWidth: 150,
                     height: 50,
                   ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
-                  // CustomButton(
-                  //   onPressed: widget.newProductionTest,
-                  //   text: 'New production test',
-                  //   minWidth: 150,
-                  //   height: 50,
-                  // ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
-                  // CustomButton(
-                  //   onPressed: widget.RSSICheck,
-                  //   text: 'RSSI check',
-                  //   minWidth: 150,
-                  //   height: 50,
-                  // ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
-                  // CustomButton(
-                  //   onPressed: widget.healthCheck,
-                  //   text: 'Health check',
-                  //   minWidth: 150,
-                  //   height: 50,
-                  // ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
-                  // CustomButton(
-                  //   onPressed: widget.breakerOn,
-                  //   text: 'Breaker on',
-                  //   minWidth: 150,
-                  //   height: 50,
-                  // ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
-                  // CustomButton(
-                  //   onPressed: widget.breakerOff,
-                  //   text: 'Breaker off',
-                  //   minWidth: 150,
-                  //   height: 50,
-                  // )
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CustomButton(
+                    onPressed: widget.newProductionTest,
+                    text: 'New production test',
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CustomButton(
+                    onPressed: widget.RSSICheck,
+                    text: 'RSSI check',
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CustomButton(
+                    onPressed: widget.healthCheck,
+                    text: 'Health check',
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CustomButton(
+                    onPressed: widget.breakerOn,
+                    text: 'Breaker on',
+                    minWidth: 150,
+                    height: 50,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  CustomButton(
+                    onPressed: widget.breakerOff,
+                    text: 'Breaker off',
+                    minWidth: 150,
+                    height: 50,
+                  )
                 ],
               ),
             ],

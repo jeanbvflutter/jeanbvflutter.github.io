@@ -4,10 +4,13 @@ import 'package:http/http.dart' as http;
 import 'package:meter_activation/entities/status_parser.dart';
 
 Future<ProductionInfo> newProductionTest(String serialNumber) async {
-  var urlExt = '/get/productionTestForConnectedMeters?serial_number=$serialNumber';
+  var urlExt = 'get/productionTestForConnectedMeters';
+  final queryParameters = {
+    "serial_number": serialNumber,
+  };
 
   final response = await http.get(
-    Uri.https('104.248.82.49:8888', urlExt),
+    Uri.http('104.248.82.49:8888', urlExt, queryParameters),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
@@ -16,7 +19,7 @@ Future<ProductionInfo> newProductionTest(String serialNumber) async {
     print(response.body);
     return ProductionInfo.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed');
+    print(response.body);
   }
 }
 

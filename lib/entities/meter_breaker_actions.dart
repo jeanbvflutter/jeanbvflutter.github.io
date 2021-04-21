@@ -5,11 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:meter_activation/entities/status_parser.dart';
 
 Future<MeterBreakerInfo> meterBreakerOn(String serialNumber) async {
-
-  var urlExt = '/post/activateBreakerForConnectedMeters?serial_number=$serialNumber';
+  var urlExt = 'post/activateBreakerForConnectedMeters';
+  final queryParameters = {
+    "serial_number": serialNumber,
+  };
 
   final response = await http.get(
-    Uri.https('104.248.82.49:8888', urlExt),
+    Uri.http('104.248.82.49:8888', urlExt, queryParameters),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
