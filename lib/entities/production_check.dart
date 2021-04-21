@@ -1,6 +1,25 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:meter_activation/entities/status_parser.dart';
+
+Future<ProductionInfo> newProductionTest(String serialNumber) async {
+  var urlExt = '/get/productionTestForConnectedMeters?serial_number=$serialNumber';
+
+  final response = await http.get(
+    Uri.https('104.248.82.49:8888', urlExt),
+    headers: <String, String>{
+      'Content-Type': 'application/form-data; charset=UTF-8',
+    },
+  );
+  if (response.statusCode == 200) {
+    print(response.body);
+    return ProductionInfo.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed');
+  }
+}
+
 
 Future<ProductionInfo> productionTest(String serialNumber) async {
   final response = await http.post(
@@ -21,15 +40,13 @@ Future<ProductionInfo> productionTest(String serialNumber) async {
   }
 }
 
-class ProductionInfo {
-  String status;
+class ProductionInfo extends StatusParser {
 
-  ProductionInfo(
-      {this.status});
+  ProductionInfo(status) : super(status);
 
   factory ProductionInfo.fromJson(Map<String, dynamic> json) {
     return ProductionInfo(
-      status: json['status'],
+      json['status'],
     );
   }
 }

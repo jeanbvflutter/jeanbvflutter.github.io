@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:meter_activation/entities/status_parser.dart';
 
 Future<MeterDisconnectionInfo> disconnectMeter(String serialNumber) async {
   var urlExt = '/disconnectMeter?serial_number=$serialNumber';
@@ -21,14 +22,13 @@ Future<MeterDisconnectionInfo> disconnectMeter(String serialNumber) async {
   }
 }
 
-class MeterDisconnectionInfo {
-  String status;
+class MeterDisconnectionInfo extends StatusParser{
 
-  MeterDisconnectionInfo({this.status});
+  MeterDisconnectionInfo(status) : super(status);
 
   factory MeterDisconnectionInfo.fromJson(Map<String, dynamic> json) {
     return MeterDisconnectionInfo(
-      status: json['disconnected_status'],
+      json['disconnected_status'],
     );
   }
 }

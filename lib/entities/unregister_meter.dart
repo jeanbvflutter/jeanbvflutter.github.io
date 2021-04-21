@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:meter_activation/entities/status_parser.dart';
 
 Future<UnRegisterMeterInfo> unregisterMeter(String serialNumber) async {
   // var http;
@@ -32,17 +33,13 @@ Future<UnRegisterMeterInfo> unregisterMeter(String serialNumber) async {
   }
 }
 
-class UnRegisterMeterInfo {
-  // Meter details
-  final String status;
+class UnRegisterMeterInfo extends StatusParser{
 
-  UnRegisterMeterInfo({
-    this.status,
-  });
+  UnRegisterMeterInfo(status) : super(null);
 
   factory UnRegisterMeterInfo.fromJson(Map<String, dynamic> json) {
     return UnRegisterMeterInfo(
-      status: json['status'],
+      json['status'],
     );
   }
 }

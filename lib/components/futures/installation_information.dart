@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:meter_activation/components/futures/status.dart';
 import 'package:meter_activation/components/ui/category.dart';
 import 'package:meter_activation/components/ui/custom_button.dart';
-import 'package:meter_activation/components/ui/header_info.dart';
 import 'package:meter_activation/components/ui/installation_information_card.dart';
 import 'package:meter_activation/components/ui/registration_info.dart';
 import 'package:meter_activation/entities/installation_info.dart';
@@ -21,6 +20,11 @@ class InstallationInformation extends StatefulWidget {
   final Function() changeAddress;
   final Function() unregisterMeter;
   final Function() connectMeterCallback;
+  final Function() newProductionTest;
+  final Function() healthCheck;
+  final Function() breakerOn;
+  final Function() breakerOff;
+  final Function() RSSICheck;
 
   TextEditingController street;
   TextEditingController zipCode;
@@ -52,7 +56,14 @@ class InstallationInformation extends StatefulWidget {
       this.meterConnectionInfo,
       this.currentProcess,
       this.endpointInfo,
-      this.processStart});
+      this.processStart,
+      this.startMeterConnection,
+      this.newProductionTest,
+      this.healthCheck,
+      this.breakerOn,
+      this.breakerOff,
+      this.RSSICheck,
+      });
 
   @override
   _InstallationInformationState createState() =>
@@ -171,7 +182,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   )),
                 ]),
                 Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       // Card(
                       //   child: category(
@@ -203,7 +214,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                         side: BorderSide(color: Colors.black26),
                         borderRadius: BorderRadius.circular(5)),
                     child: Container(
-                        // margin: EdgeInsets.all(5),
+                      // margin: EdgeInsets.all(5),
                         constraints: BoxConstraints(
                           maxHeight: 50,
                           maxWidth: 400,
@@ -258,6 +269,51 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     minWidth: 150,
                     height: 50,
                   ),
+                  // SizedBox(
+                  //   width: 10,
+                  // ),
+                  // CustomButton(
+                  //   onPressed: widget.newProductionTest,
+                  //   text: 'New production test',
+                  //   minWidth: 150,
+                  //   height: 50,
+                  // ),
+                  // SizedBox(
+                  //   width: 10,
+                  // ),
+                  // CustomButton(
+                  //   onPressed: widget.RSSICheck,
+                  //   text: 'RSSI check',
+                  //   minWidth: 150,
+                  //   height: 50,
+                  // ),
+                  // SizedBox(
+                  //   width: 10,
+                  // ),
+                  // CustomButton(
+                  //   onPressed: widget.healthCheck,
+                  //   text: 'Health check',
+                  //   minWidth: 150,
+                  //   height: 50,
+                  // ),
+                  // SizedBox(
+                  //   width: 10,
+                  // ),
+                  // CustomButton(
+                  //   onPressed: widget.breakerOn,
+                  //   text: 'Breaker on',
+                  //   minWidth: 150,
+                  //   height: 50,
+                  // ),
+                  // SizedBox(
+                  //   width: 10,
+                  // ),
+                  // CustomButton(
+                  //   onPressed: widget.breakerOff,
+                  //   text: 'Breaker off',
+                  //   minWidth: 150,
+                  //   height: 50,
+                  // )
                 ],
               ),
             ],

@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:meter_activation/components/futures/installation_information.dart';
 import 'package:meter_activation/components/ui/custom_button.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
+import 'package:meter_activation/entities/RSSI_check.dart';
 import 'package:meter_activation/entities/installation_info.dart';
 import 'package:meter_activation/entities/meter_connection.dart';
 import 'package:meter_activation/entities/unregister_meter.dart';
 import 'dart:async';
+import '../entities/meter_healthcheck.dart';
+import '../entities/meter_healthcheck.dart';
 import '../entities/register_meter.dart';
 import '../components/ui/textfield_ui.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +19,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:meter_activation/enums.dart';
 import 'package:meter_activation/entities/production_check.dart';
+import 'package:meter_activation/entities/meter_healthcheck.dart';
+import 'package:meter_activation/entities/meter_breaker_actions.dart';
+import 'package:meter_activation/entities/meter_connection.dart';
 
 // Statefulwidget is mutable. It can be drawn multiple times within its lifetime.
 // They are widget that can change their state multiple times and can be redrawn on the screen any number of times while to app is in action.
@@ -48,6 +54,46 @@ class _MainPageState extends State<MainPage> {
   Future<UnRegisterMeterInfo> _futureUnregisterMeter;
   Future<MeterConnectionInfo> _futureMeterConnection;
   Future _futureEndpointInfo;
+  Future<ProductionInfo> _futureNewProductionInfo;
+  Future<MeterHealthCheckInfo> _futureMeterHealthCheckInfo;
+  Future<RSSIInfo> _futureRSSICheckInfo;
+  Future<MeterBreakerInfo> _futureMeterBreakerOnInfo;
+  Future<MeterBreakerInfo> _futureMeterBreakerOffInfo;
+
+
+  /// WRAP THE ACTION IN BETWEEN CONNECTION
+  meterConnectionWrapper(Function func){
+    setState(() {
+      Future executeFuture;
+      var connectionCallback = connectMeter(_serialNumber.text);
+
+      connectionCallback.then((value) {
+        if (value.status == 'OK'){
+          print('EEYY!');
+          executeFuture = func(_serialNumber.text);
+        }else {
+          print("Can't connect");
+          return;
+        }
+
+        executeFuture.then((value) {
+          if(value.status == 'OK'){
+            print('EEYY!2');
+            var disconnectionCallback = connectMeter(_serialNumber.text);
+            disconnectionCallback.then((value) {
+              if (value.status == 'OK'){
+                print('Completed!');
+              }else {
+                print("Can't disconnect!");
+              }
+            });
+          }else{
+            print('FAILED EXECUTION');
+          }
+        });
+      });
+    });
+  }
 
   fetchInstallationInfoCallback() {
     setState(() {
@@ -83,6 +129,13 @@ class _MainPageState extends State<MainPage> {
       _startMeterConnection = true;
     });
   }
+  // connectMeterCallback() {
+  //   setState(() {
+  //     _futureMeterConnection = connectMeter(_serialNumber.text);
+  //     _startMeterConnection = true;
+  //   });
+  // }
+
 
   changeAddressCallback() {
     setState(() {
@@ -126,6 +179,27 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _futureProductionInfo = productionTest(_serialNumber.text);
     });
+  }
+
+  newProductionTestCallback() {
+    print(_serialNumber.text);
+    _futureProductionInfo = meterConnectionWrapper(newProductionTest);
+  }
+
+  healthCheckCallback() {
+    _futureMeterHealthCheckInfo = meterConnectionWrapper(healthCheckMeter);
+  }
+
+  breakerOnCallback() {
+    _futureMeterBreakerOnInfo = meterConnectionWrapper(meterBreakerOn);
+  }
+
+  breakerOffCallback() {
+    _futureMeterBreakerOffInfo = meterConnectionWrapper(meterBreakerOff);
+  }
+
+  RSSICheckCallback() {
+    _futureRSSICheckInfo = meterConnectionWrapper(RSSIcheck);
   }
 
   @override
@@ -177,7 +251,13 @@ class _MainPageState extends State<MainPage> {
                 meterConnectionInfo: _futureMeterConnection,
                 currentProcess: currentProcess,
                 endpointInfo: _futureEndpointInfo,
-                processStart: _startRegistration),
+                processStart: _startRegistration,
+                startMeterConnection: _startMeterConnection,
+                newProductionTest: newProductionTestCallback,
+                healthCheck: healthCheckCallback,
+                breakerOn:breakerOnCallback,
+                breakerOff:breakerOffCallback,
+                RSSICheck:RSSICheckCallback,)
           ],
         ),
       ),
