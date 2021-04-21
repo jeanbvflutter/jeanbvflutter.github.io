@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:meter_activation/components/futures/installation_information.dart';
 import 'package:meter_activation/components/ui/custom_button.dart';
@@ -37,16 +39,30 @@ class _MainPageState extends State<MainPage> {
   bool _changeAddress = false;
   bool _startRegistration = false;
   bool _startMeterConnection = false;
+  bool _registrationSuccesful = false;
+
+  String currentProcess;
 
   Future<MeterInfo> _futureMeterRegistrationInfo;
   Future<ProductionInfo> _futureProductionInfo;
   Future<UnRegisterMeterInfo> _futureUnregisterMeter;
   Future<MeterConnectionInfo> _futureMeterConnection;
+  Future _futureEndpointInfo;
 
   fetchInstallationInfoCallback() {
     setState(() {
       _futureInstallationInfo = fetchInstallationInfo(_serialNumber.text);
       _changeAddress = false;
+      _startRegistration = false;
+      _startMeterConnection = false;
+      _futureMeterConnection = null;
+      _futureMeterRegistrationInfo = null;
+    });
+  }
+
+  randomFunction() {
+    setState(() {
+      _futureUnregisterMeter = unregisterMeter(_serialNumber.text);
     });
   }
 
@@ -56,7 +72,12 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  registrationSuccessfulCallback() {
+    _registrationSuccesful = true;
+  }
+
   connectMeterCallback() {
+    print("CONNECTING METER");
     setState(() {
       _futureMeterConnection = connectMeter(_serialNumber.text);
       _startMeterConnection = true;
@@ -70,7 +91,10 @@ class _MainPageState extends State<MainPage> {
   }
 
   registerMeterCallback() {
+    // print("REGISTERING METER");
     setState(() {
+      currentProcess = "Registration";
+      _startRegistration = true;
       _futureMeterRegistrationInfo = registerMeter(
           _serialNumber.text,
           null,
@@ -78,7 +102,23 @@ class _MainPageState extends State<MainPage> {
           _zipcodeExt.text,
           int.parse(_houseNumber.text),
           _street.text);
-      _startRegistration = true;
+
+      _futureEndpointInfo = _futureMeterRegistrationInfo;
+    });
+    _futureMeterRegistrationInfo.then((value) {
+      if (value.message == 'Meter registered successfully.') {
+        sleep(Duration(seconds: 3));
+        setState(() {
+          currentProcess = "Meter Connection";
+          _futureMeterConnection = connectMeter(_serialNumber.text);
+          _startMeterConnection = true;
+
+          _futureEndpointInfo = _futureMeterConnection;
+        });
+      } else {
+        print("Can't connect");
+        return;
+      }
     });
   }
 
@@ -133,10 +173,11 @@ class _MainPageState extends State<MainPage> {
                 changeAddressBool: _changeAddress,
                 unregisterMeter: unregisterMeterCallback,
                 meterRegistrationInfo: _futureMeterRegistrationInfo,
-                startRegistration: _startRegistration,
-                connectMeter: connectMeterCallback,
+                connectMeterCallback: connectMeterCallback,
                 meterConnectionInfo: _futureMeterConnection,
-                startMeterConnection: _startMeterConnection),
+                currentProcess: currentProcess,
+                endpointInfo: _futureEndpointInfo,
+                processStart: _startRegistration),
           ],
         ),
       ),

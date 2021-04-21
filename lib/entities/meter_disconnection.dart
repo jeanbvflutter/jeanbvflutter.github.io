@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future<MeterDisconnectionInfo> disconnectMeter(String serialNumber) async {
-
   var urlExt = '/disconnectMeter?serial_number=$serialNumber';
-
+  final queryParameters = {
+    "serial_number": serialNumber,
+  };
   final response = await http.get(
-    Uri.https('104.248.82.49:8888', urlExt),
+    Uri.http('104.248.82.49:8888', urlExt, queryParameters),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
@@ -23,8 +24,7 @@ Future<MeterDisconnectionInfo> disconnectMeter(String serialNumber) async {
 class MeterDisconnectionInfo {
   String status;
 
-  MeterDisconnectionInfo(
-      {this.status});
+  MeterDisconnectionInfo({this.status});
 
   factory MeterDisconnectionInfo.fromJson(Map<String, dynamic> json) {
     return MeterDisconnectionInfo(

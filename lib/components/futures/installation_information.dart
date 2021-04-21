@@ -20,7 +20,7 @@ class InstallationInformation extends StatefulWidget {
   final Function() productionTestCallback;
   final Function() changeAddress;
   final Function() unregisterMeter;
-  final Function() connectMeter;
+  final Function() connectMeterCallback;
 
   TextEditingController street;
   TextEditingController zipCode;
@@ -28,8 +28,11 @@ class InstallationInformation extends StatefulWidget {
   TextEditingController houseNumber;
   String status;
   bool changeAddressBool;
-  bool startRegistration;
   bool startMeterConnection;
+  bool registrationSuccesful;
+  bool processStart;
+  String currentProcess;
+  Future endpointInfo;
 
   InstallationInformation(
       {this.registerMeterCallback,
@@ -45,10 +48,11 @@ class InstallationInformation extends StatefulWidget {
       this.changeAddressBool,
       this.unregisterMeter,
       this.meterRegistrationInfo,
-      this.startRegistration,
-      this.connectMeter,
+      this.connectMeterCallback,
       this.meterConnectionInfo,
-      this.startMeterConnection});
+      this.currentProcess,
+      this.endpointInfo,
+      this.processStart});
 
   @override
   _InstallationInformationState createState() =>
@@ -63,6 +67,8 @@ class _InstallationInformationState extends State<InstallationInformation> {
       builder: (context, snapshot) {
         try {
           widget.status = snapshot.data.status.toString();
+          print("REGISTRATION SUCCESSFUL" +
+              widget.registrationSuccesful.toString());
         } on Exception catch (_) {} catch (error) {
           return Text("");
         }
@@ -128,11 +134,12 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     children: [
                       Card(
                         child: category(
-                          "Registration Status",
-                          widget.startRegistration,
+                          "Registration",
+                          widget.processStart,
                           widget.meterRegistrationInfo,
                           Colors.grey[200],
                           Colors.black,
+                          false,
                         ),
                       )
                       // setStatus(widget.meterRegistrationInfo),
@@ -144,34 +151,46 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     children: [
                       Card(
                         child: category(
-                            "RSSI Check",
-                            true,
-                            widget.meterRegistrationInfo,
-                            Colors.grey[200],
-                            Colors.black),
+                          "Meter Connection",
+                          widget.processStart,
+                          widget.meterConnectionInfo,
+                          Colors.grey[200],
+                          Colors.black,
+                          widget.registrationSuccesful,
+                        ),
                       ),
+                      // Card(
+                      //   child: category(
+                      //       "RSSI Check",
+                      //       true,
+                      //       widget.meterRegistrationInfo,
+                      //       Colors.grey[200],
+                      //       Colors.black),
+                      // ),
                     ],
                   )),
                 ]),
                 Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Card(
-                        child: category(
-                            "Meter Connection",
-                            true,
-                            widget.meterConnectionInfo,
-                            Colors.grey[200],
-                            Colors.black),
-                      ),
-                      Card(
-                        child: category(
-                            "Meter Disconnection",
-                            true,
-                            widget.meterRegistrationInfo,
-                            Colors.grey[200],
-                            Colors.black),
-                      )
+                      // Card(
+                      //   child: category(
+                      //     "Meter Connection",
+                      //     widget.processStart,
+                      //     widget.meterConnectionInfo,
+                      //     Colors.grey[200],
+                      //     Colors.black,
+                      //     widget.registrationSuccesful,
+                      //   ),
+                      // ),
+                      // Card(
+                      //   child: category(
+                      //       "Meter Disconnection",
+                      //       true,
+                      //       widget.meterRegistrationInfo,
+                      //       Colors.grey[200],
+                      //       Colors.black),
+                      // )
                     ]),
               ],
             ),
@@ -190,11 +209,11 @@ class _InstallationInformationState extends State<InstallationInformation> {
                           maxWidth: 400,
                         ),
                         child: Center(
-                            child: SetStatus(
-                                process: "Registration Status",
-                                processStart: widget.startRegistration,
-                                view: "text",
-                                future: widget.meterRegistrationInfo)))),
+                            child: setStatus(
+                                "Registration",
+                                widget.processStart,
+                                "text",
+                                widget.endpointInfo)))),
               ),
             )
             // child: Container(
