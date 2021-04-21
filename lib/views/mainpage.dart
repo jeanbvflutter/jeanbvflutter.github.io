@@ -60,51 +60,18 @@ class _MainPageState extends State<MainPage> {
   Future<MeterHealthCheckInfo> _futureMeterHealthCheckInfo;
   Future<RSSIInfo> _futureRSSICheckInfo;
   Future<MeterBreakerInfo> _futureMeterBreakerOnInfo;
-  Future<MeterBreakerInfo> _futureMeterBreakerOffInfo;
-<<<<<<< HEAD
+
   Future<MeterDisconnectionInfo> _futureMeterDisconnection;
-
-  /// WRAP THE ACTION IN BETWEEN CONNECTION
-  meterConnectionWrapper(Function func) {
-    setState(() {
-      Future executeFuture;
-      var connectionCallback = connectMeter(_serialNumber.text);
-
-      connectionCallback.then((value) {
-        if (value.status == 'OK') {
-          print('EEYY!');
-          executeFuture = func(_serialNumber.text);
-        } else {
-          print("Can't connect");
-          return;
-        }
-
-        executeFuture.then((value) {
-          if (value.status == 'OK') {
-            print('EEYY!2');
-            var disconnectionCallback = connectMeter(_serialNumber.text);
-            disconnectionCallback.then((value) {
-              if (value.status == 'OK') {
-                print('Completed!');
-              } else {
-                print("Can't disconnect!");
-              }
-            });
-          } else {
-            print('FAILED EXECUTION');
-=======
   Future<MeterConnectionInfo> connectMeterFuture;
 
-
-  meterConnectionWrapper(Function func){
+  meterConnectionWrapper(Function func) {
     connectMeter(_serialNumber.text).then((value) {
       if (value.status == 'OK') {
-        func(_serialNumber.text).then((value){
+        func(_serialNumber.text).then((value) {
           if (value.status == 'OK') {
             print("Operation has successful");
-          }else{
+          } else {
             print("Operation has failed");
->>>>>>> 857ca5e2d2469e5cb41680c0210415b955daa092
           }
           disconnectMeter(_serialNumber.text);
           return;
@@ -141,15 +108,13 @@ class _MainPageState extends State<MainPage> {
       _startMeterConnection = true;
     });
   }
-<<<<<<< HEAD
+
   // connectMeterCallback() {
   //   setState(() {
   //     _futureMeterConnection = connectMeter(_serialNumber.text);
   //     _startMeterConnection = true;
   //   });
   // }
-=======
->>>>>>> 857ca5e2d2469e5cb41680c0210415b955daa092
 
   changeAddressCallback() {
     setState(() {
@@ -226,8 +191,6 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -261,32 +224,6 @@ class _MainPageState extends State<MainPage> {
             ),
             SizedBox(height: 20),
             new InstallationInformation(
-<<<<<<< HEAD
-              registerMeterCallback: registerMeterCallback,
-              getLocation: getLocation,
-              productionTestCallback: productionTestCallback,
-              futureInstallationInformation: _futureInstallationInfo,
-              changeAddress: changeAddressCallback,
-              street: _street,
-              zipCode: _zipCode,
-              zipCodeExt: _zipcodeExt,
-              houseNumber: _houseNumber,
-              changeAddressBool: _changeAddress,
-              unregisterMeter: unregisterMeterCallback,
-              meterRegistrationInfo: _futureMeterRegistrationInfo,
-              connectMeterCallback: connectMeterCallback,
-              meterConnectionInfo: _futureMeterConnection,
-              currentProcess: currentProcess,
-              endpointInfo: _futureEndpointInfo,
-              processStart: _startRegistration,
-              startMeterConnection: _startMeterConnection,
-              newProductionTest: newProductionTestCallback,
-              healthCheck: healthCheckCallback,
-              breakerOn: breakerOnCallback,
-              breakerOff: breakerOffCallback,
-              RSSICheck: RSSICheckCallback,
-            )
-=======
                 registerMeterCallback: registerMeterCallback,
                 getLocation: getLocation,
                 productionTestCallback: productionTestCallback,
@@ -305,12 +242,21 @@ class _MainPageState extends State<MainPage> {
                 endpointInfo: _futureEndpointInfo,
                 processStart: _startRegistration,
                 startMeterConnection: _startMeterConnection,
-                newProductionTest:() { meterConnectionWrapper(newProductionTest); },
-                healthCheck:() { healthCheckMeter(_serialNumber.text); },
-                breakerOn:() {meterConnectionWrapper(meterBreakerOn); },
-                breakerOff:() { meterConnectionWrapper(meterBreakerOff); },
-                RSSICheck:() { meterConnectionWrapper(RSSIcheck); })
->>>>>>> 857ca5e2d2469e5cb41680c0210415b955daa092
+                newProductionTest: () {
+                  meterConnectionWrapper(newProductionTest);
+                },
+                healthCheck: () {
+                  healthCheckMeter(_serialNumber.text);
+                },
+                breakerOn: () {
+                  meterConnectionWrapper(meterBreakerOn);
+                },
+                breakerOff: () {
+                  meterConnectionWrapper(meterBreakerOff);
+                },
+                RSSICheck: () {
+                  meterConnectionWrapper(RSSIcheck);
+                })
           ],
         ),
       ),

@@ -4,13 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:meter_activation/entities/status_parser.dart';
 
 Future<MeterDisconnectionInfo> disconnectMeter(String serialNumber) async {
-<<<<<<< HEAD
   print("DISCONNECTING METER");
   var urlExt = 'post/disconnectMeter';
-  // var urlExt = '/disconnectMeter?serial_number=$serialNumber';
-=======
-  var urlExt = 'post/disconnectMeter';
->>>>>>> 857ca5e2d2469e5cb41680c0210415b955daa092
   final queryParameters = {
     "serial_number": serialNumber,
   };
