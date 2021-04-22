@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:meter_activation/components/futures/address_information.dart';
+import 'package:meter_activation/components/futures/client_information.dart';
 import 'package:meter_activation/components/futures/status.dart';
 import 'package:meter_activation/components/ui/category.dart';
 import 'package:meter_activation/components/ui/custom_button.dart';
-import 'package:meter_activation/components/ui/installation_information_card.dart';
+import 'package:meter_activation/components/ui/custom_information_card.dart';
 import 'package:meter_activation/components/ui/registration_info.dart';
 import 'package:meter_activation/entities/installation_info.dart';
 import 'package:meter_activation/enums.dart';
 
-import 'meter_registration.dart';
+import 'meter_information.dart';
 
 class InstallationInformation extends StatefulWidget {
   Future futureInstallationInformation;
@@ -252,8 +254,45 @@ class _InstallationInformationState extends State<InstallationInformation> {
         } else {
           return Column(
             children: [
-              installationInformationCard(
-                widget.futureInstallationInformation,
+              // installationInformationCard(
+              //   widget.futureInstallationInformation,
+              // ),
+              CustomInformationCard(
+                headerInfoText: "Client Information",
+                information: widget.futureInstallationInformation,
+                futureBuilder: clientInformation,
+                  buttonInfoList: [
+                    ['ID: ' , 'clientId'],
+                    ['Achternaam: ', 'lastName'],
+                    ['Voornaam: ', 'firstName'],
+                    ['E-mail: ', 'email'],
+                    ['Bron: ', 'clientSource'],
+                  ]
+
+              ),
+              CustomInformationCard(
+                  headerInfoText: "Addres Information",
+                  information: widget.futureInstallationInformation,
+                  futureBuilder: addressInformation,
+                  buttonInfoList: [
+                    ['"Postcode: "' , 'zipCode'],
+                    ['Extentie: ', 'zipCodeExt'],
+                    ['Straat: ', 'street'],
+                    ['Huisnummer: : ', 'houseNumber'],
+                    ['City: ', 'city'],
+                  ]
+
+              ),
+              CustomInformationCard(
+                  headerInfoText: "Meter Information",
+                  information: widget.futureInstallationInformation,
+                  futureBuilder: meterInformation,
+                  buttonInfoList: [
+                    ['Serienummer: ' , 'serialNumber'],
+                    ['Status: : ', 'status'],
+                    ['Breaker status: : ', 'breakerStatus'],
+                  ]
+
               ),
               Row(
                 children: [
