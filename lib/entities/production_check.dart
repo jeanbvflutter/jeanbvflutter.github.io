@@ -23,14 +23,12 @@ Future<ProductionInfo> newProductionTest(String serialNumber) async {
   }
 }
 
-
 Future<ProductionInfo> productionTest(String serialNumber) async {
   final response = await http.post(
     Uri.https('energize.eleena.eu', '/home/production_test_flutter'),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
-
     body: jsonEncode(<String, dynamic>{
       'serial_number': serialNumber,
     }),
@@ -44,16 +42,14 @@ Future<ProductionInfo> productionTest(String serialNumber) async {
 }
 
 class ProductionInfo extends StatusParser {
+  String message;
 
-  ProductionInfo(status) : super(status);
+  ProductionInfo(status, {this.message}) : super(status);
 
   factory ProductionInfo.fromJson(Map<String, dynamic> json) {
-    return ProductionInfo(
-      json['status'],
-    );
+    return ProductionInfo(json['status'], message: json['message']);
   }
 }
-
 
 // data = {
 // 'serial_number': serial_no,

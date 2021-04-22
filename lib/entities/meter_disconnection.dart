@@ -27,11 +27,10 @@ Future<MeterDisconnectionInfo> disconnectMeter(String serialNumber) async {
 }
 
 class MeterDisconnectionInfo extends StatusParser {
-  MeterDisconnectionInfo(status) : super(status);
+  String message;
+  MeterDisconnectionInfo(status, {this.message}) : super(status);
 
   factory MeterDisconnectionInfo.fromJson(Map<String, dynamic> json) {
-    return MeterDisconnectionInfo(
-      json['disconnected_status'],
-    );
+    return MeterDisconnectionInfo(json['status'], message: json['message']);
   }
 }

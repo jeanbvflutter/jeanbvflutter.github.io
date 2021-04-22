@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:meter_activation/entities/status_parser.dart';
 
 Future<RSSIInfo> RSSIcheck(String serialNumber) async {
+  print("IN RSSI");
   var urlExt = 'get/readRSSI';
   final queryParameters = {
     "serial_number": serialNumber,
@@ -20,17 +21,16 @@ Future<RSSIInfo> RSSIcheck(String serialNumber) async {
     print(response.body);
     return RSSIInfo.fromJson(jsonDecode(response.body));
   } else {
+    print(response.body);
     throw Exception('Failed');
   }
 }
 
-class RSSIInfo extends StatusParser{
-
-  RSSIInfo(status) : super(status);
+class RSSIInfo extends StatusParser {
+  String message;
+  RSSIInfo(status, {this.message}) : super(status);
 
   factory RSSIInfo.fromJson(Map<String, dynamic> json) {
-    return RSSIInfo(
-      json['status'],
-    );
+    return RSSIInfo(json['status'], message: json['message']);
   }
 }

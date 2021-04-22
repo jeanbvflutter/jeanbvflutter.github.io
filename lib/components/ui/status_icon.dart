@@ -5,5 +5,7 @@ String displayStatus(String statusResult) {
     return 'assets/icons/flutter_green_dot.png';
   } else if (statusResult == "ERROR") {
     return 'assets/icons/flutter_red_dot.png';
+  } else if (statusResult == "error") {
+    return 'assets/icons/flutter_red_dot.png';
   }
 }
