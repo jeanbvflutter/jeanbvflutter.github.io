@@ -67,7 +67,8 @@ class _MainPageState extends State<MainPage> {
   meterConnectionWrapper(Function func) {
     connectMeter(_serialNumber.text).then((value) {
       if (value.status == 'OK') {
-        func(_serialNumber.text).then((value) {
+        _futureEndpointInfo = func(_serialNumber.text);
+        _futureEndpointInfo.then((value) {
           if (value.status == 'OK') {
             print("Operation has successful");
           } else {
@@ -119,11 +120,16 @@ class _MainPageState extends State<MainPage> {
     _registrationSuccesful = true;
   }
 
+  meterHealthCheckCallback() {
+    print("HEALTH CHECK METER V1");
+    _futureHealthCheckInfo = healthCheckMeter(_serialNumber.text);
+    _futureEndpointInfo = _futureHealthCheckInfo;
+  }
+
   connectMeterCallback() {
     print("CONNECTING METER");
     setState(() {
       _futureMeterConnection = connectMeter(_serialNumber.text);
-      _startMeterConnection = true;
     });
   }
 
@@ -183,19 +189,23 @@ class _MainPageState extends State<MainPage> {
     // print("REGISTERING METER");
     meterRegistrationCallback();
     _futureMeterRegistrationInfo.then((value) {
-      if (value.message == 'Meter registered successfully.') {
+      if (value.status == 'OK') {
         sleep(Duration(seconds: 3));
         meterConnectionCallback();
         _futureMeterConnection.then((value) {
-          if (value.message == 'Meter connected successfully') {
+          if (value.status == 'OK') {
             rssiCallback();
             _futureRSSICheckInfo.then((value) {
               if (value.status == 'OK') {
                 productionTestCallback();
-
                 _futureProductionTestInfo.then((value) {
                   if (value.status == 'OK') {
                     meterDisconnectionCallback();
+                    _futureMeterDisconnection.then((value) {
+                      if (value.status == 'OK') {
+                        meterHealthCheckCallback();
+                      }
+                    });
                   }
                 });
               }

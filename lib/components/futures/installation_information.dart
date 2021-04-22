@@ -173,11 +173,29 @@ class _InstallationInformationState extends State<InstallationInformation> {
                             Colors.black,
                             true),
                       ),
+                      // setStatus(widget.meterRegistrationInfo),
+                      // Text("Meter Registration Status"),
+                    ],
+                  ),
+                ]),
+                Row(children: [
+                  // setStatus(widget.meterRegistrationInfo),
+                  Row(
+                    children: [
                       Card(
                         child: category(
                             "Meter Disconnection",
                             widget.processStart,
                             widget.futureMeterDisconnectionInfo,
+                            Colors.grey[200],
+                            Colors.black,
+                            true),
+                      ),
+                      Card(
+                        child: category(
+                            "Meter Health Check",
+                            widget.processStart,
+                            widget.futureHealthCheck,
                             Colors.grey[200],
                             Colors.black,
                             true),
@@ -282,7 +300,28 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     text: 'Breaker off',
                     minWidth: 150,
                     height: 50,
-                  )
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Card(
+                      elevation: 1,
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.black26),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Container(
+                          // margin: EdgeInsets.all(5),
+                          constraints: BoxConstraints(
+                            maxHeight: 50,
+                            maxWidth: 400,
+                          ),
+                          child: Center(
+                              child: setStatus(
+                                  "Registration",
+                                  widget.processStart,
+                                  "text",
+                                  widget.endpointInfo)))),
                 ],
               ),
             ],

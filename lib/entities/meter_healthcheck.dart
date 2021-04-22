@@ -24,13 +24,12 @@ Future<MeterHealthCheckInfo> healthCheckMeter(String serialNumber) async {
   }
 }
 
-class MeterHealthCheckInfo extends StatusParser{
+class MeterHealthCheckInfo extends StatusParser {
+  String message;
 
-  MeterHealthCheckInfo(status) : super(status);
+  MeterHealthCheckInfo(status, {this.message}) : super(status);
 
   factory MeterHealthCheckInfo.fromJson(Map<String, dynamic> json) {
-    return MeterHealthCheckInfo(
-      json['alive'],
-    );
+    return MeterHealthCheckInfo(json['alive'], message: json['message']);
   }
 }
