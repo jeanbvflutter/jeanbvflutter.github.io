@@ -10,7 +10,7 @@ Container category(String process, bool processStart, Future future, bgColor,
     padding: EdgeInsets.all(5),
     child: Row(
       children: [
-        setStatus("general", processStart, "icon", future),
+        setStatus("general", processStart, "icon", future, ""),
         Center(child: textWidget(process, textColor)),
       ],
     ),

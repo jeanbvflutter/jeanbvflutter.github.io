@@ -50,6 +50,7 @@ class _MainPageState extends State<MainPage> {
   bool _startMeterDisonnection = false;
   bool _hasBreaker = false;
   bool _startMeterDisconnection = false;
+  String action = "Status Tracker";
   String currentProcess;
 
   Future<MeterInfo> _futureMeterRegistrationInfo;
@@ -65,18 +66,31 @@ class _MainPageState extends State<MainPage> {
   Future<MeterDisconnectionInfo> _futureMeterDisconnection;
   Future<MeterConnectionInfo> connectMeterFuture;
 
-  meterConnectionWrapper(Function func) {
-    connectMeter(_serialNumber.text).then((value) {
+  meterConnectionWrapper(Function func, String actionInput) {
+    setState(() {
+      _futureEndpointInfo = null;
+      action = actionInput;
+    });
+    _futureEndpointInfo = connectMeter(_serialNumber.text);
+    _futureEndpointInfo.then((value) {
       if (value.status == 'OK') {
-        _futureEndpointInfo = func(_serialNumber.text);
+        setState(() {
+          action = "";
+          _futureEndpointInfo = func(_serialNumber.text);
+        });
+
         _futureEndpointInfo.then((value) {
           if (value.status == 'OK') {
             print("Operation has successful");
           } else {
             print("Operation has failed");
           }
-          disconnectMeter(_serialNumber.text);
-          return;
+          // setState(() {
+          _futureEndpointInfo = disconnectMeter(_serialNumber.text);
+          // });
+          setState(() {
+            _futureEndpointInfo = null;
+          });
         });
       }
     });
@@ -268,17 +282,19 @@ class _MainPageState extends State<MainPage> {
                 futureHealthCheck: _futureHealthCheckInfo,
                 futureMeterDisconnectionInfo: _futureMeterDisconnection,
                 futureRssiCheck: _futureRSSICheckInfo,
+                action: action,
+                healthCheckMeterCallback: healthCheckMeterCallback,
                 newProductionTest: () {
-                  meterConnectionWrapper(newProductionTest);
+                  meterConnectionWrapper(newProductionTest, "production");
                 },
                 breakerOn: () {
-                  meterConnectionWrapper(meterBreakerOn);
+                  meterConnectionWrapper(meterBreakerOn, "breaker");
                 },
                 breakerOff: () {
-                  meterConnectionWrapper(meterBreakerOff);
+                  meterConnectionWrapper(meterBreakerOff, "breaker");
                 },
                 RSSICheck: () {
-                  meterConnectionWrapper(RSSIcheck);
+                  meterConnectionWrapper(RSSIcheck, "rssi");
                 })
           ],
         ),

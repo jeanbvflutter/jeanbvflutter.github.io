@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meter_activation/components/ui/status_icon.dart';
 
-FutureBuilder setStatus(
-    String process, bool processStart, String view, Future future) {
+FutureBuilder setStatus(String process, bool processStart, String view,
+    Future future, String action) {
   String status;
   String message;
   String icon;
@@ -32,8 +32,10 @@ FutureBuilder setStatus(
           switch (process) {
             case "Registration":
               {
-                if (processStart == true) {
+                if (processStart == true && action == "") {
                   return Text("Performing Meter Registration");
+                } else {
+                  return Text(action.toString());
                 }
               }
           }
@@ -47,8 +49,25 @@ FutureBuilder setStatus(
             icon,
           );
         } else if (view == "text") {
-          print("PRINTING TEXT");
-          return Text(message.toString());
+          print("PRINTING TEXT 123" + message.toString());
+          print("ACTION " + action);
+          switch (action) {
+            case "production":
+              {
+                return Text(
+                    "Production test has started. Please wait. \nThis might take a while.");
+              }
+              break;
+            case "rssi":
+              {
+                return Text("RSSI Check has started. Please wait.");
+              }
+              break;
+            case "":
+              {
+                return Text(message.toString());
+              }
+          }
         }
       } else if (snapshot.hasError) {
         print("TEST2");

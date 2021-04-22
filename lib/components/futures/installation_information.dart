@@ -43,6 +43,7 @@ class InstallationInformation extends StatefulWidget {
   String currentProcess;
   Future endpointInfo;
   bool startMeterDisconnection;
+  String action;
 
   InstallationInformation(
       {this.registerMeterCallback,
@@ -73,7 +74,8 @@ class InstallationInformation extends StatefulWidget {
       this.futureProductionTestInfo,
       this.startMeterDisconnection,
       this.futureRssiCheck,
-      this.futureMeterDisconnectionInfo});
+      this.futureMeterDisconnectionInfo,
+      this.action});
 
   @override
   _InstallationInformationState createState() =>
@@ -228,7 +230,8 @@ class _InstallationInformationState extends State<InstallationInformation> {
                                 "Registration",
                                 widget.processStart,
                                 "text",
-                                widget.endpointInfo)))),
+                                widget.endpointInfo,
+                                "")))),
               ),
             ),
           ]);
@@ -312,6 +315,24 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       height: 50,
                     ),
                   )
+                ],
+              ),
+              Row(
+                children: [
+                  Card(
+                      elevation: 1,
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.black26),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Container(
+                          // margin: EdgeInsets.all(5),
+                          constraints: BoxConstraints(
+                            maxHeight: 50,
+                            maxWidth: 400,
+                          ),
+                          child: Center(
+                              child: setStatus("Registration", true, "text",
+                                  widget.endpointInfo, widget.action)))),
                 ],
               ),
             ],
