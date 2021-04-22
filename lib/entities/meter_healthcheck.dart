@@ -30,6 +30,6 @@ class MeterHealthCheckInfo extends StatusParser {
   MeterHealthCheckInfo(status, {this.message}) : super(status);
 
   factory MeterHealthCheckInfo.fromJson(Map<String, dynamic> json) {
-    return MeterHealthCheckInfo(json['alive'], message: json['message']);
+    return MeterHealthCheckInfo(json['status'], message: json['message']);
   }
 }

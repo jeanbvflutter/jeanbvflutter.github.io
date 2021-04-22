@@ -39,9 +39,10 @@ class InstallationInformation extends StatefulWidget {
   bool startMeterConnection;
   bool registrationSuccesful;
   bool processStart;
-  bool startMeterDisconnection;
+  bool hasBreaker;
   String currentProcess;
   Future endpointInfo;
+  bool startMeterDisconnection;
 
   InstallationInformation(
       {this.registerMeterCallback,
@@ -62,14 +63,15 @@ class InstallationInformation extends StatefulWidget {
       this.processStart,
       this.startMeterConnection,
       this.newProductionTest,
-      this.healthCheckMeterCallback,
+      this.healthCheck,
       this.breakerOn,
       this.breakerOff,
       this.RSSICheck,
+      this.hasBreaker,
+      this.healthCheckMeterCallback,
       this.futureHealthCheck,
       this.futureProductionTestInfo,
       this.startMeterDisconnection,
-      this.healthCheck,
       this.futureRssiCheck,
       this.futureMeterDisconnectionInfo});
 
@@ -286,42 +288,30 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   SizedBox(
                     width: 10,
                   ),
-                  CustomButton(
-                    onPressed: widget.breakerOn,
-                    text: 'Breaker on',
-                    minWidth: 150,
-                    height: 50,
+                  Visibility(
+                    visible: widget.hasBreaker,
+                    child: CustomButton(
+                      onPressed: widget.breakerOn,
+                      text: 'Breaker on',
+                      minWidth: 150,
+                      height: 50,
+                    ),
                   ),
-                  SizedBox(
-                    width: 10,
+                  Visibility(
+                    visible: widget.hasBreaker,
+                    child: SizedBox(
+                      width: 10,
+                    ),
                   ),
-                  CustomButton(
-                    onPressed: widget.breakerOff,
-                    text: 'Breaker off',
-                    minWidth: 150,
-                    height: 50,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Card(
-                      elevation: 1,
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black26),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Container(
-                          // margin: EdgeInsets.all(5),
-                          constraints: BoxConstraints(
-                            maxHeight: 50,
-                            maxWidth: 400,
-                          ),
-                          child: Center(
-                              child: setStatus(
-                                  "Registration",
-                                  widget.processStart,
-                                  "text",
-                                  widget.endpointInfo)))),
+                  Visibility(
+                    visible: widget.hasBreaker,
+                    child: CustomButton(
+                      onPressed: widget.breakerOff,
+                      text: 'Breaker off',
+                      minWidth: 150,
+                      height: 50,
+                    ),
+                  )
                 ],
               ),
             ],

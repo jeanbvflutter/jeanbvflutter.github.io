@@ -47,8 +47,9 @@ class _MainPageState extends State<MainPage> {
   bool _startRegistration = false;
   bool _startMeterConnection = false;
   bool _registrationSuccesful = false;
+  bool _startMeterDisonnection = false;
+  bool _hasBreaker = false;
   bool _startMeterDisconnection = false;
-
   String currentProcess;
 
   Future<MeterInfo> _futureMeterRegistrationInfo;
@@ -94,19 +95,13 @@ class _MainPageState extends State<MainPage> {
       _futureEndpointInfo = null;
       _futureRSSICheckInfo = null;
       _futureProductionTestInfo = null;
+      _futureHealthCheckInfo = null;
       _futureInstallationInfo = fetchInstallationInfo(_serialNumber.text);
-    });
-  }
-
-  healthCheckMeterCallback() {
-    setState(() {
-      _futureHealthCheckInfo = healthCheckMeter(_serialNumber.text);
-    });
-  }
-
-  rssiCheckCallback() {
-    setState(() {
-      _futureRSSICheckInfo = RSSIcheck(_serialNumber.text);
+      if (this._serialNumber.text.contains('000000')) {
+        this._hasBreaker = true;
+      } else {
+        this._hasBreaker = false;
+      }
     });
   }
 
@@ -120,10 +115,11 @@ class _MainPageState extends State<MainPage> {
     _registrationSuccesful = true;
   }
 
-  meterHealthCheckCallback() {
-    print("HEALTH CHECK METER V1");
-    _futureHealthCheckInfo = healthCheckMeter(_serialNumber.text);
-    _futureEndpointInfo = _futureHealthCheckInfo;
+  healthCheckMeterCallback() {
+    setState(() {
+      _futureHealthCheckInfo = healthCheckMeter(_serialNumber.text);
+      _futureEndpointInfo = _futureHealthCheckInfo;
+    });
   }
 
   connectMeterCallback() {
@@ -203,7 +199,7 @@ class _MainPageState extends State<MainPage> {
                     meterDisconnectionCallback();
                     _futureMeterDisconnection.then((value) {
                       if (value.status == 'OK') {
-                        meterHealthCheckCallback();
+                        healthCheckMeterCallback();
                       }
                     });
                   }
@@ -266,6 +262,8 @@ class _MainPageState extends State<MainPage> {
                 currentProcess: currentProcess,
                 endpointInfo: _futureEndpointInfo,
                 processStart: _startRegistration,
+                startMeterConnection: _startMeterConnection,
+                hasBreaker: _hasBreaker,
                 futureProductionTestInfo: _futureProductionTestInfo,
                 futureHealthCheck: _futureHealthCheckInfo,
                 futureMeterDisconnectionInfo: _futureMeterDisconnection,
