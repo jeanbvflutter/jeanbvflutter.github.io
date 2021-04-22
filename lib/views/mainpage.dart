@@ -53,6 +53,8 @@ class _MainPageState extends State<MainPage> {
   String action = "Status Tracker";
   String currentProcess;
   bool active = true;
+  bool reset = false;
+  Color colorPrimary = Colors.blueGrey;
 
   Future<MeterInfo> _futureMeterRegistrationInfo;
   Future<ProductionInfo> _futureProductionTestInfo;
@@ -72,8 +74,10 @@ class _MainPageState extends State<MainPage> {
       active = false;
       _futureEndpointInfo = null;
       action = actionInput;
+      colorPrimary = Colors.grey;
     });
     _futureEndpointInfo = connectMeter(_serialNumber.text);
+
     _futureEndpointInfo.then((value) {
       if (value.status == 'OK') {
         setState(() {
@@ -82,6 +86,7 @@ class _MainPageState extends State<MainPage> {
         });
 
         _futureEndpointInfo.then((value) {
+          print("VALUE STATUS" + value.status);
           if (value.status == 'OK') {
             print("Operation has successful");
           } else {
@@ -89,11 +94,21 @@ class _MainPageState extends State<MainPage> {
           }
           // setState(() {
           _futureEndpointInfo = disconnectMeter(_serialNumber.text);
+
           // });
           setState(() {
+            print("ACITIVATING");
+            reset = false;
             _futureEndpointInfo = null;
             active = true;
+            colorPrimary = Colors.blueGrey;
           });
+        });
+      } else {
+        setState(() {
+          reset = false;
+          print("Operation has failed");
+          active = true;
         });
       }
     });
@@ -103,6 +118,7 @@ class _MainPageState extends State<MainPage> {
     print("reseting");
     setState(() {
       print("reseting");
+      active = true;
       _changeAddress = false;
       _startRegistration = false;
       _startMeterConnection = false;
@@ -164,6 +180,27 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _futureRSSICheckInfo = RSSIcheck(_serialNumber.text);
       _futureEndpointInfo = _futureRSSICheckInfo;
+    });
+  }
+
+  resetAll() {
+    setState(() {
+      reset = true;
+      sleep(Duration(seconds: 3));
+      active = true;
+      colorPrimary = Colors.blueGrey;
+      action = "";
+      _futureEndpointInfo = null;
+      _changeAddress = false;
+      _startRegistration = false;
+      _startMeterConnection = false;
+      _futureMeterConnection = null;
+      _futureMeterRegistrationInfo = null;
+      _futureMeterDisconnection = null;
+      _futureEndpointInfo = null;
+      _futureRSSICheckInfo = null;
+      _futureProductionTestInfo = null;
+      _futureHealthCheckInfo = null;
     });
   }
 
@@ -250,6 +287,8 @@ class _MainPageState extends State<MainPage> {
                   textStyle: buttonTextStyle,
                   minWidth: 150,
                   height: 50,
+                  active: active,
+                  colorPrimary: colorPrimary,
                 ),
                 SizedBox(
                   width: 10,
@@ -260,6 +299,20 @@ class _MainPageState extends State<MainPage> {
                   textStyle: buttonTextStyle,
                   minWidth: 150,
                   height: 50,
+                  active: active,
+                  colorPrimary: colorPrimary,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                CustomButton(
+                  onPressed: resetAll,
+                  text: 'Reset',
+                  textStyle: buttonTextStyle,
+                  minWidth: 150,
+                  active: true,
+                  height: 50,
+                  colorPrimary: Colors.red,
                 ),
               ],
             ),
@@ -289,6 +342,8 @@ class _MainPageState extends State<MainPage> {
                 action: action,
                 active: active,
                 healthCheckMeterCallback: healthCheckMeterCallback,
+                colorPrimary: colorPrimary,
+                reset: reset,
                 newProductionTest: () {
                   meterConnectionWrapper(newProductionTest, "production");
                 },

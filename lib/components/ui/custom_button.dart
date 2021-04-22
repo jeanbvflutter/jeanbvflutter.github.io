@@ -8,6 +8,7 @@ class CustomButton extends StatefulWidget {
   final text;
   final textStyle;
   bool active;
+  Color colorPrimary;
 
   CustomButton(
       {this.onPressed,
@@ -15,7 +16,8 @@ class CustomButton extends StatefulWidget {
       this.height,
       this.textStyle,
       this.text,
-      this.active});
+      this.active,
+      this.colorPrimary});
 
   @override
   _CustomButtonState createState() => _CustomButtonState();
@@ -33,11 +35,13 @@ class _CustomButtonState extends State<CustomButton> {
           height: widget.height,
           child: ElevatedButton(
             child: Text(widget.text, style: widget.textStyle),
+            style: ElevatedButton.styleFrom(primary: widget.colorPrimary),
             onPressed: () {
               if (widget.active == true) {
                 widget.onPressed();
               } else {
                 print("not active");
+                // widget.onPressed();
                 null;
               }
             },

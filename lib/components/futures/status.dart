@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:meter_activation/components/ui/status_icon.dart';
 
 FutureBuilder setStatus(String process, bool processStart, String view,
-    Future future, String action) {
+    Future future, String action, bool reset) {
   String status;
   String message;
   String icon;
+
   return FutureBuilder(
     future: future,
     builder: (context, snapshot) {
@@ -35,7 +36,23 @@ FutureBuilder setStatus(String process, bool processStart, String view,
                 if (processStart == true && action == "") {
                   return Text("Performing Meter Registration");
                 } else {
-                  return Text(action.toString());
+                  return Text(error.toString());
+                }
+              }
+              break;
+            case "Action":
+              {
+                if (processStart == true && action == "") {
+                  return Text("Meter Status Track");
+                } else {
+                  print("ACTIONTEST123123123123" + action);
+                  print("processstart" + processStart.toString());
+                  if (reset == false) {
+                    return Text(
+                        "An Error Occured. Please click Reset and try again.");
+                  } else {
+                    return Text("Performing action. Please wait.");
+                  }
                 }
               }
           }
@@ -55,7 +72,7 @@ FutureBuilder setStatus(String process, bool processStart, String view,
             case "production":
               {
                 return Text(
-                    "Production test has started. Please wait. \nThis might take a while.");
+                    "Production test has started. Please wait. \n This might take a while.");
               }
               break;
             case "rssi":
@@ -65,6 +82,7 @@ FutureBuilder setStatus(String process, bool processStart, String view,
               break;
             case "":
               {
+                print("IN CASE NORxMAL");
                 return Text(message.toString());
               }
           }

@@ -45,6 +45,8 @@ class InstallationInformation extends StatefulWidget {
   bool startMeterDisconnection;
   String action;
   bool active;
+  Color colorPrimary;
+  bool reset;
 
   InstallationInformation(
       {this.registerMeterCallback,
@@ -77,7 +79,9 @@ class InstallationInformation extends StatefulWidget {
       this.futureRssiCheck,
       this.futureMeterDisconnectionInfo,
       this.action,
-      this.active});
+      this.active,
+      this.colorPrimary,
+      this.reset});
 
   @override
   _InstallationInformationState createState() =>
@@ -113,6 +117,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
               minWidth: 150,
               height: 50,
               active: widget.active,
+              colorPrimary: widget.colorPrimary,
             ),
             SizedBox(height: 10),
             registrationInfo(widget.street, widget.zipCode, widget.zipCodeExt,
@@ -126,6 +131,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   minWidth: 150,
                   height: 50,
                   active: widget.active,
+                  colorPrimary: widget.colorPrimary,
                 ),
               ],
             ),
@@ -136,23 +142,23 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   children: [
                     Card(
                       child: category(
-                        "Registration",
-                        widget.processStart,
-                        widget.meterRegistrationInfo,
-                        Colors.grey[200],
-                        Colors.black,
-                        false,
-                      ),
+                          "Registration",
+                          widget.processStart,
+                          widget.meterRegistrationInfo,
+                          Colors.grey[200],
+                          Colors.black,
+                          false,
+                          widget.reset),
                     ),
                     Card(
                       child: category(
-                        "Meter Connection",
-                        widget.processStart,
-                        widget.meterConnectionInfo,
-                        Colors.grey[200],
-                        Colors.black,
-                        widget.registrationSuccesful,
-                      ),
+                          "Meter Connection",
+                          widget.processStart,
+                          widget.meterConnectionInfo,
+                          Colors.grey[200],
+                          Colors.black,
+                          widget.registrationSuccesful,
+                          widget.reset),
                     ),
                     // setStatus(widget.meterRegistrationInfo),
                     // Text("Meter Registration Status"),
@@ -164,13 +170,13 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     children: [
                       Card(
                         child: category(
-                          "RSSI Check",
-                          widget.processStart,
-                          widget.futureRssiCheck,
-                          Colors.grey[200],
-                          Colors.black,
-                          true,
-                        ),
+                            "RSSI Check",
+                            widget.processStart,
+                            widget.futureRssiCheck,
+                            Colors.grey[200],
+                            Colors.black,
+                            true,
+                            widget.reset),
                       ),
                       Card(
                         child: category(
@@ -179,7 +185,8 @@ class _InstallationInformationState extends State<InstallationInformation> {
                             widget.futureProductionTestInfo,
                             Colors.grey[200],
                             Colors.black,
-                            true),
+                            true,
+                            widget.reset),
                       ),
                       // setStatus(widget.meterRegistrationInfo),
                       // Text("Meter Registration Status"),
@@ -197,7 +204,8 @@ class _InstallationInformationState extends State<InstallationInformation> {
                             widget.futureMeterDisconnectionInfo,
                             Colors.grey[200],
                             Colors.black,
-                            true),
+                            true,
+                            widget.reset),
                       ),
                       Card(
                         child: category(
@@ -206,7 +214,8 @@ class _InstallationInformationState extends State<InstallationInformation> {
                             widget.futureHealthCheck,
                             Colors.grey[200],
                             Colors.black,
-                            true),
+                            true,
+                            widget.reset),
                       ),
                       // setStatus(widget.meterRegistrationInfo),
                       // Text("Meter Registration Status"),
@@ -235,7 +244,8 @@ class _InstallationInformationState extends State<InstallationInformation> {
                                 widget.processStart,
                                 "text",
                                 widget.endpointInfo,
-                                "")))),
+                                "",
+                                widget.reset)))),
               ),
             ),
           ]);
@@ -253,6 +263,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     minWidth: 150,
                     height: 50,
                     active: widget.active,
+                    colorPrimary: widget.colorPrimary,
                   ),
                   SizedBox(
                     width: 10,
@@ -263,6 +274,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     minWidth: 150,
                     height: 50,
                     active: widget.active,
+                    colorPrimary: widget.colorPrimary,
                   ),
                 ],
               ),
@@ -277,6 +289,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     minWidth: 150,
                     height: 50,
                     active: widget.active,
+                    colorPrimary: widget.colorPrimary,
                   ),
                   SizedBox(
                     width: 10,
@@ -287,6 +300,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     minWidth: 150,
                     height: 50,
                     active: widget.active,
+                    colorPrimary: widget.colorPrimary,
                   ),
                   SizedBox(
                     width: 10,
@@ -297,6 +311,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     minWidth: 150,
                     height: 50,
                     active: widget.active,
+                    colorPrimary: widget.colorPrimary,
                   ),
                   SizedBox(
                     width: 10,
@@ -309,6 +324,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       minWidth: 150,
                       height: 50,
                       active: widget.active,
+                      colorPrimary: widget.colorPrimary,
                     ),
                   ),
                   Visibility(
@@ -325,6 +341,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       minWidth: 150,
                       height: 50,
                       active: widget.active,
+                      colorPrimary: widget.colorPrimary,
                     ),
                   )
                 ],
@@ -343,8 +360,13 @@ class _InstallationInformationState extends State<InstallationInformation> {
                             maxWidth: 400,
                           ),
                           child: Center(
-                              child: setStatus("Registration", true, "text",
-                                  widget.endpointInfo, widget.action)))),
+                              child: setStatus(
+                                  "Action",
+                                  true,
+                                  "text",
+                                  widget.endpointInfo,
+                                  widget.action,
+                                  widget.reset)))),
                 ],
               ),
             ],
