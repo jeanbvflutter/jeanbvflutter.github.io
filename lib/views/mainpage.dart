@@ -48,6 +48,7 @@ class _MainPageState extends State<MainPage> {
   bool _startMeterConnection = false;
   bool _registrationSuccesful = false;
   bool _startMeterDisonnection = false;
+  bool _hasBreaker = false;
 
   String currentProcess;
 
@@ -88,6 +89,11 @@ class _MainPageState extends State<MainPage> {
       _startMeterConnection = false;
       _futureMeterConnection = null;
       _futureMeterRegistrationInfo = null;
+      if (this._serialNumber.text.contains('000000')) {
+        this._hasBreaker = true;
+      }else{
+        this._hasBreaker = false;
+      }
     });
   }
 
@@ -242,6 +248,7 @@ class _MainPageState extends State<MainPage> {
                 endpointInfo: _futureEndpointInfo,
                 processStart: _startRegistration,
                 startMeterConnection: _startMeterConnection,
+                hasBreaker: _hasBreaker,
                 newProductionTest: () {
                   meterConnectionWrapper(newProductionTest);
                 },

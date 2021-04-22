@@ -35,6 +35,7 @@ class InstallationInformation extends StatefulWidget {
   bool startMeterConnection;
   bool registrationSuccesful;
   bool processStart;
+  bool hasBreaker;
   String currentProcess;
   Future endpointInfo;
 
@@ -63,6 +64,7 @@ class InstallationInformation extends StatefulWidget {
     this.breakerOn,
     this.breakerOff,
     this.RSSICheck,
+    this.hasBreaker,
   });
 
   @override
@@ -238,20 +240,29 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   SizedBox(
                     width: 10,
                   ),
-                  CustomButton(
-                    onPressed: widget.breakerOn,
-                    text: 'Breaker on',
-                    minWidth: 150,
-                    height: 50,
+                  Visibility(
+                    visible:widget.hasBreaker,
+                    child: CustomButton(
+                      onPressed: widget.breakerOn,
+                      text: 'Breaker on',
+                      minWidth: 150,
+                      height: 50,
+                    ),
                   ),
-                  SizedBox(
-                    width: 10,
+                  Visibility(
+                    visible:widget.hasBreaker,
+                    child: SizedBox(
+                      width: 10,
+                    ),
                   ),
-                  CustomButton(
-                    onPressed: widget.breakerOff,
-                    text: 'Breaker off',
-                    minWidth: 150,
-                    height: 50,
+                  Visibility(
+                    visible:widget.hasBreaker,
+                    child: CustomButton(
+                      onPressed: widget.breakerOff,
+                      text: 'Breaker off',
+                      minWidth: 150,
+                      height: 50,
+                    ),
                   )
                 ],
               ),
