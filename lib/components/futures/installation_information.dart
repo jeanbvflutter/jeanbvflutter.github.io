@@ -13,18 +13,22 @@ class InstallationInformation extends StatefulWidget {
   Future futureInstallationInformation;
   Future meterRegistrationInfo;
   Future meterConnectionInfo;
+  Future futureHealthCheck;
+  Future healthCheck;
+  Future futureRssiCheck;
+  Future meterDisconnectionInfo;
+  Future futureProductionTestInfo;
+  Future futureMeterDisconnectionInfo;
 
   final Function() registerMeterCallback;
   final Function() getLocation;
-  final Function() productionTestCallback;
   final Function() changeAddress;
   final Function() unregisterMeter;
-  final Function() connectMeterCallback;
   final Function() newProductionTest;
-  final Function() healthCheck;
   final Function() breakerOn;
   final Function() breakerOff;
   final Function() RSSICheck;
+  final Function() healthCheckMeterCallback;
 
   TextEditingController street;
   TextEditingController zipCode;
@@ -38,11 +42,11 @@ class InstallationInformation extends StatefulWidget {
   bool hasBreaker;
   String currentProcess;
   Future endpointInfo;
+  bool startMeterDisconnection;
 
   InstallationInformation({
     this.registerMeterCallback,
     this.getLocation,
-    this.productionTestCallback,
     this.futureInstallationInformation,
     this.street,
     this.zipCode,
@@ -53,7 +57,6 @@ class InstallationInformation extends StatefulWidget {
     this.changeAddressBool,
     this.unregisterMeter,
     this.meterRegistrationInfo,
-    this.connectMeterCallback,
     this.meterConnectionInfo,
     this.currentProcess,
     this.endpointInfo,
@@ -65,7 +68,12 @@ class InstallationInformation extends StatefulWidget {
     this.breakerOff,
     this.RSSICheck,
     this.hasBreaker,
-  });
+    this.healthCheckMeterCallback,
+    this.futureHealthCheck,
+    this.futureProductionTestInfo,
+    this.startMeterDisconnection,
+    this.futureRssiCheck,
+    this.futureMeterDisconnectionInfo});
 
   @override
   _InstallationInformationState createState() =>
@@ -118,40 +126,68 @@ class _InstallationInformationState extends State<InstallationInformation> {
             SizedBox(height: 10),
             Column(
               children: [
+                Row(
+                  children: [
+                    Card(
+                      child: category(
+                        "Registration",
+                        widget.processStart,
+                        widget.meterRegistrationInfo,
+                        Colors.grey[200],
+                        Colors.black,
+                        false,
+                      ),
+                    ),
+                    Card(
+                      child: category(
+                        "Meter Connection",
+                        widget.processStart,
+                        widget.meterConnectionInfo,
+                        Colors.grey[200],
+                        Colors.black,
+                        widget.registrationSuccesful,
+                      ),
+                    ),
+                    // setStatus(widget.meterRegistrationInfo),
+                    // Text("Meter Registration Status"),
+                  ],
+                ),
                 Row(children: [
                   // setStatus(widget.meterRegistrationInfo),
-                  Container(
-                      child: Row(
+                  Row(
                     children: [
                       Card(
                         child: category(
-                          "Registration",
+                          "RSSI Check",
                           widget.processStart,
-                          widget.meterRegistrationInfo,
+                          widget.futureRssiCheck,
                           Colors.grey[200],
                           Colors.black,
-                          false,
+                          true,
                         ),
-                      )
+                      ),
+                      Card(
+                        child: category(
+                            "Meter Production Test",
+                            widget.processStart,
+                            widget.futureProductionTestInfo,
+                            Colors.grey[200],
+                            Colors.black,
+                            true),
+                      ),
+                      Card(
+                        child: category(
+                            "Meter Disconnection",
+                            widget.processStart,
+                            widget.futureMeterDisconnectionInfo,
+                            Colors.grey[200],
+                            Colors.black,
+                            true),
+                      ),
                       // setStatus(widget.meterRegistrationInfo),
                       // Text("Meter Registration Status"),
                     ],
-                  )),
-                  Container(
-                      child: Row(
-                    children: [
-                      Card(
-                        child: category(
-                          "Meter Connection",
-                          widget.processStart,
-                          widget.meterConnectionInfo,
-                          Colors.grey[200],
-                          Colors.black,
-                          widget.registrationSuccesful,
-                        ),
-                      ),
-                    ],
-                  )),
+                  ),
                 ]),
               ],
             ),
@@ -186,12 +222,6 @@ class _InstallationInformationState extends State<InstallationInformation> {
               ),
               Row(
                 children: [
-                  CustomButton(
-                    onPressed: widget.productionTestCallback,
-                    text: 'Production Test',
-                    minWidth: 150,
-                    height: 50,
-                  ),
                   SizedBox(
                     width: 10,
                   ),
@@ -232,7 +262,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     width: 10,
                   ),
                   CustomButton(
-                    onPressed: widget.healthCheck,
+                    onPressed: widget.healthCheckMeterCallback,
                     text: 'Health check',
                     minWidth: 150,
                     height: 50,

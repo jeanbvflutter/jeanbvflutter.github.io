@@ -14,7 +14,7 @@ FutureBuilder setStatus(
         print("process start" + processStart.toString());
         status = snapshot.data.status.toString();
         message = snapshot.data.message.toString();
-        print("MESSAGE PRINTED " + message);
+        print("MESSAGE PRINTED " + message + status);
         switch (processStart) {
           case false:
             {
@@ -48,7 +48,7 @@ FutureBuilder setStatus(
           );
         } else if (view == "text") {
           print("PRINTING TEXT");
-          return Text(message);
+          return Text(message.toString());
         }
       } else if (snapshot.hasError) {
         print("TEST2");
