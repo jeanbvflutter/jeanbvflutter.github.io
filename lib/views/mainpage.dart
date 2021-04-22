@@ -52,6 +52,7 @@ class _MainPageState extends State<MainPage> {
   bool _startMeterDisconnection = false;
   String action = "Status Tracker";
   String currentProcess;
+  bool active = true;
 
   Future<MeterInfo> _futureMeterRegistrationInfo;
   Future<ProductionInfo> _futureProductionTestInfo;
@@ -68,6 +69,7 @@ class _MainPageState extends State<MainPage> {
 
   meterConnectionWrapper(Function func, String actionInput) {
     setState(() {
+      active = false;
       _futureEndpointInfo = null;
       action = actionInput;
     });
@@ -90,6 +92,7 @@ class _MainPageState extends State<MainPage> {
           // });
           setState(() {
             _futureEndpointInfo = null;
+            active = true;
           });
         });
       }
@@ -284,6 +287,7 @@ class _MainPageState extends State<MainPage> {
                 futureMeterDisconnectionInfo: _futureMeterDisconnection,
                 futureRssiCheck: _futureRSSICheckInfo,
                 action: action,
+                active: active,
                 healthCheckMeterCallback: healthCheckMeterCallback,
                 newProductionTest: () {
                   meterConnectionWrapper(newProductionTest, "production");

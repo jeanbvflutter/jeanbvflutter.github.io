@@ -44,6 +44,7 @@ class InstallationInformation extends StatefulWidget {
   Future endpointInfo;
   bool startMeterDisconnection;
   String action;
+  bool active;
 
   InstallationInformation(
       {this.registerMeterCallback,
@@ -75,7 +76,8 @@ class InstallationInformation extends StatefulWidget {
       this.startMeterDisconnection,
       this.futureRssiCheck,
       this.futureMeterDisconnectionInfo,
-      this.action});
+      this.action,
+      this.active});
 
   @override
   _InstallationInformationState createState() =>
@@ -110,6 +112,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
               textStyle: buttonTextStyle,
               minWidth: 150,
               height: 50,
+              active: widget.active,
             ),
             SizedBox(height: 10),
             registrationInfo(widget.street, widget.zipCode, widget.zipCodeExt,
@@ -122,6 +125,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   textStyle: buttonTextStyle,
                   minWidth: 150,
                   height: 50,
+                  active: widget.active,
                 ),
               ],
             ),
@@ -248,6 +252,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     text: 'Change address',
                     minWidth: 150,
                     height: 50,
+                    active: widget.active,
                   ),
                   SizedBox(
                     width: 10,
@@ -257,6 +262,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     text: 'Unregister meter',
                     minWidth: 150,
                     height: 50,
+                    active: widget.active,
                   ),
                 ],
               ),
@@ -270,6 +276,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     text: 'New production test',
                     minWidth: 150,
                     height: 50,
+                    active: widget.active,
                   ),
                   SizedBox(
                     width: 10,
@@ -279,6 +286,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     text: 'RSSI check',
                     minWidth: 150,
                     height: 50,
+                    active: widget.active,
                   ),
                   SizedBox(
                     width: 10,
@@ -288,6 +296,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     text: 'Health check',
                     minWidth: 150,
                     height: 50,
+                    active: widget.active,
                   ),
                   SizedBox(
                     width: 10,
@@ -299,6 +308,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       text: 'Breaker on',
                       minWidth: 150,
                       height: 50,
+                      active: widget.active,
                     ),
                   ),
                   Visibility(
@@ -314,6 +324,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       text: 'Breaker off',
                       minWidth: 150,
                       height: 50,
+                      active: widget.active,
                     ),
                   )
                 ],
