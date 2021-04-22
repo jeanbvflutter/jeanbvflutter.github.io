@@ -122,6 +122,7 @@ class _MainPageState extends State<MainPage> {
   unregisterMeterCallback() {
     setState(() {
       _futureUnregisterMeter = unregisterMeter(_serialNumber.text);
+      _futureEndpointInfo = _futureUnregisterMeter;
     });
   }
 

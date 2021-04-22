@@ -243,9 +243,6 @@ class _InstallationInformationState extends State<InstallationInformation> {
               ),
               Row(
                 children: [
-                  SizedBox(
-                    width: 10,
-                  ),
                   CustomButton(
                     onPressed: widget.changeAddress,
                     text: 'Change address',
@@ -261,8 +258,12 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     minWidth: 150,
                     height: 50,
                   ),
+                ],
+              ),
+              Row(
+                children: [
                   SizedBox(
-                    width: 10,
+                    height: 40,
                   ),
                   CustomButton(
                     onPressed: widget.newProductionTest,

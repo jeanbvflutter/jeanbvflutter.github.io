@@ -7,11 +7,9 @@ import 'package:meter_activation/entities/status_parser.dart';
 
 Future<UnRegisterMeterInfo> unregisterMeter(String serialNumber) async {
   // var http;
-  
+
   final response = await http.post(
     Uri.https('energize.eleena.eu', '/home/unregister_meter_flutter'),
-
-
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
@@ -21,11 +19,11 @@ Future<UnRegisterMeterInfo> unregisterMeter(String serialNumber) async {
   );
 
   if (response.statusCode == 200) {
-    print("SERIAL NUMBER"+ serialNumber);
+    print("SERIAL NUMBER" + serialNumber);
     print("RESPONSE" + response.body);
     return UnRegisterMeterInfo.fromJson(jsonDecode(response.body));
   } else if (response.statusCode == 404) {
-    print("NUMBER" +  serialNumber);
+    print("NUMBER" + serialNumber);
     print("RESPONSE" + response.body);
     return UnRegisterMeterInfo.fromJson(jsonDecode(response.body));
   } else {
@@ -33,13 +31,11 @@ Future<UnRegisterMeterInfo> unregisterMeter(String serialNumber) async {
   }
 }
 
-class UnRegisterMeterInfo extends StatusParser{
-
-  UnRegisterMeterInfo(status) : super(null);
+class UnRegisterMeterInfo extends StatusParser {
+  String message;
+  UnRegisterMeterInfo(status, {this.message}) : super(null);
 
   factory UnRegisterMeterInfo.fromJson(Map<String, dynamic> json) {
-    return UnRegisterMeterInfo(
-      json['status'],
-    );
+    return UnRegisterMeterInfo(json['status'], message: json['status']);
   }
 }
