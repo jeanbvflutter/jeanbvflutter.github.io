@@ -10,8 +10,10 @@ Future<MeterHealthCheckInfo> healthCheckMeter(String serialNumber) async {
     "serial_number": serialNumber,
   };
 
+  print(Uri.https('polling.eleena.eu', urlExt, queryParameters));
+
   final response = await http.get(
-    Uri.http('https://polling.eleena.eu', urlExt, queryParameters),
+    Uri.https('polling.eleena.eu', urlExt, queryParameters),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },

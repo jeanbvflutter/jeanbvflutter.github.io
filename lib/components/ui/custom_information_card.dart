@@ -29,8 +29,6 @@ class _CustomInformationCardState extends State<CustomInformationCard> {
           side: BorderSide(color: Colors.black26),
           borderRadius: BorderRadius.circular(5)),
       child: Container(
-        padding: EdgeInsets.all(10.0),
-        child: Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -60,7 +58,6 @@ class _CustomInformationCardState extends State<CustomInformationCard> {
             ],
           ),
         ),
-      ),
     );
   }
 }
