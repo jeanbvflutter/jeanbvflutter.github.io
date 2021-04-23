@@ -10,7 +10,7 @@ Future<ProductionInfo> newProductionTest(String serialNumber) async {
   };
 
   final response = await http.get(
-    Uri.http('104.248.82.49:8888', urlExt, queryParameters),
+    Uri.http('https://polling.eleena.eu', urlExt, queryParameters),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },

@@ -11,7 +11,7 @@ Future<MeterBreakerInfo> meterBreakerOn(String serialNumber) async {
   };
 
   final response = await http.get(
-    Uri.http('104.248.82.49:8888', urlExt, queryParameters),
+    Uri.http('https://polling.eleena.eu', urlExt, queryParameters),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
@@ -26,10 +26,14 @@ Future<MeterBreakerInfo> meterBreakerOn(String serialNumber) async {
 
 Future<MeterBreakerInfo> meterBreakerOff(String serialNumber) async {
 
-  var urlExt = '/post/deactivateBreakerForConnectedMeters?serial_number=$serialNumber';
+  var urlExt = '/post/deactivateBreakerForConnectedMeters';
+
+  final queryParameters = {
+    "serial_number": serialNumber,
+  };
 
   final response = await http.get(
-    Uri.https('104.248.82.49:8888', urlExt),
+    Uri.http('https://polling.eleena.eu', urlExt, queryParameters),
     headers: <String, String>{
       'Content-Type': 'application/form-data; charset=UTF-8',
     },
