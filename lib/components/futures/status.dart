@@ -21,6 +21,7 @@ FutureBuilder setStatus(String process, bool processStart, String view,
           case false:
             {
               message = "METER STATUS TRACKER";
+              // return Text("METER STATUS TRACKER");
             }
             break;
         }
@@ -37,7 +38,7 @@ FutureBuilder setStatus(String process, bool processStart, String view,
                 if (processStart == true && action == "") {
                   return Text("Performing Meter Registration");
                 } else {
-                  return Text(error.toString());
+                  return Text("METER STATUS TRACKER");
                 }
               }
               break;
@@ -92,6 +93,7 @@ FutureBuilder setStatus(String process, bool processStart, String view,
               }
             default:
               {
+                print("DEFAULT");
                 return Text(message.toString());
               }
           }
