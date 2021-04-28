@@ -214,6 +214,7 @@ class _MainPageState extends State<MainPage> {
               _futureRSSICheckInfo = null;
               _futureProductionTestInfo = null;
               _futureHealthCheckInfo = null;
+              meterDisconnectionCallback();
             }));
   }
 
