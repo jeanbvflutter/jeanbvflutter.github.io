@@ -258,42 +258,36 @@ class _InstallationInformationState extends State<InstallationInformation> {
               //   widget.futureInstallationInformation,
               // ),
               CustomInformationCard(
-                headerInfoText: "Client Information",
-                information: widget.futureInstallationInformation,
-                futureBuilder: clientInformation,
+                  headerInfoText: "Client Information",
+                  information: widget.futureInstallationInformation,
+                  futureBuilder: clientInformation,
                   buttonInfoList: [
-                    ['ID: ' , 'clientId'],
+                    ['ID: ', 'clientId'],
                     ['Achternaam: ', 'lastName'],
                     ['Voornaam: ', 'firstName'],
                     ['E-mail: ', 'email'],
                     ['Bron: ', 'clientSource'],
-                  ]
-
-              ),
+                  ]),
               CustomInformationCard(
                   headerInfoText: "Addres Information",
                   information: widget.futureInstallationInformation,
                   futureBuilder: addressInformation,
                   buttonInfoList: [
-                    ['"Postcode: "' , 'zipCode'],
+                    ['Postcode: ', 'zipCode'],
                     ['Extentie: ', 'zipCodeExt'],
                     ['Straat: ', 'street'],
-                    ['Huisnummer: : ', 'houseNumber'],
+                    ['Huisnummer: ', 'houseNumber'],
                     ['City: ', 'city'],
-                  ]
-
-              ),
+                  ]),
               CustomInformationCard(
                   headerInfoText: "Meter Information",
                   information: widget.futureInstallationInformation,
                   futureBuilder: meterInformation,
                   buttonInfoList: [
-                    ['Serienummer: ' , 'serialNumber'],
+                    ['Serienummer: ', 'serialNumber'],
                     ['Status: : ', 'status'],
-                    ['Breaker status: : ', 'breakerStatus'],
-                  ]
-
-              ),
+                    ['Breaker status: ', 'breakerStatus'],
+                  ]),
               Row(
                 children: [
                   CustomButton(

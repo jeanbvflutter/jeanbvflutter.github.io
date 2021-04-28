@@ -16,6 +16,7 @@ FutureBuilder setStatus(String process, bool processStart, String view,
         status = snapshot.data.status.toString();
         message = snapshot.data.message.toString();
         print("MESSAGE PRINTED " + message + status);
+        print("RESET STATUS" + reset.toString());
         switch (processStart) {
           case false:
             {
@@ -43,11 +44,15 @@ FutureBuilder setStatus(String process, bool processStart, String view,
             case "Action":
               {
                 if (processStart == true && action == "") {
+                  print("PROCESS START");
+                  print(processStart.toString());
+                  print("ACTION");
+                  print(action.toString());
                   return Text("Meter Status Track");
                 } else {
                   print("ACTIONTEST123123123123" + action);
                   print("processstart" + processStart.toString());
-                  if (reset == false) {
+                  if (action == "error") {
                     return Text(
                         "An Error Occured. Please click Reset and try again.");
                   } else {
@@ -82,18 +87,22 @@ FutureBuilder setStatus(String process, bool processStart, String view,
               break;
             case "":
               {
-                print("IN CASE NORxMAL");
+                print("IN CASE NORMAL");
+                return Text(message.toString());
+              }
+            default:
+              {
                 return Text(message.toString());
               }
           }
         }
       } else if (snapshot.hasError) {
         print("TEST2");
-        return Text("NULL");
+        return Text("NULL ee");
       }
       print("TEST3");
       // By default, show a loading spinner.
-      return Text("NULL");
+      return Text("NULL ss");
     },
   );
 }

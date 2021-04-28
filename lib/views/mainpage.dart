@@ -23,6 +23,7 @@ import 'package:meter_activation/entities/production_check.dart';
 import 'package:meter_activation/entities/meter_healthcheck.dart';
 import 'package:meter_activation/entities/meter_breaker_actions.dart';
 import 'package:meter_activation/entities/meter_connection.dart';
+import 'dart:async';
 
 // Statefulwidget is mutable. It can be drawn multiple times within its lifetime.
 // They are widget that can change their state multiple times and can be redrawn on the screen any number of times while to app is in action.
@@ -50,7 +51,7 @@ class _MainPageState extends State<MainPage> {
   bool _startMeterDisonnection = false;
   bool _hasBreaker = false;
   bool _startMeterDisconnection = false;
-  String action = "Status Tracker";
+  String action = "";
   String currentProcess;
   bool active = true;
   bool reset = false;
@@ -73,45 +74,53 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       active = false;
       _futureEndpointInfo = null;
+      print("action " + actionInput);
       action = actionInput;
       colorPrimary = Colors.grey;
     });
-    _futureEndpointInfo = connectMeter(_serialNumber.text);
+    Future.delayed(
+        const Duration(seconds: 4),
+        () => setState(() {
+              _futureEndpointInfo = connectMeter(_serialNumber.text);
+              _futureEndpointInfo.then((value) {
+                if (value.status == 'OK') {
+                  setState(() {
+                    action = "";
+                    _futureEndpointInfo = func(_serialNumber.text);
+                  });
 
-    _futureEndpointInfo.then((value) {
-      if (value.status == 'OK') {
-        setState(() {
-          action = "";
-          _futureEndpointInfo = func(_serialNumber.text);
-        });
+                  _futureEndpointInfo.then((value) {
+                    print("VALUE STATUS" + value.status);
+                    if (value.status == 'OK') {
+                      print("Operation has successful");
+                    } else {
+                      print("Operation has failed");
+                    }
+                    // setState(() {
+                    _futureEndpointInfo = disconnectMeter(_serialNumber.text);
 
-        _futureEndpointInfo.then((value) {
-          print("VALUE STATUS" + value.status);
-          if (value.status == 'OK') {
-            print("Operation has successful");
-          } else {
-            print("Operation has failed");
-          }
-          // setState(() {
-          _futureEndpointInfo = disconnectMeter(_serialNumber.text);
-
-          // });
-          setState(() {
-            print("ACITIVATING");
-            reset = false;
-            _futureEndpointInfo = null;
-            active = true;
-            colorPrimary = Colors.blueGrey;
-          });
-        });
-      } else {
-        setState(() {
-          reset = false;
-          print("Operation has failed");
-          active = true;
-        });
-      }
-    });
+                    // });
+                    setState(() {
+                      print("ACITIVATING");
+                      reset = false;
+                      _futureEndpointInfo = null;
+                      active = true;
+                      colorPrimary = Colors.blueGrey;
+                    });
+                  });
+                } else {
+                  setState(() {
+                    reset = false;
+                    print("Operation has failed");
+                    active = true;
+                  });
+                }
+              }).catchError((e) {
+                setState(() {
+                  action = "error";
+                });
+              }).whenComplete(() => print("Done!"));
+            }));
   }
 
   fetchInstallationInfoCallback() {
@@ -186,22 +195,26 @@ class _MainPageState extends State<MainPage> {
   resetAll() {
     setState(() {
       reset = true;
-      sleep(Duration(seconds: 3));
-      active = true;
-      colorPrimary = Colors.blueGrey;
-      action = "";
-      _futureEndpointInfo = null;
-      _changeAddress = false;
-      _startRegistration = false;
-      _startMeterConnection = false;
-      _futureMeterConnection = null;
-      _futureMeterRegistrationInfo = null;
-      _futureMeterDisconnection = null;
-      _futureEndpointInfo = null;
-      _futureRSSICheckInfo = null;
-      _futureProductionTestInfo = null;
-      _futureHealthCheckInfo = null;
     });
+    Future.delayed(
+        const Duration(seconds: 3),
+        () => setState(() {
+              reset = true;
+              active = true;
+              colorPrimary = Colors.blueGrey;
+              action = "";
+              _futureEndpointInfo = null;
+              _changeAddress = false;
+              _startRegistration = false;
+              _startMeterConnection = false;
+              _futureMeterConnection = null;
+              _futureMeterRegistrationInfo = null;
+              _futureMeterDisconnection = null;
+              _futureEndpointInfo = null;
+              _futureRSSICheckInfo = null;
+              _futureProductionTestInfo = null;
+              _futureHealthCheckInfo = null;
+            }));
   }
 
   meterDisconnectionCallback() {
@@ -236,35 +249,50 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  cascadeActions() {
+    Future.delayed(
+        const Duration(seconds: 3),
+        () => setState(() {
+              print("setting state");
+              currentProcess = "Meter Connection";
+              _futureMeterConnection = connectMeter(_serialNumber.text);
+              _startMeterConnection = true;
+              _futureEndpointInfo = _futureMeterConnection;
+              _futureMeterConnection.then((value) {
+                if (value.status == 'OK') {
+                  print("IN HERE RSSI");
+                  rssiCallback();
+                  _futureRSSICheckInfo.then((value) {
+                    if (value.status == 'OK') {
+                      productionTestCallback();
+                      _futureProductionTestInfo.then((value) {
+                        if (value.status == 'OK') {
+                          meterDisconnectionCallback();
+                          _futureMeterDisconnection.then((value) {
+                            if (value.status == 'OK') {
+                              healthCheckMeterCallback();
+                            }
+                          });
+                        }
+                      });
+                    }
+                  });
+                } else {
+                  print("in here else hmm");
+                }
+              });
+            }));
+  }
+
   registerMeterCallback() {
-    // print("REGISTERING METER");
+    print("REGISTERING METER");
     meterRegistrationCallback();
     _futureMeterRegistrationInfo.then((value) {
       if (value.status == 'OK') {
-        sleep(Duration(seconds: 3));
-        meterConnectionCallback();
-        _futureMeterConnection.then((value) {
-          if (value.status == 'OK') {
-            rssiCallback();
-            _futureRSSICheckInfo.then((value) {
-              if (value.status == 'OK') {
-                productionTestCallback();
-                _futureProductionTestInfo.then((value) {
-                  if (value.status == 'OK') {
-                    meterDisconnectionCallback();
-                    _futureMeterDisconnection.then((value) {
-                      if (value.status == 'OK') {
-                        healthCheckMeterCallback();
-                      }
-                    });
-                  }
-                });
-              }
-            });
-          }
-        });
+        cascadeActions();
       }
     }).catchError((e) {
+      print(e);
       print("ERRORRRR");
     }).whenComplete(() => print("Done!"));
   }
