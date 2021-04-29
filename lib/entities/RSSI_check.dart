@@ -28,9 +28,12 @@ Future<RSSIInfo> RSSIcheck(String serialNumber) async {
 
 class RSSIInfo extends StatusParser {
   String message;
-  RSSIInfo(status, {this.message}) : super(status);
+  bool actionStatus;
+
+  RSSIInfo(status, {this.message, this.actionStatus}) : super(status);
 
   factory RSSIInfo.fromJson(Map<String, dynamic> json) {
-    return RSSIInfo(json['status'], message: json['message']);
+    return RSSIInfo(json['status'],
+        message: json['message'], actionStatus: json['action_status']);
   }
 }

@@ -28,10 +28,13 @@ Future<MeterConnectionInfo> connectMeter(String serialNumber) async {
 
 class MeterConnectionInfo extends StatusParser {
   String message;
+  bool actionStatus;
 
-  MeterConnectionInfo(status, {this.message}) : super(status);
+  MeterConnectionInfo(status, {this.message, this.actionStatus})
+      : super(status);
 
   factory MeterConnectionInfo.fromJson(Map<String, dynamic> json) {
-    return MeterConnectionInfo(json['status'], message: json['message']);
+    return MeterConnectionInfo(json['status'],
+        message: json['message'], actionStatus: json['action_status']);
   }
 }

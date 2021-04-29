@@ -108,7 +108,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
             widget.changeAddressBool == true) {
           return Column(children: [
             Align(
-                alignment: Alignment.centerLeft,
+                // alignment: Alignment.centerLeft,
                 child: Text(
                     "Vul het adres in waarop je de meter wil registereren, of klik op 'Detecteer locatie'")),
             SizedBox(height: 5),
@@ -257,37 +257,46 @@ class _InstallationInformationState extends State<InstallationInformation> {
               // installationInformationCard(
               //   widget.futureInstallationInformation,
               // ),
-              CustomInformationCard(
-                  headerInfoText: "Client Information",
-                  information: widget.futureInstallationInformation,
-                  futureBuilder: clientInformation,
-                  buttonInfoList: [
-                    ['ID: ', 'clientId'],
-                    ['Achternaam: ', 'lastName'],
-                    ['Voornaam: ', 'firstName'],
-                    ['E-mail: ', 'email'],
-                    ['Bron: ', 'clientSource'],
-                  ]),
-              CustomInformationCard(
-                  headerInfoText: "Addres Information",
-                  information: widget.futureInstallationInformation,
-                  futureBuilder: addressInformation,
-                  buttonInfoList: [
-                    ['Postcode: ', 'zipCode'],
-                    ['Extentie: ', 'zipCodeExt'],
-                    ['Straat: ', 'street'],
-                    ['Huisnummer: ', 'houseNumber'],
-                    ['City: ', 'city'],
-                  ]),
-              CustomInformationCard(
-                  headerInfoText: "Meter Information",
-                  information: widget.futureInstallationInformation,
-                  futureBuilder: meterInformation,
-                  buttonInfoList: [
-                    ['Serienummer: ', 'serialNumber'],
-                    ['Status: : ', 'status'],
-                    ['Breaker status: ', 'breakerStatus'],
-                  ]),
+              Align(
+                // alignment: Alignment.centerLeft,
+                child: CustomInformationCard(
+                    headerInfoText: "Client Information",
+                    information: widget.futureInstallationInformation,
+                    futureBuilder: clientInformation,
+                    buttonInfoList: [
+                      ['ID: ', 'clientId'],
+                      ['Achternaam: ', 'lastName'],
+                      ['Voornaam: ', 'firstName'],
+                      ['E-mail: ', 'email'],
+                      ['Bron: ', 'clientSource'],
+                    ]),
+              ),
+              Align(
+                // alignment: Alignment.centerLeft,
+                child: CustomInformationCard(
+                    headerInfoText: "Addres Information",
+                    information: widget.futureInstallationInformation,
+                    futureBuilder: addressInformation,
+                    buttonInfoList: [
+                      ['Postcode: ', 'zipCode'],
+                      ['Extentie: ', 'zipCodeExt'],
+                      ['Straat: ', 'street'],
+                      ['Huisnummer: ', 'houseNumber'],
+                      ['City: ', 'city'],
+                    ]),
+              ),
+              Align(
+                // alignment: Alignment.centerLeft,
+                child: CustomInformationCard(
+                    headerInfoText: "Meter Information",
+                    information: widget.futureInstallationInformation,
+                    futureBuilder: meterInformation,
+                    buttonInfoList: [
+                      ['Serienummer: ', 'serialNumber'],
+                      ['Status: : ', 'status'],
+                      ['Breaker status: ', 'breakerStatus'],
+                    ]),
+              ),
               Row(
                 children: [
                   CustomButton(

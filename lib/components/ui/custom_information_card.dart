@@ -29,35 +29,34 @@ class _CustomInformationCardState extends State<CustomInformationCard> {
           side: BorderSide(color: Colors.black26),
           borderRadius: BorderRadius.circular(5)),
       child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              headerInfoWidget(widget.headerInfoText),
-              Container(
-                margin: EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    for (List info in widget.buttonInfoList)
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(info[0]),
-                                widget.futureBuilder(
-                                    info[1], widget.information),
-                              ],
-                            ),
-                          ],
-                        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            headerInfoWidget(widget.headerInfoText),
+            Container(
+              margin: EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  for (List info in widget.buttonInfoList)
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(info[0]),
+                              widget.futureBuilder(info[1], widget.information),
+                            ],
+                          ),
+                        ],
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
     );
   }
 }

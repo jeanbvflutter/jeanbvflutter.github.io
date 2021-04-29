@@ -83,15 +83,15 @@ class _MainPageState extends State<MainPage> {
         () => setState(() {
               _futureEndpointInfo = connectMeter(_serialNumber.text);
               _futureEndpointInfo.then((value) {
-                if (value.status == 'OK') {
+                if (value.actionStatus == true) {
                   setState(() {
                     action = "";
                     _futureEndpointInfo = func(_serialNumber.text);
                   });
 
                   _futureEndpointInfo.then((value) {
-                    print("VALUE STATUS" + value.status);
-                    if (value.status == 'OK') {
+                    print("VALUE STATUS" + value.actionStatus);
+                    if (value.actionStatus == true) {
                       print("Operation has successful");
                     } else {
                       print("Operation has failed");
@@ -260,17 +260,17 @@ class _MainPageState extends State<MainPage> {
               _startMeterConnection = true;
               _futureEndpointInfo = _futureMeterConnection;
               _futureMeterConnection.then((value) {
-                if (value.status == 'OK') {
+                if (value.actionStatus == true) {
                   print("IN HERE RSSI");
                   rssiCallback();
                   _futureRSSICheckInfo.then((value) {
-                    if (value.status == 'OK') {
+                    if (value.actionStatus == true) {
                       productionTestCallback();
                       _futureProductionTestInfo.then((value) {
-                        if (value.status == 'OK') {
+                        if (value.actionStatus == true) {
                           meterDisconnectionCallback();
                           _futureMeterDisconnection.then((value) {
-                            if (value.status == 'OK') {
+                            if (value.actionStatus == true) {
                               healthCheckMeterCallback();
                             }
                           });

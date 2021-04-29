@@ -43,11 +43,13 @@ Future<ProductionInfo> productionTest(String serialNumber) async {
 
 class ProductionInfo extends StatusParser {
   String message;
+  bool actionStatus;
 
-  ProductionInfo(status, {this.message}) : super(status);
+  ProductionInfo(status, {this.message, this.actionStatus}) : super(status);
 
   factory ProductionInfo.fromJson(Map<String, dynamic> json) {
-    return ProductionInfo(json['status'], message: json['message']);
+    return ProductionInfo(json['status'],
+        message: json['message'], actionStatus: json['action_status']);
   }
 }
 

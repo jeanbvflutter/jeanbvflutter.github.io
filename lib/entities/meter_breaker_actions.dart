@@ -25,7 +25,6 @@ Future<MeterBreakerInfo> meterBreakerOn(String serialNumber) async {
 }
 
 Future<MeterBreakerInfo> meterBreakerOff(String serialNumber) async {
-
   var urlExt = '/post/deactivateBreakerForConnectedMeters';
 
   final queryParameters = {
@@ -46,13 +45,12 @@ Future<MeterBreakerInfo> meterBreakerOff(String serialNumber) async {
   }
 }
 
-class MeterBreakerInfo extends StatusParser{
-
-  MeterBreakerInfo(status) : super(status);
+class MeterBreakerInfo extends StatusParser {
+  bool actionStatus;
+  MeterBreakerInfo(status, {this.actionStatus}) : super(status);
 
   factory MeterBreakerInfo.fromJson(Map<String, dynamic> json) {
-    return MeterBreakerInfo(
-      json['status'],
-    );
+    return MeterBreakerInfo(json['status'],
+        actionStatus: json['action_status']);
   }
 }
