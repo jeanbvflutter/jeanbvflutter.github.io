@@ -169,20 +169,22 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     Align(
                         // alignment: Alignment.centerLeft,
                         child: Text(
-                            "Vul het adres in waarop je de meter wil registereren, of klik op 'Detecteer locatie'")),
+                            "Vul het adres in waarop je de meter wil registereren")),
                     SizedBox(height: 10),
-                    CustomButton(
-                      onPressed: widget.getLocation,
-                      text: 'Detecteer locatie',
-                      textStyle: buttonTextStyle,
-                      minWidth: 150,
-                      height: 50,
-                      active: widget.active,
-                      colorPrimary: widget.colorPrimary,
-                    ),
+                    // CustomButton(
+                    //   onPressed: widget.getLocation,
+                    //   text: 'Detecteer locatie',
+                    //   textStyle: buttonTextStyle,
+                    //   minWidth: 150,
+                    //   height: 50,
+                    //   active: widget.active,
+                    //   colorPrimary: widget.colorPrimary,
+                    // ),
                     SizedBox(height: 10),
                     registrationInfo(widget.street, widget.zipCode,
                         widget.zipCodeExt, widget.houseNumber),
+
+                    SizedBox(height: 15),
                     Row(
                       children: [
                         CustomButton(
