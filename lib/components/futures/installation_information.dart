@@ -159,38 +159,46 @@ class _InstallationInformationState extends State<InstallationInformation> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Align(
-                // alignment: Alignment.centerLeft,
-                child: Text(
-                    "Vul het adres in waarop je de meter wil registereren, of klik op 'Detecteer locatie'")),
-            SizedBox(height: 5),
-            CustomButton(
-              onPressed: widget.getLocation,
-              text: 'Detecteer locatie',
-              textStyle: buttonTextStyle,
-              minWidth: 150,
-              height: 50,
-              active: widget.active,
-              colorPrimary: widget.colorPrimary,
-            ),
-            SizedBox(height: 10),
-            registrationInfo(widget.street, widget.zipCode, widget.zipCodeExt,
-                widget.houseNumber),
-            Row(
-              children: [
-                CustomButton(
-                  onPressed: widget.registerMeterCallback,
-                  text: 'Register meter',
-                  textStyle: buttonTextStyle,
-                  minWidth: 150,
-                  height: 50,
-                  active: widget.active,
-                  colorPrimary: widget.colorPrimary,
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
+            Container(
+                padding: const EdgeInsets.all(15.0),
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.black)),
+                child: Column(
+                  children: [
+                    Align(
+                        // alignment: Alignment.centerLeft,
+                        child: Text(
+                            "Vul het adres in waarop je de meter wil registereren, of klik op 'Detecteer locatie'")),
+                    SizedBox(height: 10),
+                    CustomButton(
+                      onPressed: widget.getLocation,
+                      text: 'Detecteer locatie',
+                      textStyle: buttonTextStyle,
+                      minWidth: 150,
+                      height: 50,
+                      active: widget.active,
+                      colorPrimary: widget.colorPrimary,
+                    ),
+                    SizedBox(height: 10),
+                    registrationInfo(widget.street, widget.zipCode,
+                        widget.zipCodeExt, widget.houseNumber),
+                    Row(
+                      children: [
+                        CustomButton(
+                          onPressed: widget.registerMeterCallback,
+                          text: 'Register meter',
+                          textStyle: buttonTextStyle,
+                          minWidth: 150,
+                          height: 50,
+                          active: widget.active,
+                          colorPrimary: widget.colorPrimary,
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
+            SizedBox(height: 20),
             Column(
               children: [
                 Row(

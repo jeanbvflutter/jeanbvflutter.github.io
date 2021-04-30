@@ -7,6 +7,6 @@ Container headerInfoWidget(String someText) {
     height: 30,
     width: 250,
     child: Center(child: textWidget(someText, Colors.white)),
-    decoration: BoxDecoration(color: Colors.blueGrey),
+    decoration: BoxDecoration(color: Colors.green),
   );
 }

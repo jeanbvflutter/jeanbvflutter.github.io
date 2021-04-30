@@ -16,7 +16,7 @@ class _MainState extends State<Main> {
     return MaterialApp(
       theme: ThemeData(
           brightness: Brightness.light,
-          primarySwatch: Colors.blueGrey,
+          primarySwatch: Colors.green,
           accentColor: Colors.blue,
           buttonColor: Colors.blue), //button
 

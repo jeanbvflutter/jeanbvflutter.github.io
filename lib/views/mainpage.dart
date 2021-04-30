@@ -56,7 +56,7 @@ class _MainPageState extends State<MainPage> {
   String currentProcess;
   bool active = true;
   bool reset = false;
-  Color colorPrimary = Colors.blueGrey;
+  Color colorPrimary = Colors.green;
 
   Future<MeterInfo> _futureMeterRegistrationInfo;
   Future<ProductionInfo> _futureProductionTestInfo;
@@ -107,7 +107,7 @@ class _MainPageState extends State<MainPage> {
                       reset = false;
                       _futureEndpointInfo = null;
                       active = true;
-                      colorPrimary = Colors.blueGrey;
+                      colorPrimary = Colors.green;
                     });
                   });
                 } else {
@@ -268,7 +268,7 @@ class _MainPageState extends State<MainPage> {
         () => setState(() {
               reset = true;
               active = true;
-              colorPrimary = Colors.blueGrey;
+              colorPrimary = Colors.green;
               action = "";
               _futureEndpointInfo = null;
               _changeAddress = false;
