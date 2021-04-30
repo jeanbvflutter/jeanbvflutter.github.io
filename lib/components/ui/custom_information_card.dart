@@ -44,8 +44,11 @@ class _CustomInformationCardState extends State<CustomInformationCard> {
                         children: [
                           Row(
                             children: [
-                              Text(info[0]),
-                              widget.futureBuilder(info[1], widget.information),
+                              info[0] == null ? Text("") : Text(info[0]),
+                              info[1] == null
+                                  ? Text("")
+                                  : widget.futureBuilder(
+                                      info[1], widget.information),
                             ],
                           ),
                         ],

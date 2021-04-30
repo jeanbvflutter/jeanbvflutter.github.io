@@ -109,17 +109,57 @@ class _InstallationInformationState extends State<InstallationInformation> {
             widget.status == 'Unregistered' ||
             widget.changeAddressBool == true) {
           return Column(children: [
-            CustomInformationCard(
-                headerInfoText: "Client Information",
-                information: widget.futureInstallationInformation,
-                futureBuilder: clientInformation,
-                buttonInfoList: [
-                  ['ID: ', 'clientId'],
-                  ['Achternaam: ', 'lastName'],
-                  ['Voornaam: ', 'firstName'],
-                  ['E-mail: ', 'email'],
-                  ['Bron: ', 'clientSource'],
-                ]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 150.0,
+                  // alignment: Alignment.centerLeft,
+                  child: CustomInformationCard(
+                      headerInfoText: "Client Information",
+                      information: widget.futureInstallationInformation,
+                      futureBuilder: clientInformation,
+                      buttonInfoList: [
+                        ['ID: ', 'clientId'],
+                        ['Achternaam: ', 'lastName'],
+                        ['Voornaam: ', 'firstName'],
+                        ['E-mail: ', 'email'],
+                        ['Bron: ', 'clientSource'],
+                      ]),
+                ),
+                SizedBox(
+                  height: 150.0,
+                  // alignment: Alignment.centerLeft,
+                  child: CustomInformationCard(
+                      headerInfoText: "Addres Information",
+                      information: widget.futureInstallationInformation,
+                      futureBuilder: addressInformation,
+                      buttonInfoList: [
+                        ['Postcode: ', 'zipCode'],
+                        ['Extentie: ', 'zipCodeExt'],
+                        ['Straat: ', 'street'],
+                        ['Huisnummer: ', 'houseNumber'],
+                        ['City: ', 'city'],
+                      ]),
+                ),
+                SizedBox(
+                  height: 150.0,
+                  // alignment: Alignment.centerLeft,
+                  child: CustomInformationCard(
+                      headerInfoText: "Meter Information",
+                      information: widget.futureInstallationInformation,
+                      futureBuilder: meterInformation,
+                      buttonInfoList: [
+                        ['Serienummer: ', 'serialNumber'],
+                        ['Status: ', 'status'],
+                        ['Breaker status: ', 'breakerStatus'],
+                        [null, null],
+                        [null, null],
+                      ]),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
             Align(
                 // alignment: Alignment.centerLeft,
                 child: Text(
