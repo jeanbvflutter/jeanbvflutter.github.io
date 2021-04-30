@@ -6,6 +6,7 @@ import 'package:meter_activation/components/ui/custom_button.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
 import 'package:meter_activation/entities/RSSI_check.dart';
 import 'package:meter_activation/entities/installation_info.dart';
+import 'package:meter_activation/entities/meter_commands.dart';
 import 'package:meter_activation/entities/meter_connection.dart';
 import 'package:meter_activation/entities/meter_disconnection.dart';
 import 'package:meter_activation/entities/unregister_meter.dart';
@@ -69,6 +70,7 @@ class _MainPageState extends State<MainPage> {
 
   Future<MeterDisconnectionInfo> _futureMeterDisconnection;
   Future<MeterConnectionInfo> connectMeterFuture;
+  Future<MeterCommandInfoInfo> _futureMeterCommand;
 
   meterConnectionWrapper(Function func, String actionInput) {
     setState(() {
@@ -135,6 +137,7 @@ class _MainPageState extends State<MainPage> {
       _futureMeterRegistrationInfo = null;
       _futureMeterDisconnection = null;
       _futureEndpointInfo = null;
+      _futureMeterCommand = null;
       _futureRSSICheckInfo = null;
       _futureProductionTestInfo = null;
       _futureHealthCheckInfo = null;
@@ -162,6 +165,13 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _futureHealthCheckInfo = healthCheckMeter(_serialNumber.text);
       _futureEndpointInfo = _futureHealthCheckInfo;
+    });
+  }
+
+  meterCommandCallback() {
+    setState(() {
+      _futureMeterCommand = getMeterCommands(_serialNumber.text);
+      _futureMeterCommand = _futureMeterCommand;
     });
   }
 
@@ -374,6 +384,7 @@ class _MainPageState extends State<MainPage> {
                     action: action,
                     active: active,
                     healthCheckMeterCallback: healthCheckMeterCallback,
+                    meterCommandCallback: meterCommandCallback,
                     colorPrimary: colorPrimary,
                     reset: reset,
                     newProductionTest: () {

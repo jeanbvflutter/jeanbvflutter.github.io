@@ -31,6 +31,7 @@ class InstallationInformation extends StatefulWidget {
   final Function() breakerOff;
   final Function() RSSICheck;
   final Function() healthCheckMeterCallback;
+  final Function() meterCommandCallback;
 
   TextEditingController street;
   TextEditingController zipCode;
@@ -75,6 +76,7 @@ class InstallationInformation extends StatefulWidget {
       this.RSSICheck,
       this.hasBreaker,
       this.healthCheckMeterCallback,
+      this.meterCommandCallback,
       this.futureHealthCheck,
       this.futureProductionTestInfo,
       this.startMeterDisconnection,
@@ -342,6 +344,16 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     child: CustomButton(
                       onPressed: widget.healthCheckMeterCallback,
                       text: 'Health check',
+                      minWidth: 150,
+                      height: 50,
+                      active: widget.active,
+                      colorPrimary: widget.colorPrimary,
+                    ),
+                  ),
+                  Expanded(
+                    child: CustomButton(
+                      onPressed: widget.meterCommandCallback,
+                      text: 'Commands',
                       minWidth: 150,
                       height: 50,
                       active: widget.active,
