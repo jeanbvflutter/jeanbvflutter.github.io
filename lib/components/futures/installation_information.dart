@@ -254,9 +254,6 @@ class _InstallationInformationState extends State<InstallationInformation> {
         } else {
           return Column(
             children: [
-              // installationInformationCard(
-              //   widget.futureInstallationInformation,
-              // ),
               Align(
                 // alignment: Alignment.centerLeft,
                 child: CustomInformationCard(
@@ -297,9 +294,9 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       ['Breaker status: ', 'breakerStatus'],
                     ]),
               ),
-              Row(
-                children: [
-                  CustomButton(
+              Row(children: [
+                Expanded(
+                  child: CustomButton(
                     onPressed: widget.changeAddress,
                     text: 'Change address',
                     minWidth: 150,
@@ -307,10 +304,9 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     active: widget.active,
                     colorPrimary: widget.colorPrimary,
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  CustomButton(
+                ),
+                Expanded(
+                  child: CustomButton(
                     onPressed: widget.unregisterMeter,
                     text: 'Unregister meter',
                     minWidth: 150,
@@ -318,14 +314,9 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     active: widget.active,
                     colorPrimary: widget.colorPrimary,
                   ),
-                ],
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    height: 40,
-                  ),
-                  CustomButton(
+                ),
+                Expanded(
+                  child: CustomButton(
                     onPressed: widget.newProductionTest,
                     text: 'New production test',
                     minWidth: 150,
@@ -333,83 +324,83 @@ class _InstallationInformationState extends State<InstallationInformation> {
                     active: widget.active,
                     colorPrimary: widget.colorPrimary,
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  CustomButton(
-                    onPressed: widget.RSSICheck,
-                    text: 'RSSI check',
-                    minWidth: 150,
-                    height: 50,
-                    active: widget.active,
-                    colorPrimary: widget.colorPrimary,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  CustomButton(
-                    onPressed: widget.healthCheckMeterCallback,
-                    text: 'Health check',
-                    minWidth: 150,
-                    height: 50,
-                    active: widget.active,
-                    colorPrimary: widget.colorPrimary,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Visibility(
-                    visible: widget.hasBreaker,
+                ),
+              ]),
+              Row(
+                children: [
+                  Expanded(
                     child: CustomButton(
-                      onPressed: widget.breakerOn,
-                      text: 'Breaker on',
+                      onPressed: widget.RSSICheck,
+                      text: 'RSSI check',
                       minWidth: 150,
                       height: 50,
                       active: widget.active,
                       colorPrimary: widget.colorPrimary,
                     ),
                   ),
-                  Visibility(
-                    visible: widget.hasBreaker,
-                    child: SizedBox(
-                      width: 10,
-                    ),
-                  ),
-                  Visibility(
-                    visible: widget.hasBreaker,
+                  Expanded(
                     child: CustomButton(
-                      onPressed: widget.breakerOff,
-                      text: 'Breaker off',
+                      onPressed: widget.healthCheckMeterCallback,
+                      text: 'Health check',
                       minWidth: 150,
                       height: 50,
                       active: widget.active,
                       colorPrimary: widget.colorPrimary,
+                    ),
+                  ),
+                  Expanded(
+                    child: Visibility(
+                      visible: widget.hasBreaker,
+                      child: CustomButton(
+                        onPressed: widget.breakerOn,
+                        text: 'Breaker on',
+                        minWidth: 150,
+                        height: 50,
+                        active: widget.active,
+                        colorPrimary: widget.colorPrimary,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Visibility(
+                      visible: widget.hasBreaker,
+                      child: CustomButton(
+                        onPressed: widget.breakerOff,
+                        text: 'Breaker off',
+                        minWidth: 150,
+                        height: 50,
+                        active: widget.active,
+                        colorPrimary: widget.colorPrimary,
+                      ),
                     ),
                   )
                 ],
               ),
-              Row(
-                children: [
-                  Card(
-                      elevation: 1,
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.black26),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Container(
-                          // margin: EdgeInsets.all(5),
-                          constraints: BoxConstraints(
-                            maxHeight: 50,
-                            maxWidth: 400,
+              Center(
+                child: Container(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Card(
+                          elevation: 1,
+                          shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.black26),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Container(
+                            // margin: EdgeInsets.all(5),
+                            constraints: BoxConstraints(
+                              maxHeight: 50,
+                            ),
+                            child: Center(
+                              child: setStatus("Action", true, "text",
+                                  widget.endpointInfo, widget.action, widget.reset),
+                            ),
                           ),
-                          child: Center(
-                              child: setStatus(
-                                  "Action",
-                                  true,
-                                  "text",
-                                  widget.endpointInfo,
-                                  widget.action,
-                                  widget.reset)))),
-                ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           );

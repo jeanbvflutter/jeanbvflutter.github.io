@@ -302,90 +302,95 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: Text("Eleena Meter Activation")),
-      body: Container(
-        margin: EdgeInsets.all(5),
-        child: Column(
-          children: [
-            Center(child: headerWidget("Investigate installation")),
-            Center(child: textFieldWidget(_serialNumber, "Serienummer")),
-            Row(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            constraints: BoxConstraints(minWidth: 500, maxWidth: 900),
+            margin: EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                CustomButton(
-                  onPressed: scanBarcode,
-                  text: 'Scan Barcode',
-                  textStyle: buttonTextStyle,
-                  minWidth: 150,
-                  height: 50,
-                  active: active,
-                  colorPrimary: colorPrimary,
+                Center(child: textFieldWidget(_serialNumber, "Serienummer")),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        onPressed: scanBarcode,
+                        text: 'Scan Barcode',
+                        textStyle: buttonTextStyle,
+                        minWidth: 150,
+                        height: 50,
+                        active: active,
+                        colorPrimary: colorPrimary,
+                      ),
+                    ),
+                    Expanded(
+                      child: CustomButton(
+                        onPressed: fetchInstallationInfoCallback,
+                        text: 'Investigate meter',
+                        textStyle: buttonTextStyle,
+                        minWidth: 150,
+                        height: 50,
+                        active: active,
+                        colorPrimary: colorPrimary,
+                      ),
+                    ),
+                    Expanded(
+                      child: CustomButton(
+                        onPressed: resetAll,
+                        text: 'Reset',
+                        textStyle: buttonTextStyle,
+                        minWidth: 150,
+                        active: true,
+                        height: 50,
+                        colorPrimary: Colors.red,
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 10,
-                ),
-                CustomButton(
-                  onPressed: fetchInstallationInfoCallback,
-                  text: 'Investigate meter',
-                  textStyle: buttonTextStyle,
-                  minWidth: 150,
-                  height: 50,
-                  active: active,
-                  colorPrimary: colorPrimary,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                CustomButton(
-                  onPressed: resetAll,
-                  text: 'Reset',
-                  textStyle: buttonTextStyle,
-                  minWidth: 150,
-                  active: true,
-                  height: 50,
-                  colorPrimary: Colors.red,
-                ),
+                SizedBox(height: 20),
+                InstallationInformation(
+                    registerMeterCallback: registerMeterCallback,
+                    getLocation: getLocation,
+                    futureInstallationInformation: _futureInstallationInfo,
+                    changeAddress: changeAddressCallback,
+                    street: _street,
+                    zipCode: _zipCode,
+                    zipCodeExt: _zipcodeExt,
+                    houseNumber: _houseNumber,
+                    changeAddressBool: _changeAddress,
+                    unregisterMeter: unregisterMeterCallback,
+                    meterRegistrationInfo: _futureMeterRegistrationInfo,
+                    meterConnectionInfo: _futureMeterConnection,
+                    currentProcess: currentProcess,
+                    endpointInfo: _futureEndpointInfo,
+                    processStart: _startRegistration,
+                    startMeterConnection: _startMeterConnection,
+                    hasBreaker: _hasBreaker,
+                    futureProductionTestInfo: _futureProductionTestInfo,
+                    futureHealthCheck: _futureHealthCheckInfo,
+                    futureMeterDisconnectionInfo: _futureMeterDisconnection,
+                    futureRssiCheck: _futureRSSICheckInfo,
+                    action: action,
+                    active: active,
+                    healthCheckMeterCallback: healthCheckMeterCallback,
+                    colorPrimary: colorPrimary,
+                    reset: reset,
+                    newProductionTest: () {
+                      meterConnectionWrapper(newProductionTest, "production");
+                    },
+                    breakerOn: () {
+                      meterConnectionWrapper(meterBreakerOn, "breaker");
+                    },
+                    breakerOff: () {
+                      meterConnectionWrapper(meterBreakerOff, "breaker");
+                    },
+                    RSSICheck: () {
+                      meterConnectionWrapper(RSSIcheck, "rssi");
+                    })
               ],
             ),
-            SizedBox(height: 20),
-            new InstallationInformation(
-                registerMeterCallback: registerMeterCallback,
-                getLocation: getLocation,
-                futureInstallationInformation: _futureInstallationInfo,
-                changeAddress: changeAddressCallback,
-                street: _street,
-                zipCode: _zipCode,
-                zipCodeExt: _zipcodeExt,
-                houseNumber: _houseNumber,
-                changeAddressBool: _changeAddress,
-                unregisterMeter: unregisterMeterCallback,
-                meterRegistrationInfo: _futureMeterRegistrationInfo,
-                meterConnectionInfo: _futureMeterConnection,
-                currentProcess: currentProcess,
-                endpointInfo: _futureEndpointInfo,
-                processStart: _startRegistration,
-                startMeterConnection: _startMeterConnection,
-                hasBreaker: _hasBreaker,
-                futureProductionTestInfo: _futureProductionTestInfo,
-                futureHealthCheck: _futureHealthCheckInfo,
-                futureMeterDisconnectionInfo: _futureMeterDisconnection,
-                futureRssiCheck: _futureRSSICheckInfo,
-                action: action,
-                active: active,
-                healthCheckMeterCallback: healthCheckMeterCallback,
-                colorPrimary: colorPrimary,
-                reset: reset,
-                newProductionTest: () {
-                  meterConnectionWrapper(newProductionTest, "production");
-                },
-                breakerOn: () {
-                  meterConnectionWrapper(meterBreakerOn, "breaker");
-                },
-                breakerOff: () {
-                  meterConnectionWrapper(meterBreakerOff, "breaker");
-                },
-                RSSICheck: () {
-                  meterConnectionWrapper(RSSIcheck, "rssi");
-                })
-          ],
+          ),
         ),
       ),
     );
