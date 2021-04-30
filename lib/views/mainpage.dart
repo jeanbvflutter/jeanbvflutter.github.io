@@ -6,6 +6,7 @@ import 'package:meter_activation/components/ui/custom_button.dart';
 import 'package:meter_activation/components/ui/header_widget.dart';
 import 'package:meter_activation/entities/RSSI_check.dart';
 import 'package:meter_activation/entities/installation_info.dart';
+import 'package:meter_activation/entities/meter_commands.dart';
 import 'package:meter_activation/entities/meter_connection.dart';
 import 'package:meter_activation/entities/meter_disconnection.dart';
 import 'package:meter_activation/entities/unregister_meter.dart';
@@ -69,6 +70,7 @@ class _MainPageState extends State<MainPage> {
 
   Future<MeterDisconnectionInfo> _futureMeterDisconnection;
   Future<MeterConnectionInfo> connectMeterFuture;
+  Future<MeterCommandInfoInfo> _futureMeterCommand;
 
   meterConnectionWrapper(Function func, String actionInput) {
     setState(() {
@@ -135,6 +137,7 @@ class _MainPageState extends State<MainPage> {
       _futureMeterRegistrationInfo = null;
       _futureMeterDisconnection = null;
       _futureEndpointInfo = null;
+      _futureMeterCommand = null;
       _futureRSSICheckInfo = null;
       _futureProductionTestInfo = null;
       _futureHealthCheckInfo = null;
@@ -162,6 +165,70 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _futureHealthCheckInfo = healthCheckMeter(_serialNumber.text);
       _futureEndpointInfo = _futureHealthCheckInfo;
+    });
+  }
+
+  meterCommandCallback() {
+    setState(() {
+      _futureMeterCommand = getMeterCommands(_serialNumber.text);
+      _futureMeterCommand = _futureMeterCommand;
+
+      _futureMeterCommand.then((value) {
+        List<DataRow> rows = [];
+
+        value.commands.forEach((command) {
+          rows.add(DataRow(cells: [
+            DataCell(
+              Text(command.enteredAt??''),
+            ),
+            DataCell(
+              Text(command.type??''),
+            ),
+            DataCell(
+              Text(command.result??''),
+            ),
+          ]));
+        });
+
+        var alert = AlertDialog(
+          title: Text('Command List'),
+          content: SingleChildScrollView(
+            child: Center(
+              child: Container(
+                child: DataTable(
+                  columns: [
+                    DataColumn(
+                      label: Text('Entered At'),
+                    ),
+                    DataColumn(
+                      label: Text('Type'),
+                    ),
+                    DataColumn(
+                      label: Text('Result'),
+                    ),
+                  ],
+                  rows: rows,
+                ),
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('X'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      });
     });
   }
 
@@ -302,90 +369,96 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: Text("Eleena Meter Activation")),
-      body: Container(
-        margin: EdgeInsets.all(5),
-        child: Column(
-          children: [
-            Center(child: headerWidget("Investigate installation")),
-            Center(child: textFieldWidget(_serialNumber, "Serienummer")),
-            Row(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            constraints: BoxConstraints(minWidth: 500, maxWidth: 900),
+            margin: EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                CustomButton(
-                  onPressed: scanBarcode,
-                  text: 'Scan Barcode',
-                  textStyle: buttonTextStyle,
-                  minWidth: 150,
-                  height: 50,
-                  active: active,
-                  colorPrimary: colorPrimary,
+                Center(child: textFieldWidget(_serialNumber, "Serienummer")),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        onPressed: scanBarcode,
+                        text: 'Scan Barcode',
+                        textStyle: buttonTextStyle,
+                        minWidth: 150,
+                        height: 50,
+                        active: active,
+                        colorPrimary: colorPrimary,
+                      ),
+                    ),
+                    Expanded(
+                      child: CustomButton(
+                        onPressed: fetchInstallationInfoCallback,
+                        text: 'Investigate meter',
+                        textStyle: buttonTextStyle,
+                        minWidth: 150,
+                        height: 50,
+                        active: active,
+                        colorPrimary: colorPrimary,
+                      ),
+                    ),
+                    Expanded(
+                      child: CustomButton(
+                        onPressed: resetAll,
+                        text: 'Reset',
+                        textStyle: buttonTextStyle,
+                        minWidth: 150,
+                        active: true,
+                        height: 50,
+                        colorPrimary: Colors.red,
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 10,
-                ),
-                CustomButton(
-                  onPressed: fetchInstallationInfoCallback,
-                  text: 'Investigate meter',
-                  textStyle: buttonTextStyle,
-                  minWidth: 150,
-                  height: 50,
-                  active: active,
-                  colorPrimary: colorPrimary,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                CustomButton(
-                  onPressed: resetAll,
-                  text: 'Reset',
-                  textStyle: buttonTextStyle,
-                  minWidth: 150,
-                  active: true,
-                  height: 50,
-                  colorPrimary: Colors.red,
-                ),
+                SizedBox(height: 20),
+                InstallationInformation(
+                    registerMeterCallback: registerMeterCallback,
+                    getLocation: getLocation,
+                    futureInstallationInformation: _futureInstallationInfo,
+                    changeAddress: changeAddressCallback,
+                    street: _street,
+                    zipCode: _zipCode,
+                    zipCodeExt: _zipcodeExt,
+                    houseNumber: _houseNumber,
+                    changeAddressBool: _changeAddress,
+                    unregisterMeter: unregisterMeterCallback,
+                    meterRegistrationInfo: _futureMeterRegistrationInfo,
+                    meterConnectionInfo: _futureMeterConnection,
+                    currentProcess: currentProcess,
+                    endpointInfo: _futureEndpointInfo,
+                    processStart: _startRegistration,
+                    startMeterConnection: _startMeterConnection,
+                    hasBreaker: _hasBreaker,
+                    futureProductionTestInfo: _futureProductionTestInfo,
+                    futureHealthCheck: _futureHealthCheckInfo,
+                    futureMeterDisconnectionInfo: _futureMeterDisconnection,
+                    futureRssiCheck: _futureRSSICheckInfo,
+                    action: action,
+                    active: active,
+                    healthCheckMeterCallback: healthCheckMeterCallback,
+                    meterCommandCallback: meterCommandCallback,
+                    colorPrimary: colorPrimary,
+                    reset: reset,
+                    newProductionTest: () {
+                      meterConnectionWrapper(newProductionTest, "production");
+                    },
+                    breakerOn: () {
+                      meterConnectionWrapper(meterBreakerOn, "breaker");
+                    },
+                    breakerOff: () {
+                      meterConnectionWrapper(meterBreakerOff, "breaker");
+                    },
+                    RSSICheck: () {
+                      meterConnectionWrapper(RSSIcheck, "rssi");
+                    })
               ],
             ),
-            SizedBox(height: 20),
-            new InstallationInformation(
-                registerMeterCallback: registerMeterCallback,
-                getLocation: getLocation,
-                futureInstallationInformation: _futureInstallationInfo,
-                changeAddress: changeAddressCallback,
-                street: _street,
-                zipCode: _zipCode,
-                zipCodeExt: _zipcodeExt,
-                houseNumber: _houseNumber,
-                changeAddressBool: _changeAddress,
-                unregisterMeter: unregisterMeterCallback,
-                meterRegistrationInfo: _futureMeterRegistrationInfo,
-                meterConnectionInfo: _futureMeterConnection,
-                currentProcess: currentProcess,
-                endpointInfo: _futureEndpointInfo,
-                processStart: _startRegistration,
-                startMeterConnection: _startMeterConnection,
-                hasBreaker: _hasBreaker,
-                futureProductionTestInfo: _futureProductionTestInfo,
-                futureHealthCheck: _futureHealthCheckInfo,
-                futureMeterDisconnectionInfo: _futureMeterDisconnection,
-                futureRssiCheck: _futureRSSICheckInfo,
-                action: action,
-                active: active,
-                healthCheckMeterCallback: healthCheckMeterCallback,
-                colorPrimary: colorPrimary,
-                reset: reset,
-                newProductionTest: () {
-                  meterConnectionWrapper(newProductionTest, "production");
-                },
-                breakerOn: () {
-                  meterConnectionWrapper(meterBreakerOn, "breaker");
-                },
-                breakerOff: () {
-                  meterConnectionWrapper(meterBreakerOff, "breaker");
-                },
-                RSSICheck: () {
-                  meterConnectionWrapper(RSSIcheck, "rssi");
-                })
-          ],
+          ),
         ),
       ),
     );

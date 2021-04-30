@@ -30,7 +30,7 @@ class InstallationInfo {
   final String breakerStatus;
   final int meterId;
   final int cumulativeProduction;
-  final String serialNumber;
+  final String serialNumber;  
 
   // Client details
   final int clientId;

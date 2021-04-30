@@ -26,10 +26,8 @@ class CustomButton extends StatefulWidget {
 class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      margin: EdgeInsets.only(top: 10),
-      child: Align(
-        alignment: Alignment.centerLeft,
+    return Container(
+      margin: EdgeInsets.all(3),
         child: ButtonTheme(
           minWidth: widget.minWidth,
           height: widget.height,
@@ -47,7 +45,6 @@ class _CustomButtonState extends State<CustomButton> {
             },
           ),
         ),
-      ),
-    );
+      );
   }
 }
