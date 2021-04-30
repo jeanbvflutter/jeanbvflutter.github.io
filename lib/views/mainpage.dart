@@ -90,7 +90,7 @@ class _MainPageState extends State<MainPage> {
                   });
 
                   _futureEndpointInfo.then((value) {
-                    print("VALUE STATUS" + value.actionStatus);
+                    print("VALUE STATUS" + value.actionStatus.toString());
                     if (value.actionStatus == true) {
                       print("Operation has successful");
                     } else {
