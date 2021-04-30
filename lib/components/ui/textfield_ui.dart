@@ -14,7 +14,7 @@ TextField textFieldWidget(_controller, String _hintText) {
         regex = r'^[0-9]{0,5}';
       }
       break;
-    case "extentie":
+    case "extentie (hoofdletters)":
       {
         regex = r'^[A-Z]{0,2}';
       }

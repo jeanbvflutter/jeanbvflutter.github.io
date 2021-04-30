@@ -17,7 +17,8 @@ Container registrationInfo(_street, _zipcode, _zipcode_ext, _housenumber) {
                   child: textFieldWidget(_zipcode, "Postcode"),
                 ),
                 Expanded(
-                  child: textFieldWidget(_zipcode_ext, "Extentie"),
+                  child:
+                      textFieldWidget(_zipcode_ext, "Extentie (hoofdletters)"),
                 ),
                 Expanded(
                   child: textFieldWidget(_housenumber, "Huisnummer"),
