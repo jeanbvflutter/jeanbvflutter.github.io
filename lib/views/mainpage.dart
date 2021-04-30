@@ -172,6 +172,63 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _futureMeterCommand = getMeterCommands(_serialNumber.text);
       _futureMeterCommand = _futureMeterCommand;
+
+      _futureMeterCommand.then((value) {
+        List<DataRow> rows = [];
+
+        value.commands.forEach((command) {
+          rows.add(DataRow(cells: [
+            DataCell(
+              Text(command.enteredAt??''),
+            ),
+            DataCell(
+              Text(command.type??''),
+            ),
+            DataCell(
+              Text(command.result??''),
+            ),
+          ]));
+        });
+
+        var alert = AlertDialog(
+          title: Text('Command List'),
+          content: SingleChildScrollView(
+            child: Center(
+              child: Container(
+                child: DataTable(
+                  columns: [
+                    DataColumn(
+                      label: Text('Entered At'),
+                    ),
+                    DataColumn(
+                      label: Text('Type'),
+                    ),
+                    DataColumn(
+                      label: Text('Result'),
+                    ),
+                  ],
+                  rows: rows,
+                ),
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('X'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      });
     });
   }
 

@@ -18,12 +18,8 @@ Future<MeterCommandInfoInfo> getMeterCommands(String serialNumber) async {
   );
 
   if (response.statusCode == 200) {
-    print("SERIAL NUMBER: " + serialNumber);
-    print("RESPONSE" + response.body);
     return MeterCommandInfoInfo.fromJson(jsonDecode(response.body));
   } else if (response.statusCode == 404) {
-    print("NUMBER" + serialNumber);
-    print("RESPONSE" + response.body);
     return MeterCommandInfoInfo.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed');
@@ -52,7 +48,7 @@ class Command {
 
   factory Command.fromJson(Map<String, dynamic> json) {
     return Command(
-      enteredAt: json['enteredAt'],
+      enteredAt: json['enteredAT'],
       meter: json['meter'],
       result: json['result'],
       type: json['type']
