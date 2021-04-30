@@ -109,6 +109,17 @@ class _InstallationInformationState extends State<InstallationInformation> {
             widget.status == 'Unregistered' ||
             widget.changeAddressBool == true) {
           return Column(children: [
+            CustomInformationCard(
+                headerInfoText: "Client Information",
+                information: widget.futureInstallationInformation,
+                futureBuilder: clientInformation,
+                buttonInfoList: [
+                  ['ID: ', 'clientId'],
+                  ['Achternaam: ', 'lastName'],
+                  ['Voornaam: ', 'firstName'],
+                  ['E-mail: ', 'email'],
+                  ['Bron: ', 'clientSource'],
+                ]),
             Align(
                 // alignment: Alignment.centerLeft,
                 child: Text(
@@ -404,8 +415,13 @@ class _InstallationInformationState extends State<InstallationInformation> {
                               maxHeight: 50,
                             ),
                             child: Center(
-                              child: setStatus("Action", true, "text",
-                                  widget.endpointInfo, widget.action, widget.reset),
+                              child: setStatus(
+                                  "Action",
+                                  true,
+                                  "text",
+                                  widget.endpointInfo,
+                                  widget.action,
+                                  widget.reset),
                             ),
                           ),
                         ),

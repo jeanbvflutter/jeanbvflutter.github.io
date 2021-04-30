@@ -4,6 +4,8 @@ import 'package:meter_activation/components/futures/client_information.dart';
 import 'package:meter_activation/components/futures/meter_information.dart';
 import 'package:meter_activation/components/ui/header_info.dart';
 
+import 'custom_information_card.dart';
+
 Card installationInformationCard(Future futureInstallationInformation) {
   return Card(
     elevation: 3,
@@ -157,7 +159,7 @@ Card installationInformationCard(Future futureInstallationInformation) {
                             children: [
                               Row(
                                 children: [
-                                  Text("Huisnummer: "),
+                                  Text("Huisnumqsdqsdmer: "),
                                   addressInformation("houseNumber",
                                       futureInstallationInformation)
                                 ],

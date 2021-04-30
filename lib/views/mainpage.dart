@@ -179,13 +179,13 @@ class _MainPageState extends State<MainPage> {
         value.commands.forEach((command) {
           rows.add(DataRow(cells: [
             DataCell(
-              Text(command.enteredAt??''),
+              Text(command.enteredAt ?? ''),
             ),
             DataCell(
-              Text(command.type??''),
+              Text(command.type ?? ''),
             ),
             DataCell(
-              Text(command.result??''),
+              Text(command.result ?? ''),
             ),
           ]));
         });
@@ -331,10 +331,12 @@ class _MainPageState extends State<MainPage> {
                   print("IN HERE RSSI");
                   rssiCallback();
                   _futureRSSICheckInfo.then((value) {
-                    if (value.actionStatus == true) {
+                    if (value.actionStatus == true ||
+                        value.actionStatus == false) {
                       productionTestCallback();
                       _futureProductionTestInfo.then((value) {
-                        if (value.actionStatus == true) {
+                        if (value.actionStatus == true ||
+                            value.actionStatus == false) {
                           meterDisconnectionCallback();
                           _futureMeterDisconnection.then((value) {
                             if (value.actionStatus == true) {
