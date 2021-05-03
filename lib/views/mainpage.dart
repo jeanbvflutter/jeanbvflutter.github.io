@@ -295,6 +295,8 @@ class _MainPageState extends State<MainPage> {
   meterRegistrationCallback() {
     setState(() {
       currentProcess = "Registration";
+      active = false;
+      colorPrimary = Colors.grey;
       _startRegistration = true;
       _futureMeterRegistrationInfo = registerMeter(
           _serialNumber.text,
@@ -340,7 +342,10 @@ class _MainPageState extends State<MainPage> {
                           meterDisconnectionCallback();
                           _futureMeterDisconnection.then((value) {
                             if (value.actionStatus == true) {
-                              healthCheckMeterCallback();
+                              setState(() {
+                                active = true;
+                                colorPrimary = Colors.green;
+                              });
                             }
                           });
                         }

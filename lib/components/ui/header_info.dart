@@ -5,7 +5,7 @@ import 'package:meter_activation/views/mainpage.dart';
 Container headerInfoWidget(String someText) {
   return Container(
     height: 30,
-    width: 250,
+    constraints: BoxConstraints(minWidth: 250),
     child: Center(child: textWidget(someText, Colors.white)),
     decoration: BoxDecoration(color: Colors.green),
   );

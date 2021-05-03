@@ -272,16 +272,16 @@ class _InstallationInformationState extends State<InstallationInformation> {
                             true,
                             widget.reset),
                       ),
-                      Card(
-                        child: category(
-                            "Meter Health Check",
-                            widget.processStart,
-                            widget.futureHealthCheck,
-                            Colors.grey[200],
-                            Colors.black,
-                            true,
-                            widget.reset),
-                      ),
+                      // Card(
+                      //   child: category(
+                      //       "Meter Health Check",
+                      //       widget.processStart,
+                      //       widget.futureHealthCheck,
+                      //       Colors.grey[200],
+                      //       Colors.black,
+                      //       true,
+                      //       widget.reset),
+                      // ),
                       // setStatus(widget.meterRegistrationInfo),
                       // Text("Meter Registration Status"),
                     ],
@@ -361,7 +361,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                 Expanded(
                   child: CustomButton(
                     onPressed: widget.changeAddress,
-                    text: 'Change address',
+                    text: 'Verander adres',
                     minWidth: 150,
                     height: 50,
                     active: widget.active,
@@ -371,7 +371,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                 Expanded(
                   child: CustomButton(
                     onPressed: widget.unregisterMeter,
-                    text: 'Unregister meter',
+                    text: 'Ontkoppel meter',
                     minWidth: 150,
                     height: 50,
                     active: widget.active,
@@ -381,7 +381,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                 Expanded(
                   child: CustomButton(
                     onPressed: widget.newProductionTest,
-                    text: 'New production test',
+                    text: 'Productietest',
                     minWidth: 150,
                     height: 50,
                     active: widget.active,
@@ -394,7 +394,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   Expanded(
                     child: CustomButton(
                       onPressed: widget.RSSICheck,
-                      text: 'RSSI check',
+                      text: 'Signaalsterkte',
                       minWidth: 150,
                       height: 50,
                       active: widget.active,
@@ -404,7 +404,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   Expanded(
                     child: CustomButton(
                       onPressed: widget.healthCheckMeterCallback,
-                      text: 'Health check',
+                      text: 'Meterconnectie test',
                       minWidth: 150,
                       height: 50,
                       active: widget.active,
@@ -414,7 +414,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                   Expanded(
                     child: CustomButton(
                       onPressed: widget.meterCommandCallback,
-                      text: 'Commands',
+                      text: 'Actiehistorie meter',
                       minWidth: 150,
                       height: 50,
                       active: widget.active,
@@ -426,7 +426,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       visible: widget.hasBreaker,
                       child: CustomButton(
                         onPressed: widget.breakerOn,
-                        text: 'Breaker on',
+                        text: 'Zet breaker aan',
                         minWidth: 150,
                         height: 50,
                         active: widget.active,
@@ -439,7 +439,7 @@ class _InstallationInformationState extends State<InstallationInformation> {
                       visible: widget.hasBreaker,
                       child: CustomButton(
                         onPressed: widget.breakerOff,
-                        text: 'Breaker off',
+                        text: 'Zet breaker uit',
                         minWidth: 150,
                         height: 50,
                         active: widget.active,
